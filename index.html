@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Saving Challenge</title>
-    <!-- html2canvas Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- AdSense Code (මෙතන ඔයාගේ AdSense කේතය දාන්න) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
     <style>
@@ -149,29 +147,24 @@
 <body>
 
 <div id="app-wrapper">
-    <!-- Header (Logo Style) -->
     <div class="header-section">
         <h1 class="main-title">Daily Saving Challenge</h1>
         <p class="sub-heading">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</p>
     </div>
 
-    <!-- Simplified Name Input -->
     <div class="name-input-section">
         <span class="name-label">ඔබගේ නම:</span>
         <input type="text" id="userName" placeholder="ඔබගේ නම" value="">
     </div>
 
-    <!-- Live Total -->
     <div id="liveTotal" class="live-total">ඉතුරු කරමු: රු. 0</div>
 
-    <!-- Wheel -->
     <div class="wheel-container">
         <div class="pointer"></div>
         <div class="wheel outer-wheel" id="outerWheel"></div>
         <div class="wheel inner-wheel" id="innerWheel"></div>
     </div>
 
-    <!-- Buttons -->
     <div class="btn-container">
         <button id="spinBtn" class="spin-btn" onclick="spin()">කරකවමු</button>
         <button class="custom-btn" onclick="openCustom()">ලොකු රවුමේ අගයන් වෙනස් කරමු</button>
@@ -182,13 +175,11 @@
         <p>ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතුරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.</p>
     </div>
 
-    <!-- Top Ad Banner -->
     <div class="ad-banner-area">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
     </div>
 
-    <!-- Blog Section -->
     <div class="blog-section">
         <h2>මූල්‍ය උපදෙස් සහ ලිපි</h2>
         <div class="article-grid" id="blogGrid">
@@ -197,25 +188,20 @@
         <div id="viewAllContainer" class="view-all-container"></div>
     </div>
 
-    <!-- FB Section -->
     <div class="fb-section">
         <h2>අපගේ Facebook පිටුව</h2>
         <div class="fb-embed-container">
-            <!-- ඔයාගේ FB Embed Code එක මෙතන දාන්න -->
             <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F20531316728%2Fposts%2F10154009990506729%2F&width=500&show_text=true&height=274&appId" width="100%" height="274" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
     </div>
 
-    <!-- Bottom Ad Banner -->
     <div class="ad-banner-area">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
     </div>
 
-    <!-- Footer with Social Icons -->
     <div class="footer">
         <div class="social-icons">
-            <!-- ඔයාගේ FB පිටුවේ Link එක මෙතන දාන්න -->
             <a href="https://www.facebook.com/YOUR_PAGE_LINK" target="_blank" class="social-icon" title="Visit FB Page">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/></svg>
             </a>
@@ -228,7 +214,6 @@
 
 </div>
 
-<!-- Modals -->
 <div id="customModal" class="my-modal">
     <div class="my-modal-content">
         <h2 style="margin-top:0;">Customize Big Wheel</h2>
@@ -243,7 +228,9 @@
 <div id="resultModal" class="my-modal">
     <div class="my-modal-content">
         <div id="captureArea" class="capture-card">
+            
             <div id="captureDate" class="capture-date"></div>
+
             <img id="popupAvatar" src="" alt="Profile" class="profile-pic" crossorigin="anonymous">
             <h2 id="cardName">Hi Name</h2>
             <p class="capture-subtitle">අද ඔයාට ඉතුරු කරනන් වෙන මුදල</p>
@@ -259,7 +246,6 @@
     </div>
 </div>
 
-<!-- JavaScript Engine -->
 <script>
     // =========================================================
     // 📌 වැදගත්: ඔයාගේ Blogger වෙබ්සයිට් එකේ ලින්ක් එක මෙතන දාන්න
@@ -272,8 +258,8 @@
         const viewAllContainer = document.getElementById('viewAllContainer');
         if(!blogGrid) return;
 
-        // Fetch API request to Blogger's JSON feed
-        fetch(`${myBloggerURL}/feeds/posts/default/-/Daily%20Saving%20Challenge?alt=json&max-results=6`)
+        // Label Filter එක අයින් කරලා තියෙන්නේ. දැන් සියලුම ලිපි 6ක් එනවා.
+        fetch(`${myBloggerURL}/feeds/posts/default?alt=json&max-results=6`)
             .then(response => response.json())
             .then(data => {
                 blogGrid.innerHTML = ''; 
@@ -313,7 +299,8 @@
                 });
 
                 if (totalPosts > 6) {
-                    viewAllContainer.innerHTML = `<a href="${myBloggerURL}/search/label/Daily%20Saving%20Challenge" target="_blank" class="view-all-btn">සියලුම ලිපි සඳහා</a>`;
+                    // View All Button එක කෙලින්ම Blogger එකේ Home Page එකට Link වෙනවා
+                    viewAllContainer.innerHTML = `<a href="${myBloggerURL}/" target="_blank" class="view-all-btn">සියලුම ලිපි සඳහා</a>`;
                 }
             })
             .catch(error => {
