@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- 📌 Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --primary: #6366f1;
@@ -260,7 +264,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             animation: fadeInUp 0.6s ease-out 0.5s both;
         }
 
@@ -349,7 +353,7 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 25px;
             animation: fadeInUp 0.6s ease-out 0.6s both;
         }
 
@@ -408,6 +412,36 @@
         .custom-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--primary); color: var(--text-primary); transform: translateY(-2px); }
         .custom-btn i { font-size: 1rem; color: var(--primary-light); }
 
+        /* LIVE STATS CSS */
+        .live-stats-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease-out 0.65s both;
+        }
+
+        .stat-badge {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 10px 25px;
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-badge:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+        .stat-badge i.fa-users { color: var(--primary-light); }
+        .stat-badge i.fa-trophy { color: var(--accent); }
+        .stat-badge span { font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; }
+
         .purpose-section {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -439,26 +473,6 @@
 
         .purpose-section h2 i { color: var(--accent); font-size: 1.3rem; }
         .purpose-section p { font-size: 1rem; color: var(--text-secondary); line-height: 1.8; }
-
-        .ad-banner-area {
-            width: 100%;
-            max-width: 728px;
-            min-height: 90px;
-            margin: 30px auto;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: var(--glass);
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px dashed var(--glass-border);
-            backdrop-filter: blur(10px);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            animation: fadeInUp 0.6s ease-out 0.8s both;
-        }
-
-        .ad-banner-area i { margin-right: 8px; color: var(--accent); }
 
         .blog-section { margin-bottom: 50px; animation: fadeInUp 0.6s ease-out 0.9s both; }
 
@@ -974,14 +988,21 @@
                     ලොකු රවුමේ අගයන් වෙනස් කරමු
                 </button>
             </div>
+            
+            <!-- 📌 REAL-TIME LIVE STATS SECTION -->
+            <div class="live-stats-container">
+                <div class="stat-badge">
+                    <i class="fas fa-users"></i> මේ දක්වා සහභාගී වූ ගණන: <span id="userCountDisplay">...</span>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-trophy"></i> අවසන් ජයග්‍රාහකයා: <span id="lastWinnerDisplay">...</span>
+                </div>
+            </div>
         </div>
 
         <div class="purpose-section">
             <h2><i class="fas fa-bullseye"></i>දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ අරමුන</h2>
             <p>ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතිරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.</p>
-        </div>
-
-        <div class="ad-banner-area" id="adBanner1">
         </div>
 
         <div class="blog-section">
@@ -994,9 +1015,6 @@
             <div class="article-grid" id="blogGrid">
                 <p style="text-align:center; color:var(--text-muted); padding: 40px; grid-column: 1 / -1;">ලිපි ලබා ගනිමින්...</p>
             </div>
-        </div>
-
-        <div class="ad-banner-area" id="adBanner2">
         </div>
 
         <div class="fb-section">
@@ -1056,6 +1074,56 @@
     </div>
 
     <script>
+        // =========================================
+        // 📌 FIREBASE CONFIGURATION (Realtime DB)
+        // =========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U",
+            authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
+            projectId: "dailysavingchallenge-b7f58",
+            storageBucket: "dailysavingchallenge-b7f58.firebasestorage.app",
+            messagingSenderId: "936731731201",
+            appId: "1:936731731201:web:bb3e841e7664b805102700",
+            // Note: Added Database URL manually based on project ID
+            databaseURL: "https://dailysavingchallenge-b7f58-default-rtdb.firebaseio.com" 
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Variables for Realtime Stats
+        let globalSpinCount = 0;
+
+        // Fetch Live Data from Firebase
+        database.ref('stats').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                globalSpinCount = data.totalSpins || 0;
+                const winnerName = data.lastWinnerName || "-";
+                const winnerAmount = data.lastWinnerAmount || 0;
+
+                const countDisplay = document.getElementById('userCountDisplay');
+                const winnerDisplay = document.getElementById('lastWinnerDisplay');
+                
+                if (countDisplay) countDisplay.innerText = globalSpinCount.toLocaleString();
+                if (winnerDisplay && winnerName !== "-") {
+                    winnerDisplay.innerText = `${winnerName} - රු. ${winnerAmount.toLocaleString()}`;
+                }
+            } else {
+                // Initial setup if database is completely empty
+                database.ref('stats').set({
+                    totalSpins: 1520, // Starting default count
+                    lastWinnerName: "Kasun",
+                    lastWinnerAmount: 350
+                });
+            }
+        });
+
+
+        // =========================================
+        // 📌 GAME LOGIC (Wheel, Posts, Avatar etc.)
+        // =========================================
         const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
         let outerVals = [100, 200, 300, 400, 500, 600, 700, 800, 900];
         const innerVals = [10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -1289,14 +1357,12 @@
             const outTarget = 360 - (outIndex * (360 / outerVals.length));
             const inTarget = 360 - (inIndex * (360 / innerVals.length));
 
-            // Increase base rotation to compensate for longer spin time
             outerDeg += 3600 + outTarget - (outerDeg % 360);
             innerDeg += 5040 + inTarget - (innerDeg % 360);
 
             const outerWheel = document.getElementById('outerWheel');
             const innerWheel = document.getElementById('innerWheel');
 
-            // Apply the random transition duration
             outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
             innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
 
@@ -1318,6 +1384,13 @@
                 avatarImg.style.display = 'block';
                 avatarImg.style.visibility = 'visible';
                 avatarImg.style.opacity = '1';
+
+                // 📌 Push New Data to Firebase Database
+                database.ref('stats').set({
+                    totalSpins: globalSpinCount + 1,
+                    lastWinnerName: nameInput,
+                    lastWinnerAmount: total
+                });
 
                 document.getElementById('resultModal').classList.add('active');
                 createConfetti();
