@@ -74,11 +74,6 @@
             opacity: 0.5;
         }
 
-        @keyframes bgMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
-        }
-
         .orb {
             position: fixed;
             border-radius: 50%;
@@ -209,7 +204,6 @@
 
         .name-input-section input:focus + i,
         .input-group:focus-within i { color: var(--primary); }
-
         .name-input-section input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
 
         .live-total-container {
@@ -390,7 +384,7 @@
         .spin-btn:active { transform: translateY(-1px) scale(0.98); }
         .spin-btn:disabled { background: var(--dark-lighter); color: var(--text-muted); cursor: not-allowed; box-shadow: none; transform: none; }
         .spin-btn i { font-size: 1.3rem; transition: transform 0.3s; }
-        .spin-btn:hover i { transform: rotate(180deg); }
+        .spin-btn:not(:disabled):hover i { transform: rotate(180deg); }
 
         .custom-btn {
             display: inline-flex;
@@ -410,7 +404,20 @@
         }
 
         .custom-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--primary); color: var(--text-primary); transform: translateY(-2px); }
-        .custom-btn i { font-size: 1rem; color: var(--primary-light); }
+
+        /* Highlighted Custom Button Style */
+        .highlighted-btn {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(236, 72, 153, 0.15));
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+        .highlighted-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
 
         /* LIVE STATS CSS */
         .live-stats-container {
@@ -940,6 +947,39 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
+    <!-- 📌 NEW: ANNOUNCEMENT MODAL ON LOAD -->
+    <div id="announcementModal" class="my-modal active">
+        <div class="my-modal-content" style="max-width: 550px; padding: 30px;">
+            <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 15px; text-align: center;">📢 විශේෂ නිවේදනයක්! 📢</h2>
+            
+            <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; text-align: center;">
+                මේ අලුත් වෙනස්කම් වලට ඔයාලා කැමතිද? අකමැතිද? 🤔
+            </p>
+            
+            <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; line-height: 1.7; text-align: left;">
+                යාළුවනේ, ජූලි 1 වෙනිදා ඉඳන් අපි අපේ Website එකේ පොඩි වෙනස්කම් කිහිපයක් කරන්න තීරණය කළා. 🛠️<br><br>
+                🔹 ඉස්සරහට Wheel එක කරකවන්න පුළුවන් වෙන්නේ දවසට එක වතාවක් විතරයි! 🎡<br>
+                🔹 ඒ වෙනුවට, ඔයාලට තවත් අලුත් Options කිහිපයකුත් අපි ඉක්මනින්ම එකතු කරනවා. ✨<br><br>
+                පල්ලෙහායින් ඔයාලගේ අදහස Comment කරගෙන යන්න! 👇
+            </p>
+
+            <div class="fb-embed-container" style="margin-bottom: 25px; max-width: 100%; width: 100%; border-radius: var(--radius); overflow: hidden; background: white;">
+                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fdailysavingchallange%2F&tabs=timeline&width=340&height=300&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
+                    width="100%" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" 
+                    allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            
+            <div class="modal-actions" style="flex-direction: column; gap: 12px; margin-top: 10px;">
+                <a href="https://web.facebook.com/dailysavingchallange/" target="_blank" class="action-btn primary" style="width: 100%; text-decoration: none;">
+                    <i class="fab fa-facebook-f"></i> Facebook එකෙන් Comment කරන්න
+                </a>
+                <button class="action-btn secondary" style="width: 100%;" onclick="closeAnnouncement()">
+                    වසන්න (ප්‍රධාන පිටුවට යන්න)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="app-wrapper">
         <div class="header-section">
             <div class="logo-container">
@@ -983,9 +1023,9 @@
                     <i class="fas fa-sync-alt"></i>
                     කරකවමු
                 </button>
-                <button class="custom-btn" onclick="openCustom()">
+                <button class="custom-btn highlighted-btn" onclick="openCustom()">
                     <i class="fas fa-cog"></i>
-                    ලොකු රවුමේ අගයන් වෙනස් කරමු
+                    <b>ලොකු රවුමේ අගයන් වෙනස් කරමු</b>
                 </button>
             </div>
             
@@ -1021,7 +1061,7 @@
             <div class="fb-card">
                 <h2><i class="fab fa-facebook"></i>අපගේ Facebook පිටුව</h2>
                 <div class="fb-embed-container">
-                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fprofile.php%3Fid%3D61590623947927&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fdailysavingchallange%2F&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
                             width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" 
                             allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                 </div>
@@ -1030,7 +1070,7 @@
 
         <div class="footer">
             <div class="social-icons">
-                <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://web.facebook.com/dailysavingchallange/" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="mailto:dailysavingchallenge@gmail.com" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
             </div>
             <div class="footer-text">
@@ -1084,18 +1124,14 @@
             storageBucket: "dailysavingchallenge-b7f58.firebasestorage.app",
             messagingSenderId: "936731731201",
             appId: "1:936731731201:web:bb3e841e7664b805102700",
-            // Note: Added Database URL manually based on project ID
             databaseURL: "https://dailysavingchallenge-b7f58-default-rtdb.firebaseio.com" 
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Variables for Realtime Stats
         let globalSpinCount = 0;
 
-        // Fetch Live Data from Firebase
         database.ref('stats').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -1111,15 +1147,13 @@
                     winnerDisplay.innerText = `${winnerName} - රු. ${winnerAmount.toLocaleString()}`;
                 }
             } else {
-                // Initial setup if database is completely empty
                 database.ref('stats').set({
-                    totalSpins: 1520, // Starting default count
+                    totalSpins: 1520, 
                     lastWinnerName: "Kasun",
                     lastWinnerAmount: 350
                 });
             }
         });
-
 
         // =========================================
         // 📌 GAME LOGIC (Wheel, Posts, Avatar etc.)
@@ -1238,6 +1272,11 @@
         document.addEventListener("DOMContentLoaded", initializeApp);
         setTimeout(initializeApp, 500);
 
+        // 📌 Close Announcement Popup
+        function closeAnnouncement() {
+            document.getElementById('announcementModal').classList.remove('active');
+        }
+
         function openCustom() {
             let currentMax = outerVals[outerVals.length - 1];
             if (outerVals.length === 1 && outerVals[0] === 0) currentMax = 0;
@@ -1344,7 +1383,6 @@
             }
             isSpinning = true;
             
-            // Random spin duration between 10000ms (10s) and 15000ms (15s)
             const spinDuration = Math.floor(Math.random() * 5000) + 10000; 
 
             const spinBtn = document.getElementById('spinBtn');
@@ -1372,7 +1410,10 @@
             setTimeout(() => {
                 const total = outerVals[outIndex] + innerVals[inIndex];
                 document.getElementById('liveAmount').innerText = `රු. ${total.toLocaleString()}`;
+                
+                // Greeting Changed to English "Hi"
                 document.getElementById('cardName').innerText = `Hi ${nameInput}`;
+                
                 document.getElementById('cardTotal').innerText = `රු. ${total.toLocaleString()}`;
                 const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
                 const currentDate = new Date().toLocaleDateString('en-US', dateOptions);
@@ -1392,7 +1433,7 @@
                     lastWinnerAmount: total
                 });
 
-                // 📌 ලැයිස්තුවක් විදියට හැමෝගෙම විස්තර එකතු කිරීම (History List)
+                // 📌 Push History List
                 const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
                 database.ref('spinHistory').push({
                     userName: nameInput,
@@ -1428,7 +1469,8 @@
 
         document.querySelectorAll('.my-modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
+                // Prevent closing Announcement modal by clicking outside
+                if (e.target === modal && modal.id !== 'announcementModal') {
                     modal.classList.remove('active');
                 }
             });
@@ -1437,12 +1479,17 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.my-modal.active').forEach(modal => {
-                    modal.classList.remove('active');
+                    if(modal.id !== 'announcementModal') {
+                        modal.classList.remove('active');
+                    }
                 });
             }
             if (e.key === ' ' && !isSpinning) {
-                e.preventDefault();
-                spin();
+                // Check if announcement modal is closed before spinning with space
+                if(!document.getElementById('announcementModal').classList.contains('active')) {
+                    e.preventDefault();
+                    spin();
+                }
             }
         });
 
