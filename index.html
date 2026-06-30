@@ -1,3 +1,12 @@
+ඔබ එවූ "Screenshot 2026-06-30 at 9.01.05 AM.png" පින්තූරයේ පෙනෙන ආකාරයට, Image එක Download වීමේදී (html2canvas මගින්) Gradient Text එක නිවැරදිව Render නොවීම නිසා තමයි ඒ කොළ පාට කොටුව (Background block) එක පෙනෙන්නේ.
+
+මෙය නිවැරදි කිරීමට, පින්තූරය Download වන අවස්ථාවේදී පමණක් Gradient එක වෙනුවට Solid Color එකක් යෙදෙන පරිදි CSS කේතයට විශේෂ වෙනසක් (`.capturing` class එක හරහා) එකතු කර ඇත. දැන් පින්තූරය Download වන විට කිසිදු අවලස්සන කොටුවක් නොපෙන්වා අකුරු පමණක් ඉතා පැහැදිලිව කොළ පැහැයෙන් දිස්වනු ඇත.
+
+Mobile Responsiveness ද පෙර පරිදිම සියයට සියයක් සුරක්ෂිත කර ඇත.
+
+මෙන්න නිවැරදි කළ සම්පූර්ණ HTML කේතය:
+
+```html
 <!DOCTYPE html>
 <html lang="si">
 <head>
@@ -101,20 +110,25 @@
             z-index: 1;
         }
 
+        /* 📌 HEADER SECTION */
         .header-section {
             padding: 30px 0 20px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: relative;
         }
 
-        .logo-container {
+        .header-left {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 15px;
-            margin-bottom: 15px;
-            flex-wrap: nowrap;
             animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .header-right {
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+            flex-shrink: 0;
         }
 
         .logo-img {
@@ -125,7 +139,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             border: 3px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease;
-            flex-shrink: 0;
         }
 
         .logo-img:hover {
@@ -137,7 +150,7 @@
         }
 
         .main-title {
-            font-size: clamp(1.5rem, 4vw, 2.8rem);
+            font-size: clamp(1.2rem, 4vw, 2.8rem);
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 50%, var(--accent) 100%);
             -webkit-background-clip: text;
@@ -150,61 +163,66 @@
         }
 
         .sub-heading {
-            font-size: clamp(0.85rem, 2vw, 1.2rem);
+            font-size: clamp(0.75rem, 2vw, 1.2rem);
             color: var(--text-secondary);
             font-weight: 500;
             white-space: nowrap;
         }
 
-        .name-input-section {
+        /* 📌 MAIN PAGE LANG TOGGLE */
+        .main-lang-toggle {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 25px 0 20px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease-out 0.3s both;
-        }
-
-        .name-label { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
-
-        .input-group {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 16px;
-            color: var(--text-muted);
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .name-input-section input {
-            padding: 14px 20px 14px 45px;
-            border: 2px solid var(--glass-border);
-            background: var(--glass);
-            color: var(--text-primary);
-            font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            border-radius: var(--radius-full);
-            width: 280px;
-            transition: all 0.3s ease;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
         }
-
-        .name-input-section input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), var(--shadow-glow);
-            width: 320px;
+        
+        .main-lang-toggle .lang-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .main-lang-toggle .lang-btn:hover {
+            color: var(--text-primary);
         }
 
-        .name-input-section input:focus + i,
-        .input-group:focus-within i { color: var(--primary); }
-        .name-input-section input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+        .main-lang-toggle .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* 📌 GREETING SECTION */
+        .user-greeting {
+            text-align: center;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+        
+        .user-greeting h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .user-greeting span.name-highlight {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
 
         .live-total-container {
             display: flex;
@@ -382,7 +400,16 @@
         .spin-btn:hover::before { left: 100%; }
         .spin-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-xl), 0 0 40px rgba(99, 102, 241, 0.4); }
         .spin-btn:active { transform: translateY(-1px) scale(0.98); }
-        .spin-btn:disabled { background: var(--dark-lighter); color: var(--text-muted); cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        .spin-btn:disabled { 
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white; 
+            cursor: not-allowed; 
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); 
+            transform: none; 
+            opacity: 0.9;
+        }
+        
         .spin-btn i { font-size: 1.3rem; transition: transform 0.3s; }
         .spin-btn:not(:disabled):hover i { transform: rotate(180deg); }
 
@@ -404,7 +431,7 @@
         }
 
         .custom-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--primary); color: var(--text-primary); transform: translateY(-2px); }
-
+        
         .highlighted-btn {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(236, 72, 153, 0.15));
             border: 1px solid var(--accent);
@@ -417,6 +444,153 @@
             border-color: transparent;
             box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
         }
+        .highlighted-btn i { color: inherit; }
+
+        /* 📌 CALENDAR TRACKER SECTION */
+        .calendar-section {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 35px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(20px);
+            animation: fadeInUp 0.6s ease-out 0.65s both;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+        }
+
+        /* Temporary background when capturing so text remains readable */
+        .calendar-section.capturing {
+            background: #0f172a !important; /* solid dark background for screenshot */
+            border: 2px solid var(--primary-dark);
+        }
+
+        .calendar-section h2 {
+            text-align: center;
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .calendar-section h2 i { color: var(--accent); }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 12px 5px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            min-height: 70px;
+        }
+
+        .day-card .date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .day-card .amount {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .day-card.completed {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border-color: var(--success);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+        }
+        .day-card.completed .date { color: rgba(255,255,255,0.9); }
+        .day-card.completed .amount { color: var(--success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+
+        .day-card.missed {
+            background: rgba(239, 68, 68, 0.05);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .day-card.missed .amount { color: var(--danger); font-size: 1.1rem; }
+
+        .day-card.today {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.1);
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
+        }
+
+        /* 📌 BEAUTIFIED TOTAL BOX FOR DOWNLOAD & VIEW */
+        .monthly-total-box {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px dashed var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .monthly-total-display {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--success);
+            padding: 20px 50px;
+            border-radius: var(--radius-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .monthly-total-display .total-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .monthly-total-display .total-amount {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            text-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+            margin: 0;
+        }
+
+        /* 📌 FIX FOR HTML2CANVAS GRADIENT TEXT BUG (Prevents the ugly solid green block) */
+        .capturing .monthly-total-display .total-amount {
+            background: transparent !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            -webkit-text-fill-color: #10b981 !important; /* solid var(--success) */
+            color: #10b981 !important;
+            text-shadow: none !important; 
+        }
 
         .live-stats-container {
             display: flex;
@@ -424,7 +598,7 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 50px;
-            animation: fadeInUp 0.6s ease-out 0.65s both;
+            animation: fadeInUp 0.6s ease-out 0.7s both;
         }
 
         .stat-badge {
@@ -439,13 +613,11 @@
             align-items: center;
             gap: 10px;
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
         }
         
-        .stat-badge:hover { border-color: var(--primary-light); transform: translateY(-2px); }
         .stat-badge i.fa-users { color: var(--primary-light); }
         .stat-badge i.fa-trophy { color: var(--accent); }
-        .stat-badge span { font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; }
+        .stat-badge span { font-weight: 700; color: var(--text-primary); }
 
         .purpose-section {
             background: var(--glass);
@@ -479,6 +651,26 @@
         .purpose-section h2 i { color: var(--accent); font-size: 1.3rem; }
         .purpose-section p { font-size: 1rem; color: var(--text-secondary); line-height: 1.8; }
 
+        .ad-banner-area {
+            width: 100%;
+            max-width: 728px;
+            min-height: 90px;
+            margin: 30px auto;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px dashed var(--glass-border);
+            backdrop-filter: blur(10px);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+        .ad-banner-area i { margin-right: 8px; color: var(--accent); }
+
+        /* 📌 BLOG & FB SECTION */
         .blog-section { margin-bottom: 50px; animation: fadeInUp 0.6s ease-out 0.9s both; }
 
         .section-header {
@@ -597,6 +789,7 @@
             box-shadow: var(--shadow-lg);
         }
 
+        /* 📌 FOOTER WITH SOCIAL ICONS */
         .footer {
             margin-top: 50px;
             padding: 40px 20px;
@@ -634,62 +827,61 @@
         .footer-text a { color: var(--primary-light); text-decoration: none; transition: color 0.3s; }
         .footer-text a:hover { color: var(--secondary); }
 
-        /* 📌 MODAL CSS REWRITTEN FOR MOBILE */
-        .my-modal {
-            display: none;
-            position: fixed;
-            z-index: 999999;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center; /* keep centered vertically */
-            padding: 15px; /* Less padding on outside for mobile */
-            animation: fadeIn 0.3s ease;
+        /* 📌 MODAL & SLIDER STYLES */
+        .welcome-input-wrapper { margin: 15px 0 25px 0; position: relative; }
+        .welcome-input-wrapper i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem; }
+        .welcome-input {
+            width: 100%; padding: 18px 20px 18px 50px; border-radius: var(--radius-full);
+            border: 2px solid var(--primary); background: rgba(0,0,0,0.2); color: white;
+            font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif; font-size: 1.2rem; outline: none;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); transition: all 0.3s ease;
         }
+        .welcome-input:focus { box-shadow: 0 0 30px rgba(99, 102, 241, 0.5); border-color: var(--primary-light); }
 
+        .attention-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            text-align: left;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .attention-note i {
+            color: var(--warning);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        .attention-note strong { color: var(--warning); font-weight: 700; }
+
+        .my-modal {
+            display: none; position: fixed; z-index: 999999; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px); justify-content: center; align-items: center;
+            padding: 20px; animation: fadeIn 0.3s ease;
+        }
         .my-modal.active { display: flex; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .my-modal-content {
             background: linear-gradient(135deg, var(--dark-light), var(--dark));
-            padding: 40px;
-            border-radius: var(--radius-xl);
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            width: 100%;
-            max-width: 500px; /* Safe max width */
-            max-height: 90vh; /* IMPORTANT: Keep inside screen */
-            overflow-y: auto; /* IMPORTANT: Scroll if too tall */
-            overflow-x: hidden;
-            color: var(--text-primary);
-            font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
-            box-shadow: var(--shadow-xl), 0 0 40px rgba(99, 102, 241, 0.2);
-            animation: modalSlideIn 0.4s ease;
-            position: relative;
+            padding: 40px; border-radius: var(--radius-xl); text-align: center;
+            border: 1px solid var(--glass-border); min-width: 320px; max-width: 500px; width: 100%;
+            color: var(--text-primary); font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
+            box-shadow: var(--shadow-xl), 0 0 50px rgba(99, 102, 241, 0.3);
+            animation: modalSlideIn 0.4s ease; position: relative; overflow: hidden;
         }
-        
-        /* Clean scrollbar for modals */
-        .my-modal-content::-webkit-scrollbar { width: 6px; }
-        .my-modal-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-        @keyframes modalSlideIn {
-            from { transform: translateY(-30px) scale(0.95); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
-        }
-
+        @keyframes modalSlideIn { from { transform: translateY(-30px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
         .my-modal-content::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 4px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
         }
-
-        .modal-title { font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; }
-        .modal-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
 
         .slider-container { margin: 25px 0; }
 
@@ -732,138 +924,85 @@
             font-size: 0.8rem;
             margin-top: 5px;
         }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-
+        
         .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 28px; border: none; border-radius: var(--radius-full);
+            font-size: 1rem; cursor: pointer; font-weight: 600; font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
             transition: all 0.3s ease;
         }
-
         .action-btn.primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
         .action-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); }
         .action-btn.secondary { background: var(--glass); color: var(--text-secondary); border: 1px solid var(--glass-border); }
         .action-btn.secondary:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
         .action-btn.success { background: linear-gradient(135deg, var(--success), #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
         .action-btn.success:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+        
+        /* Modal Lang Toggle Styling */
+        .lang-toggle { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-toggle .lang-btn { flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--primary); background: transparent; color: var(--text-primary); font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .lang-toggle .lang-btn.active { background: var(--primary); color: white; }
 
+        @media (max-width: 1024px) {
+            .wheel-container { transform: scale(0.9); }
+            .article-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .calendar-grid { grid-template-columns: repeat(5, 1fr); }
+            .wheel-container { transform: scale(0.8); margin-top: -20px; margin-bottom: -20px; }
+            .article-grid { grid-template-columns: 1fr; }
+            .header-left { gap: 10px; }
+            .logo-img { width: 55px; height: 55px; }
+        }
+        @media (max-width: 480px) {
+            .header-section { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .header-right { align-self: flex-end; margin-top: -65px; }
+            .calendar-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .day-card { padding: 10px 2px; min-height: 60px; }
+            .day-card .amount { font-size: 0.85rem; }
+            .wheel-container { transform: scale(0.65); margin-top: -60px; margin-bottom: -60px; }
+            .spin-btn { font-size: 1.1rem; padding: 14px 30px; width: 90%; max-width: 280px; justify-content: center; }
+            .live-total { padding: 15px 25px; font-size: 1.3rem; }
+            
+            /* Responsive updates for the total box & buttons */
+            .monthly-total-display {
+                padding: 15px 20px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .monthly-total-display .total-amount { font-size: 2.2rem; }
+            #calendarDownloadArea .action-btn { width: 100%; padding: 14px 20px; font-size: 0.95rem; }
+            #showTotalBtn { width: 100%; max-width: 320px; justify-content: center; }
+            
+            .my-modal-content { padding: 25px 20px; width: 95%; }
+            .fb-embed-container { max-width: 100%; }
+            .attention-note { font-size: 0.85rem; padding: 12px; }
+        }
+        @media (max-width: 360px) {
+            .header-right { margin-top: -60px; }
+            .logo-img { width: 45px; height: 45px; }
+            .main-title { font-size: 1rem; }
+            .sub-heading { font-size: 0.65rem; }
+            .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+            .wheel-container { transform: scale(0.55); margin-top: -80px; margin-bottom: -80px; }
+            .monthly-total-display .total-amount { font-size: 1.8rem; }
+        }
+        
         .capture-card {
             background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
-            padding: 35px;
-            border-radius: var(--radius-xl);
-            margin-bottom: 25px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: var(--shadow-xl), 0 0 30px rgba(99, 102, 241, 0.2);
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px; border-radius: var(--radius-xl); margin-bottom: 25px;
+            width: 100%; max-width: 350px; margin-left: auto; margin-right: auto;
+            text-align: center; position: relative; overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: var(--shadow-xl), 0 0 30px rgba(99, 102, 241, 0.2);
         }
-
-        .capture-card::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            animation: cardGlow 4s ease-in-out infinite;
-        }
-
-        @keyframes cardGlow { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(180deg); } }
-
         .capture-date { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px; font-weight: 600; position: relative; z-index: 1;}
-        .profile-pic { width: 85px; height: 85px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.3); margin-bottom: 15px; object-fit: cover; background: white; position: relative; z-index: 1; display: block; margin-left: auto; margin-right: auto;}
+        .profile-pic { width: 85px; height: 85px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.3); margin-bottom: 15px; object-fit: cover; background: white; position: relative; z-index: 1; margin-left: auto; margin-right: auto; display: block;}
         .capture-card h2 { margin: 0; font-size: 1.5rem; color: #fff; position: relative; z-index: 1; font-weight: 700; }
         .capture-subtitle { margin: 8px 0 20px 0; font-size: 1rem; color: rgba(255, 255, 255, 0.9); position: relative; z-index: 1; font-weight: 500; }
         .capture-card .amount { font-size: 3.5rem; font-weight: 800; color: #fbbf24; margin: 0; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); position: relative; z-index: 1; letter-spacing: -1px; }
         .capture-msg { font-size: 0.9rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-top: 20px; position: relative; z-index: 1; font-weight: 400; }
         .capture-footer { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 25px; font-size: 1rem; font-weight: 700; color: #fbbf24; background: rgba(0, 0, 0, 0.2); padding: 12px; border-radius: var(--radius); position: relative; z-index: 1;}
 
-        .confetti {
-            position: fixed; width: 10px; height: 10px; top: -10px; z-index: 9999999;
-            animation: confettiFall linear forwards;
-        }
-
-        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-
-        /* 📌 MOBILE RESPONSIVE MEDIA QUERIES */
-        @media (max-width: 1024px) {
-            .wheel-container { transform: scale(0.9); }
-            .article-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 768px) {
-            .logo-container { gap: 12px; }
-            .logo-img { width: 55px; height: 55px; }
-            .main-title { font-size: 1.4rem; }
-            .sub-heading { font-size: 0.9rem; }
-            .wheel-container { transform: scale(0.8); margin-top: -20px; margin-bottom: -20px; }
-            .article-grid { grid-template-columns: 1fr; }
-            .purpose-section { padding: 25px; }
-            .my-modal-content { padding: 30px 20px; }
-            .capture-card { padding: 25px; max-width: 100%; }
-            .capture-card .amount { font-size: 2.8rem; }
-            .section-header { flex-direction: column; align-items: flex-start; }
-            .fb-card { padding: 25px; }
-        }
-
-        @media (max-width: 480px) {
-            .header-section { padding: 20px 0 15px; }
-            .logo-container { gap: 10px; }
-            .logo-img { width: 50px; height: 50px; }
-            .main-title { font-size: 1.2rem; }
-            .sub-heading { font-size: 0.8rem; }
-            .wheel-container { transform: scale(0.65); margin-top: -60px; margin-bottom: -60px; }
-            .spin-btn { font-size: 1.1rem; padding: 14px 30px; width: 90%; max-width: 280px; justify-content: center; }
-            .custom-btn { font-size: 0.85rem; padding: 10px 20px; }
-            .name-input-section { flex-direction: column; gap: 10px; }
-            .name-input-section input { width: 240px; font-size: 0.95rem; }
-            .name-input-section input:focus { width: 260px; }
-            .live-total { padding: 15px 25px; font-size: 1.3rem; }
-            .purpose-section { padding: 20px; }
-            .purpose-section h2 { font-size: 1.2rem; }
-            .fb-card { padding: 20px 15px; }
-            .fb-embed-container { max-width: 100%; }
-            /* Safe Mobile Modal Padding */
-            .my-modal-content { padding: 25px 15px; width: 100%; }
-            .capture-card { padding: 20px; }
-            .capture-card .amount { font-size: 2.5rem; }
-            .profile-pic { width: 70px; height: 70px; }
-            .modal-actions { flex-direction: column; }
-            .action-btn { width: 100%; justify-content: center; }
-            .footer { padding: 30px 15px; }
-        }
-
-        @media (max-width: 360px) {
-            .logo-container { gap: 8px; }
-            .logo-img { width: 45px; height: 45px; }
-            .main-title { font-size: 1.1rem; }
-            .sub-heading { font-size: 0.75rem; }
-            .wheel-container { transform: scale(0.55); margin-top: -80px; margin-bottom: -80px; }
-            .live-total { font-size: 1.1rem; padding: 12px 20px; }
-            .spin-btn { font-size: 1rem; padding: 12px 25px; }
-            .name-input-section input { width: 200px; }
-            .name-input-section input:focus { width: 220px; }
-        }
     </style>
 </head>
 <body>
@@ -873,63 +1012,66 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- 📌 NEW: ANNOUNCEMENT MODAL ON LOAD -->
-    <div id="announcementModal" class="my-modal active">
+    <!-- 📌 FIRST TIME WELCOME MODAL WITH LANGUAGE SELECTOR -->
+    <div id="welcomeModal" class="my-modal">
         <div class="my-modal-content">
-            <h2 class="main-title" style="font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 15px; text-align: center;">📢 විශේෂ නිවේදනයක්! 📢</h2>
-            
-            <p style="color: var(--text-primary); font-size: clamp(0.95rem, 3vw, 1.1rem); margin-bottom: 15px; font-weight: 600; text-align: center;">
-                මේ අලුත් වෙනස්කම් වලට ඔයාලා කැමතිද? අකමැතිද? 🤔
-            </p>
-            
-            <p style="color: var(--text-secondary); font-size: clamp(0.85rem, 2.5vw, 1rem); margin-bottom: 20px; line-height: 1.6; text-align: left;">
-                යාළුවනේ, ජූලි 1 වෙනිදා ඉඳන් අපි අපේ Website එකේ පොඩි වෙනස්කම් කිහිපයක් කරන්න තීරණය කළා. 🛠️<br><br>
-                🔹 ඉස්සරහට Wheel එක කරකවන්න පුළුවන් වෙන්නේ දවසට එක වතාවක් විතරයි! 🎡<br>
-                🔹 ඒ වෙනුවට, ඔයාලට තවත් අලුත් Options කිහිපයකුත් අපි ඉක්මනින්ම එකතු කරනවා. ✨<br><br>
-                පල්ලෙහායින් ඔයාලගේ අදහස Comment කරගෙන යන්න! 👇
-            </p>
+            <h3 style="color: var(--text-secondary); margin-bottom: 10px; font-size: 1.1rem;" data-i18n="select_lang">භාෂාව තෝරන්න / Select Language</h3>
+            <div class="lang-toggle">
+                <button class="lang-btn btn-si active" onclick="setLanguage('si')">Sinhala</button>
+                <button class="lang-btn btn-en" onclick="setLanguage('en')">English</button>
+            </div>
+            <hr style="border: none; border-top: 1px solid var(--glass-border); margin-bottom: 20px;">
 
-            <div class="fb-embed-container" style="margin-bottom: 20px; max-width: 100%; width: 100%; border-radius: var(--radius); overflow: hidden; background: white; height: 250px;">
-                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fdailysavingchallange%2F&tabs=timeline&width=340&height=250&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
-                    width="100%" height="250" style="border:none;overflow:hidden" scrolling="no" frameborder="0" 
-                    allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <h2 class="main-title" style="font-size: 2.2rem; margin-bottom: 10px;" data-i18n="welcome_title">ආයුබෝවන්! 👋</h2>
+            <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px;" data-i18n="welcome_sub">දිනපතා ඉතිරි කිරීමේ අභියෝගය ආරම්භ කිරීමට ඔබගේ නම ඇතුළත් කරන්න.</p>
+            
+            <div class="attention-note">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong data-i18n="important">වැදගත්:</strong> <span data-i18n="important_note">ඔබ මෙහි ලබා දෙන නම ඉදිරියටත් වෙනස් නොවි භාවිතා වන අතර, අභියෝගය සඳහා රෝදය කැරකැවිය හැක්කේ දිනකට එක් වරක් පමණි!</span>
+                </div>
+            </div>
+
+            <div class="welcome-input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="newUserName" class="welcome-input" placeholder="ඔබගේ නම" data-i18n-placeholder="name_placeholder">
             </div>
             
-            <div class="modal-actions" style="flex-direction: column; gap: 10px; margin-top: 5px;">
-                <a href="https://web.facebook.com/dailysavingchallange/" target="_blank" class="action-btn primary" style="width: 100%; text-decoration: none; padding: 12px;">
-                    <i class="fab fa-facebook-f"></i> Facebook එකෙන් Comment කරන්න
-                </a>
-                <button class="action-btn secondary" style="width: 100%; padding: 12px;" onclick="closeAnnouncement()">
-                    වසන්න (ප්‍රධාන පිටුවට යන්න)
-                </button>
-            </div>
+            <button class="action-btn primary" style="width: 100%; padding: 16px; font-size: 1.1rem;" onclick="saveUserName()">
+                <span data-i18n="start_btn">ආරම්භ කරමු</span> <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
-    <div id="app-wrapper">
+    <div id="app-wrapper" style="opacity: 0; transition: opacity 0.5s ease;">
+        
+        <!-- 📌 HEADER SECTION -->
         <div class="header-section">
-            <div class="logo-container">
+            <div class="header-left">
                 <img src="dsc_logo.png" alt="DSC Logo" class="logo-img">
                 <div class="title-group">
                     <h1 class="main-title">Daily Saving Challenge</h1>
-                    <p class="sub-heading">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</p>
+                    <p class="sub-heading">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</p> <!-- No data-i18n here, kept fixed -->
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="main-lang-toggle">
+                    <button class="lang-btn btn-si active" onclick="setLanguage('si')">සිං</button>
+                    <button class="lang-btn btn-en" onclick="setLanguage('en')">EN</button>
                 </div>
             </div>
         </div>
 
-        <div class="name-input-section">
-            <span class="name-label">ඔබගේ නම:</span>
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="userName" placeholder="නම ඇතුලත් කරන්න" value="">
-            </div>
+        <div class="user-greeting">
+            <h2>Hi, <span id="displayUserName" class="name-highlight"></span> 👋</h2>
         </div>
 
         <div class="live-total-container">
             <div class="live-total">
                 <i class="fas fa-piggy-bank"></i>
-                <span>ඉතුරු කරමු:</span>
-                <span class="amount" id="liveAmount">රු. 0</span>
+                <span data-i18n="save_label">ඉතුරු කරමු:</span>
+                <span class="amount" id="liveAmount">Rs. 0</span>
             </div>
         </div>
 
@@ -947,46 +1089,78 @@
             <div class="btn-container">
                 <button id="spinBtn" class="spin-btn" onclick="spin()">
                     <i class="fas fa-sync-alt"></i>
-                    කරකවමු
+                    <span id="spinBtnText" data-i18n="spin_btn">කරකවමු</span>
                 </button>
                 <button class="custom-btn highlighted-btn" onclick="openCustom()">
                     <i class="fas fa-cog"></i>
-                    <b>ලොකු රවුමේ අගයන් වෙනස් කරමු</b>
+                    <b data-i18n="change_wheel_btn">ලොකු රවුමේ අගයන් වෙනස් කරමු</b>
                 </button>
             </div>
             
+            <div class="calendar-section" id="calendarCaptureArea">
+                <h2><i class="fas fa-calendar-alt"></i> <span data-i18n="calendar_title">මගේ ඉතිරි කිරීමේ සටහන (මේ මාසයේ)</span></h2>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Cards will be generated by JS -->
+                </div>
+                
+                <div class="monthly-total-box">
+                    
+                    <!-- Button to show total -->
+                    <button id="showTotalBtn" class="action-btn secondary" onclick="showMonthlyTotal()">
+                        <i class="fas fa-eye"></i> <span data-i18n="show_total_btn">මේ මාසයේ මුළු ඉතිරිය පෙන්වන්න</span>
+                    </button>
+                    
+                    <!-- Beautiful Hidden Total Box -->
+                    <div id="totalAmountContainer" class="monthly-total-display" style="display:none;">
+                        <div class="total-label" data-i18n="month_total_title">මේ මාසයේ මුළු ඉතිරිය</div>
+                        <div class="total-amount">Rs. <span id="monthTotalAmount">0</span></div>
+                    </div>
+                    
+                    <!-- End of Month Download Button Area -->
+                    <div id="calendarDownloadArea" style="text-align: center; margin-top: 25px; display: none;">
+                        <button class="action-btn success" onclick="downloadCalendar()">
+                            <i class="fas fa-download"></i> <span data-i18n="download_calendar">මේ මාසේ සටහන ඩවුන්ලෝඩ් කරගමු</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="live-stats-container">
                 <div class="stat-badge">
-                    <i class="fas fa-users"></i> මේ දක්වා සහභාගී වූ ගණන: <span id="userCountDisplay">...</span>
+                    <i class="fas fa-users"></i> <span data-i18n="stats_participants">මේ දක්වා සහභාගී වූ ගණන:</span> <span id="userCountDisplay" style="margin-left:5px;">...</span>
                 </div>
                 <div class="stat-badge">
-                    <i class="fas fa-trophy"></i> අවසන් ජයග්‍රාහකයා: <span id="lastWinnerDisplay">...</span>
+                    <i class="fas fa-trophy"></i> <span data-i18n="stats_winner">අවසන් ඉතුරුම්කරු:</span> <span id="lastWinnerDisplay" style="margin-left:5px;">...</span>
                 </div>
             </div>
         </div>
 
         <div class="purpose-section">
-            <h2><i class="fas fa-bullseye"></i>දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ අරමුන</h2>
-            <p>ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතිරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.</p>
+            <h2><i class="fas fa-bullseye"></i><span data-i18n="purpose_title">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ අරමුන</span></h2>
+            <p data-i18n="purpose_desc">ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතිරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.</p>
         </div>
+
+        <div class="ad-banner-area" id="adBanner1"></div>
 
         <div class="blog-section">
             <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-book-open"></i>මූල්‍ය උපදෙස් සහ ලිපි</h2>
+                <h2 class="section-title"><i class="fas fa-book-open"></i><span data-i18n="blog_title">මූල්‍ය උපදෙස් සහ ලිපි</span></h2>
                 <a href="https://dailysavingchallengelk.blogspot.com" target="_blank" class="view-all-link">
-                    සියලුම ලිපි<i class="fas fa-arrow-right"></i>
+                    <span data-i18n="view_all">සියලුම ලිපි</span><i class="fas fa-arrow-right"></i>
                 </a>
             </div>
             <div class="article-grid" id="blogGrid">
-                <p style="text-align:center; color:var(--text-muted); padding: 40px; grid-column: 1 / -1;">ලිපි ලබා ගනිමින්...</p>
+                <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 40px; grid-column: 1 / -1;">ලිපි ලබා ගනිමින්...</p>
             </div>
         </div>
 
+        <div class="ad-banner-area" id="adBanner2"></div>
+
         <div class="fb-section">
             <div class="fb-card">
-                <h2><i class="fab fa-facebook"></i>අපගේ Facebook පිටුව</h2>
+                <h2><i class="fab fa-facebook"></i><span data-i18n="fb_title">අපගේ Facebook පිටුව</span></h2>
                 <div class="fb-embed-container">
-                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fdailysavingchallange%2F&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fprofile.php%3Fid%3D61590623947927&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" 
                             width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" 
                             allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                 </div>
@@ -995,27 +1169,28 @@
 
         <div class="footer">
             <div class="social-icons">
-                <a href="https://web.facebook.com/dailysavingchallange/" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="mailto:dailysavingchallenge@gmail.com" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
             </div>
             <div class="footer-text">
-                &copy; 2026 <a href="#">Daily Saving Challenge</a>. සියලුම හිමිකම් ඇවිරිණි.
+                &copy; 2026 <a href="#">Daily Saving Challenge</a>. <span data-i18n="footer_rights">සියලුම හිමිකම් ඇවිරිණි.</span>
             </div>
         </div>
     </div>
 
+    <!-- 📌 ORIGINAL MODAL -->
     <div id="customModal" class="my-modal">
         <div class="my-modal-content">
-            <h2 class="modal-title">ලොකු රවුම සකසන්න</h2>
-            <p class="modal-subtitle">උපරිම අගය තෝරා ගන්න (0 - 900)</p>
+            <h2 class="modal-title" data-i18n="modal_setup_title">ලොකු රවුම සකසන්න</h2>
+            <p class="modal-subtitle" data-i18n="modal_setup_sub">උපරිම අගය තෝරා ගන්න (0 - 900)</p>
             <div class="slider-container">
                 <input type="range" id="wheelSlider" min="0" max="900" step="100" value="900" oninput="updateSliderText(this.value)">
                 <div class="slider-value" id="sliderValDisplay">900</div>
                 <div class="slider-labels"><span>0</span><span>300</span><span>600</span><span>900</span></div>
             </div>
             <div class="modal-actions">
-                <button class="action-btn primary" onclick="saveCustom()"><i class="fas fa-check"></i>සුරකින්න</button>
-                <button class="action-btn secondary" onclick="closeCustom()"><i class="fas fa-times"></i>අවලංගු කරන්න</button>
+                <button class="action-btn primary" onclick="saveCustom()"><i class="fas fa-check"></i><span data-i18n="modal_save">සුරකින්න</span></button>
+                <button class="action-btn secondary" onclick="closeCustom()"><i class="fas fa-times"></i><span data-i18n="modal_cancel">අවලංගු කරන්න</span></button>
             </div>
         </div>
     </div>
@@ -1024,23 +1199,140 @@
         <div class="my-modal-content">
             <div id="captureArea" class="capture-card">
                 <div id="captureDate" class="capture-date"></div>
-                <img id="popupAvatar" src="" alt="Profile" class="profile-pic" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%236366f1\' rx=\'50\'/%3E%3Ctext x=\'50%\' y=\'50%\' text-anchor=\'middle\' dominant-baseline=\'central\' font-family=\'Arial\' font-size=\'45\' fill=\'white\'%3E👤%3C/text%3E%3C/svg%3E'">
+                <img id="popupAvatar" src="" alt="Profile" class="profile-pic">
                 <h2 id="cardName">Hi Name</h2>
-                <p class="capture-subtitle">අද ඔයාට ඉතුරු කරනන් වෙන මුදල</p>
-                <div class="amount" id="cardTotal">රු. 0</div>
-                <p class="capture-msg">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ ඊලග දවසේ ඔබට කීයක් ඉතුරු කරන්න අවශ්‍යද බලමු. ජයවේවා!</p>
+                <p class="capture-subtitle" data-i18n="card_subtitle">අද ඔයාට ඉතුරු කරනන් වෙන මුදල</p>
+                <div class="amount" id="cardTotal">Rs. 0</div>
+                <p class="capture-msg" data-i18n="card_msg">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ ඊලග දවසේ ඔබට කීයක් ඉතුරු කරන්න අවශ්‍යද බලමු. ජයවේවා!</p>
                 <div class="capture-footer"><i class="fab fa-facebook"></i>Daily Saving Challenge</div>
             </div>
             <div class="modal-actions">
                 <button class="action-btn success" onclick="shareAndDownload()"><i class="fas fa-download"></i>Download & Share</button>
-                <button class="action-btn secondary" onclick="closeModal()"><i class="fas fa-times"></i>වසන්න</button>
+                <button class="action-btn secondary" onclick="closeModal()"><i class="fas fa-times"></i><span data-i18n="card_close">වසන්න</span></button>
             </div>
         </div>
     </div>
 
     <script>
         // =========================================
-        // 📌 FIREBASE CONFIGURATION
+        // 📌 LANGUAGE TOGGLE LOGIC
+        // =========================================
+        const translations = {
+            en: {
+                select_lang: "Select Language / භාෂාව තෝරන්න",
+                welcome_title: "Welcome! 👋",
+                welcome_sub: "Enter your name to start the Daily Saving Challenge.",
+                important: "Important:",
+                important_note: "The name you provide here will remain unchanged, and the wheel can only be spun once a day!",
+                name_placeholder: "Your Name",
+                start_btn: "Let's Start",
+                save_label: "Let's Save:",
+                spin_btn: "Spin",
+                change_wheel_btn: "Change Outer Wheel Values",
+                calendar_title: "My Savings Record (This Month)",
+                month_total_title: "Total Savings This Month",
+                show_total_btn: "Show This Month's Total",
+                download_calendar: "Download This Month's Record",
+                stats_participants: "Total Participants So Far:",
+                stats_winner: "Last Saver:",
+                purpose_title: "Purpose of the Daily Saving Challenge",
+                purpose_desc: "The main objective is to cultivate the habit of saving a small amount daily to secure your future. This wheel randomly gives you a daily savings amount, making it a fun challenge to help grow your savings account.",
+                blog_title: "Financial Advice and Articles",
+                view_all: "All Articles",
+                fb_title: "Our Facebook Page",
+                footer_rights: "All Rights Reserved.",
+                modal_setup_title: "Setup Outer Wheel",
+                modal_setup_sub: "Select Maximum Value (0 - 900)",
+                modal_save: "Save",
+                modal_cancel: "Cancel",
+                card_subtitle: "The amount you need to save today",
+                card_msg: "Let's see how much you need to save the next day in the Daily Saving Challenge. Good luck!",
+                card_close: "Close",
+                js_enter_name: "Please enter your name!",
+                js_start_greet: "let's start the challenge!",
+                js_completed: "Completed Today",
+                js_spinning: "Spinning...",
+                js_no_articles: "No articles available currently.",
+                js_read_more: "Read More",
+                js_today: "Today"
+            },
+            si: {
+                select_lang: "භාෂාව තෝරන්න / Select Language",
+                welcome_title: "ආයුබෝවන්! 👋",
+                welcome_sub: "දිනපතා ඉතිරි කිරීමේ අභියෝගය ආරම්භ කිරීමට ඔබගේ නම ඇතුළත් කරන්න.",
+                important: "වැදගත්:",
+                important_note: "ඔබ මෙහි ලබා දෙන නම ඉදිරියටත් වෙනස් නොවි භාවිතා වන අතර, අභියෝගය සඳහා රෝදය කැරකැවිය හැක්කේ දිනකට එක් වරක් පමණි!",
+                name_placeholder: "ඔබගේ නම",
+                start_btn: "ආරම්භ කරමු",
+                save_label: "ඉතුරු කරමු:",
+                spin_btn: "කරකවමු",
+                change_wheel_btn: "ලොකු රවුමේ අගයන් වෙනස් කරමු",
+                calendar_title: "මගේ ඉතිරි කිරීමේ සටහන (මේ මාසයේ)",
+                month_total_title: "මේ මාසයේ මුළු ඉතිරිය",
+                show_total_btn: "මේ මාසයේ මුළු ඉතිරිය පෙන්වන්න",
+                download_calendar: "මේ මාසේ සටහන ඩවුන්ලෝඩ් කරගමු",
+                stats_participants: "මේ දක්වා සහභාගී වූ ගණන:",
+                stats_winner: "අවසන් ඉතුරුම්කරු:",
+                purpose_title: "දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ අරමුන",
+                purpose_desc: "ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතිරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.",
+                blog_title: "මූල්‍ය උපදෙස් සහ ලිපි",
+                view_all: "සියලුම ලිපි",
+                fb_title: "අපගේ Facebook පිටුව",
+                footer_rights: "සියලුම හිමිකම් ඇවිරිණි.",
+                modal_setup_title: "ලොකු රවුම සකසන්න",
+                modal_setup_sub: "උපරිම අගය තෝරා ගන්න (0 - 900)",
+                modal_save: "සුරකින්න",
+                modal_cancel: "අවලංගු කරන්න",
+                card_subtitle: "අද ඔයාට ඉතුරු කරනන් වෙන මුදල",
+                card_msg: "දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගයේ ඊලග දවසේ ඔබට කීයක් ඉතුරු කරන්න අවශ්‍යද බලමු. ජයවේවා!",
+                card_close: "වසන්න",
+                js_enter_name: "කරුණාකර ඔබගේ නම ඇතුළත් කරන්න!",
+                js_start_greet: "අභියෝගය අරඹමු!",
+                js_completed: "අද සම්පූර්ණයි",
+                js_spinning: "කරකවමින්...",
+                js_no_articles: "දැනට ලිපි කිසිවක් නොමැත.",
+                js_read_more: "තවත් කියවන්න",
+                js_today: "අද"
+            }
+        };
+
+        let currentLang = localStorage.getItem('dsc_lang') || 'si';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('dsc_lang', lang);
+
+            // Update all language buttons (both in Modal and Main Page header)
+            document.querySelectorAll('.btn-si').forEach(btn => btn.classList.toggle('active', lang === 'si'));
+            document.querySelectorAll('.btn-en').forEach(btn => btn.classList.toggle('active', lang === 'en'));
+
+            // Replace texts
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+
+            // Replace placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang][key]) {
+                    el.placeholder = translations[currentLang][key];
+                }
+            });
+
+            // Update dynamically generated contents
+            if (localUserName) {
+                renderCalendar();
+                checkTodaySpin();
+            }
+            const noArticles = document.getElementById('noArticlesMsg');
+            if (noArticles) noArticles.innerText = translations[currentLang].js_no_articles;
+        }
+
+        // =========================================
+        // 📌 FIREBASE CONFIGURATION 
         // =========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U",
@@ -1069,28 +1361,187 @@
                 
                 if (countDisplay) countDisplay.innerText = globalSpinCount.toLocaleString();
                 if (winnerDisplay && winnerName !== "-") {
-                    winnerDisplay.innerText = `${winnerName} - රු. ${winnerAmount.toLocaleString()}`;
+                    winnerDisplay.innerText = `${winnerName} - Rs. ${winnerAmount.toLocaleString()}`;
                 }
-            } else {
-                database.ref('stats').set({
-                    totalSpins: 1520, 
-                    lastWinnerName: "Kasun",
-                    lastWinnerAmount: 350
-                });
             }
         });
 
         // =========================================
-        // 📌 GAME LOGIC
+        // 📌 USER & HABIT TRACKING LOGIC
+        // =========================================
+        let localUserName = localStorage.getItem('dsc_userName') || '';
+        let trackingData = JSON.parse(localStorage.getItem('dsc_tracking')) || {};
+
+        function getTodayString() {
+            const dateObj = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+            const today = new Date(dateObj);
+            return `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        }
+
+        function initializeApp() {
+            setLanguage(currentLang);
+            if (!localUserName) {
+                document.getElementById('welcomeModal').classList.add('active');
+            } else {
+                document.getElementById('app-wrapper').style.opacity = '1';
+                document.getElementById('displayUserName').innerText = localUserName;
+                checkTodaySpin();
+            }
+            
+            buildWheel('outerWheel', outerVals, 165, false, false);
+            buildWheel('innerWheel', innerVals, 80, false, true);
+            renderCalendar();
+            loadBloggerPosts();
+        }
+
+        function saveUserName() {
+            const nameInput = document.getElementById('newUserName').value.trim();
+            if(nameInput === "") {
+                showNotification(translations[currentLang].js_enter_name, "warning");
+                return;
+            }
+            localStorage.setItem('dsc_userName', nameInput);
+            localUserName = nameInput;
+            
+            document.getElementById('welcomeModal').classList.remove('active');
+            document.getElementById('displayUserName').innerText = localUserName;
+            document.getElementById('app-wrapper').style.opacity = '1';
+            
+            showNotification(`Hi ${localUserName}, ${translations[currentLang].js_start_greet}`, "success");
+        }
+
+        // =========================================
+        // 📌 SHOW MONTHLY TOTAL (5 SECONDS)
+        // =========================================
+        function showMonthlyTotal() {
+            const btn = document.getElementById('showTotalBtn');
+            const totalDisplay = document.getElementById('totalAmountContainer');
+            
+            btn.style.display = 'none';
+            totalDisplay.style.display = 'flex'; // Use flex for styling
+            
+            setTimeout(() => {
+                totalDisplay.style.display = 'none';
+                btn.style.display = 'inline-flex';
+            }, 5000);
+        }
+
+        // =========================================
+        // 📌 DOWNLOAD CALENDAR (END OF MONTH)
+        // =========================================
+        function downloadCalendar() {
+            const btn = document.getElementById('showTotalBtn');
+            const totalDisplay = document.getElementById('totalAmountContainer');
+            const downloadArea = document.getElementById('calendarDownloadArea');
+            const captureElement = document.getElementById('calendarCaptureArea');
+            
+            // 1. Temporarily hide buttons and show beautiful total display
+            const origBtnDisplay = btn.style.display;
+            const origTotalDisplay = totalDisplay.style.display;
+            
+            btn.style.display = 'none';
+            totalDisplay.style.display = 'flex';
+            downloadArea.style.display = 'none';
+
+            // 2. Add class to force solid background for the screenshot
+            captureElement.classList.add('capturing');
+
+            // 3. Take screenshot
+            html2canvas(captureElement, { scale: 2, useCORS: true, backgroundColor: '#0f172a' }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = `DSC_Calendar_${new Date().getFullYear()}_${new Date().getMonth()+1}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showNotification("Calendar downloaded successfully!", "success");
+                
+                // 4. Restore original states
+                btn.style.display = origBtnDisplay;
+                totalDisplay.style.display = origTotalDisplay;
+                downloadArea.style.display = 'block';
+                captureElement.classList.remove('capturing');
+            }).catch(err => {
+                showNotification("Sorry, an error occurred.", "error");
+                
+                // Restore original states if error
+                btn.style.display = origBtnDisplay;
+                totalDisplay.style.display = origTotalDisplay;
+                downloadArea.style.display = 'block';
+                captureElement.classList.remove('capturing');
+            });
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            let currentMonthTotal = 0;
+            
+            const dateObj = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+            const todayDate = new Date(dateObj);
+            const year = todayDate.getFullYear();
+            const month = todayDate.getMonth();
+            const todayStr = getTodayString();
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            // Check if today is the last day of the month
+            const isLastDay = todayDate.getDate() === daysInMonth;
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayStr = `${year}-${String(month+1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+                
+                const card = document.createElement('div');
+                card.className = 'day-card';
+                let amountHtml = '-';
+
+                if (trackingData[dayStr]) {
+                    card.classList.add('completed');
+                    amountHtml = `Rs. ${trackingData[dayStr]}`;
+                    currentMonthTotal += trackingData[dayStr];
+                } else if (dayStr < todayStr) {
+                    card.classList.add('missed');
+                    amountHtml = '<i class="fas fa-times"></i>';
+                } else if (dayStr === todayStr) {
+                    card.classList.add('today');
+                    amountHtml = translations[currentLang].js_today;
+                }
+
+                card.innerHTML = `<div class="date">${i}</div><div class="amount">${amountHtml}</div>`;
+                grid.appendChild(card);
+            }
+
+            document.getElementById('monthTotalAmount').innerText = currentMonthTotal.toLocaleString();
+
+            // Show download calendar button if it's the last day of the month
+            if (isLastDay) {
+                document.getElementById('calendarDownloadArea').style.display = 'block';
+            } else {
+                document.getElementById('calendarDownloadArea').style.display = 'none';
+            }
+        }
+
+        function checkTodaySpin() {
+            const todayStr = getTodayString();
+            const spinBtn = document.getElementById('spinBtn');
+            const spinBtnText = document.getElementById('spinBtnText');
+            
+            if (trackingData[todayStr]) {
+                spinBtn.disabled = true;
+                spinBtn.innerHTML = `<i class="fas fa-check-circle"></i> <span>${translations[currentLang].js_completed}</span>`;
+                document.getElementById('liveAmount').innerText = `Rs. ${trackingData[todayStr].toLocaleString()}`;
+            } else {
+                spinBtn.disabled = false;
+                spinBtn.innerHTML = `<i class="fas fa-sync-alt"></i> <span id="spinBtnText">${translations[currentLang].spin_btn}</span>`;
+            }
+        }
+
+        // =========================================
+        // 📌 GAME LOGIC (Wheel, Animations, Blog)
         // =========================================
         const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
         let outerVals = [100, 200, 300, 400, 500, 600, 700, 800, 900];
         const innerVals = [10, 20, 30, 40, 50, 60, 70, 80, 90];
         const outerColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f59e0b', '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6'];
         const innerColors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#1dd1a1', '#ff9f43'];
-        let outerDeg = 0;
-        let innerDeg = 0;
-        let isSpinning = false;
+        let outerDeg = 0; let innerDeg = 0; let isSpinning = false;
 
         function loadBloggerPosts() {
             const blogGrid = document.getElementById('blogGrid');
@@ -1108,7 +1559,7 @@
             const entries = feed.entry || [];
 
             if (entries.length === 0) {
-                blogGrid.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding: 40px; grid-column: 1 / -1;">දැනට ලිපි කිසිවක් නොමැත.</p>';
+                blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 40px; grid-column: 1 / -1;">${translations[currentLang].js_no_articles}</p>`;
                 return;
             }
 
@@ -1128,20 +1579,11 @@
                         <h3>${title}</h3>
                         <p>${snippet}</p>
                         <a href="${link}" target="_blank" class="read-more">
-                            තවත් කියවන්න <i class="fas fa-arrow-right"></i>
+                            <span data-i18n="js_read_more">${translations[currentLang].js_read_more}</span> <i class="fas fa-arrow-right"></i>
                         </a>
-                    </div>
-                `;
+                    </div>`;
             });
         };
-
-        function generateAvatar(name) {
-            const bgColors = ['#6366f1', '#ec4899', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#84cc16'];
-            const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
-            const initial = name.trim() ? name.trim().charAt(0).toUpperCase() : '👤';
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><rect width="100" height="100" fill="${randomBg}" rx="50" /><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="45" font-weight="bold" fill="#ffffff">${initial}</text></svg>`;
-            return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-        }
 
         function buildWheel(id, values, textOffset, isZeroMode = false, isInner = false) {
             const wheel = document.getElementById(id);
@@ -1153,63 +1595,140 @@
                 wheel.style.background = `conic-gradient(${colors[0]}, ${colors[1]}, ${colors[2]}, ${colors[3]}, ${colors[4]}, ${colors[5]}, ${colors[6]}, ${colors[7]}, ${colors[0]})`;
                 return;
             }
-            if(values.length === 1 && id === 'outerWheel') {
-                wheel.style.background = 'none'; wheel.style.backgroundColor = colors[0];
-                const span = document.createElement('span'); span.className = 'slice-text';
-                span.innerText = values[0]; span.style.transform = `translate(-50%, -50%) rotate(0deg) translateY(-${textOffset}px)`;
-                wheel.appendChild(span); return;
-            }
-            const sliceAngle = 360 / values.length; const offsetAngle = sliceAngle / 2;
+            const sliceAngle = 360 / values.length;
+            const offsetAngle = sliceAngle / 2;
             let gradient = `conic-gradient(from -${offsetAngle}deg, `;
             for(let i = 0; i < values.length; i++) {
-                const startAngle = i * sliceAngle; const endAngle = startAngle + sliceAngle;
+                const startAngle = i * sliceAngle;
+                const endAngle = startAngle + sliceAngle;
                 gradient += `${colors[i % colors.length]} ${startAngle}deg ${endAngle}deg${i === values.length - 1 ? '' : ', '}`;
-                const span = document.createElement('span'); span.className = 'slice-text';
-                span.innerText = values[i]; span.style.transform = `translate(-50%, -50%) rotate(${startAngle}deg) translateY(-${textOffset}px)`;
+                const span = document.createElement('span');
+                span.className = 'slice-text';
+                span.innerText = values[i];
+                span.style.transform = `translate(-50%, -50%) rotate(${startAngle}deg) translateY(-${textOffset}px)`;
                 wheel.appendChild(span);
             }
-            gradient += ')'; wheel.style.background = gradient;
-        }
-
-        function initializeApp() {
-            if(document.getElementById('outerWheel').innerHTML !== '') return;
-            buildWheel('outerWheel', outerVals, 165, false, false);
-            buildWheel('innerWheel', innerVals, 80, false, true);
-            loadBloggerPosts();
+            gradient += ')';
+            wheel.style.background = gradient;
         }
 
         document.addEventListener("DOMContentLoaded", initializeApp);
-        setTimeout(initializeApp, 500);
 
-        // 📌 Close Announcement Popup
-        function closeAnnouncement() { document.getElementById('announcementModal').classList.remove('active'); }
-        function openCustom() {
-            let currentMax = outerVals[outerVals.length - 1];
-            if (outerVals.length === 1 && outerVals[0] === 0) currentMax = 0;
-            document.getElementById('wheelSlider').value = currentMax;
-            document.getElementById('sliderValDisplay').innerText = currentMax;
-            document.getElementById('customModal').classList.add('active');
-        }
+        function openCustom() { document.getElementById('customModal').classList.add('active'); }
         function updateSliderText(val) { document.getElementById('sliderValDisplay').innerText = val; }
         function closeCustom() { document.getElementById('customModal').classList.remove('active'); }
         function saveCustom() {
             const maxVal = parseInt(document.getElementById('wheelSlider').value);
             outerVals = []; let isZero = false;
-            if (maxVal === 0) { outerVals = [0]; isZero = true; } else { for(let i = 100; i <= maxVal; i += 100) { outerVals.push(i); } }
+            if (maxVal === 0) { outerVals = [0]; isZero = true; } 
+            else { for(let i = 100; i <= maxVal; i += 100) { outerVals.push(i); } }
             buildWheel('outerWheel', outerVals, 165, isZero, false);
-            closeCustom(); outerDeg = 0; innerDeg = 0;
+            closeCustom();
             document.getElementById('outerWheel').style.transition = 'none';
             document.getElementById('innerWheel').style.transition = 'none';
             void document.getElementById('outerWheel').offsetWidth;
             document.getElementById('outerWheel').style.transform = `rotate(0deg)`;
             document.getElementById('innerWheel').style.transform = `rotate(0deg)`;
-            document.getElementById('liveAmount').innerText = `රු. 0`;
+            outerDeg = 0; innerDeg = 0;
+        }
+
+        function generateAvatar(name) {
+            const bgColors = ['#6366f1', '#ec4899', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#84cc16'];
+            const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
+            const initial = name.trim() ? name.trim().charAt(0).toUpperCase() : '👤';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><rect width="100" height="100" fill="${randomBg}" rx="50" /><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="45" font-weight="bold" fill="#ffffff">${initial}</text></svg>`;
+            return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+        }
+
+        function spin() {
+            if (isSpinning) return;
+            if (!localUserName) {
+                document.getElementById('welcomeModal').classList.add('active');
+                return;
+            }
+            
+            isSpinning = true;
+            const spinDuration = Math.floor(Math.random() * 5000) + 10000; 
+
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true;
+            spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${translations[currentLang].js_spinning}</span>`;
+            document.getElementById('liveAmount').innerText = translations[currentLang].js_spinning;
+
+            const outIndex = Math.floor(Math.random() * outerVals.length);
+            const inIndex = Math.floor(Math.random() * innerVals.length);
+            const outTarget = 360 - (outIndex * (360 / outerVals.length));
+            const inTarget = 360 - (inIndex * (360 / innerVals.length));
+
+            outerDeg += 3600 + outTarget - (outerDeg % 360);
+            innerDeg += 5040 + inTarget - (innerDeg % 360);
+
+            const outerWheel = document.getElementById('outerWheel');
+            const innerWheel = document.getElementById('innerWheel');
+
+            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
+            innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
+
+            outerWheel.style.transform = `rotate(${outerDeg}deg)`;
+            innerWheel.style.transform = `rotate(${innerDeg}deg)`;
+
+            setTimeout(() => {
+                const total = outerVals[outIndex] + innerVals[inIndex];
+                
+                // 📌 SAVE DAILY PROGRESS
+                const todayStr = getTodayString();
+                trackingData[todayStr] = total;
+                localStorage.setItem('dsc_tracking', JSON.stringify(trackingData));
+                
+                renderCalendar();
+                checkTodaySpin();
+
+                document.getElementById('cardName').innerText = `Hi ${localUserName}`;
+                document.getElementById('cardTotal').innerText = `Rs. ${total.toLocaleString()}`;
+                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+                document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions);
+                document.getElementById('popupAvatar').src = generateAvatar(localUserName);
+
+                // 📌 Push to Firebase Stats & History
+                database.ref('stats').set({
+                    totalSpins: globalSpinCount + 1,
+                    lastWinnerName: localUserName,
+                    lastWinnerAmount: total
+                });
+
+                const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
+                database.ref('spinHistory').push({
+                    userName: localUserName,
+                    wonAmount: total,
+                    playedTime: currentTime
+                });
+
+                document.getElementById('resultModal').classList.add('active');
+                createConfetti();
+                isSpinning = false;
+            }, spinDuration);
+        }
+
+        function closeModal() { document.getElementById('resultModal').classList.remove('active'); }
+
+        function shareAndDownload() {
+            const captureElement = document.getElementById('captureArea');
+            html2canvas(captureElement, { scale: 2, useCORS: true, backgroundColor: null }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'Daily_Saving_Challenge.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showNotification("Image downloaded successfully!", "success");
+            }).catch(err => {
+                showNotification("Sorry, an error occurred.", "error");
+            });
         }
 
         function createConfetti() {
             const colors = ['#6366f1', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#8b5cf6'];
             for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div'); confetti.className = 'confetti';
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
@@ -1234,72 +1753,19 @@
             document.body.appendChild(notification);
             setTimeout(() => { notification.style.animation = 'slideOutRight 0.4s ease forwards'; setTimeout(() => notification.remove(), 400); }, 3000);
         }
-
-        function spin() {
-            if (isSpinning) return;
-            let nameInput = document.getElementById('userName').value;
-            if(nameInput.trim() === "") { showNotification("කරුණාකර ඔබගේ නම ඇතුලත් කරන්න!", "warning"); return; }
-            isSpinning = true;
-            const spinDuration = Math.floor(Math.random() * 5000) + 10000; 
-
-            const spinBtn = document.getElementById('spinBtn');
-            spinBtn.disabled = true; spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> කරකවමින්...';
-            document.getElementById('liveAmount').innerText = "කරකවමින්...";
-
-            const outIndex = Math.floor(Math.random() * outerVals.length); const inIndex = Math.floor(Math.random() * innerVals.length);
-            const outTarget = 360 - (outIndex * (360 / outerVals.length)); const inTarget = 360 - (inIndex * (360 / innerVals.length));
-            outerDeg += 3600 + outTarget - (outerDeg % 360); innerDeg += 5040 + inTarget - (innerDeg % 360);
-
-            const outerWheel = document.getElementById('outerWheel'); const innerWheel = document.getElementById('innerWheel');
-            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
-            innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`;
-            outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
-
-            setTimeout(() => {
-                const total = outerVals[outIndex] + innerVals[inIndex];
-                document.getElementById('liveAmount').innerText = `රු. ${total.toLocaleString()}`;
-                document.getElementById('cardName').innerText = `Hi ${nameInput}`;
-                document.getElementById('cardTotal').innerText = `රු. ${total.toLocaleString()}`;
-                document.getElementById('captureDate').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                const avatarImg = document.getElementById('popupAvatar');
-                avatarImg.src = generateAvatar(nameInput); avatarImg.style.display = 'block'; avatarImg.style.visibility = 'visible'; avatarImg.style.opacity = '1';
-
-                database.ref('stats').set({ totalSpins: globalSpinCount + 1, lastWinnerName: nameInput, lastWinnerAmount: total });
-                database.ref('spinHistory').push({ userName: nameInput, wonAmount: total, playedTime: new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }) });
-
-                document.getElementById('resultModal').classList.add('active');
-                createConfetti(); isSpinning = false; spinBtn.disabled = false; spinBtn.innerHTML = '<i class="fas fa-sync-alt"></i> කරකවමු';
-            }, spinDuration);
-        }
-
-        function closeModal() { document.getElementById('resultModal').classList.remove('active'); }
-
-        function shareAndDownload() {
-            const captureElement = document.getElementById('captureArea');
-            html2canvas(captureElement, { scale: 2, useCORS: true, backgroundColor: null }).then(canvas => {
-                let link = document.createElement('a'); link.download = 'Daily_Saving_Challenge.png';
-                link.href = canvas.toDataURL("image/png"); link.click(); showNotification("Image downloaded successfully!", "success");
-            }).catch(err => { showNotification("Sorry, an error occurred while saving the image.", "error"); });
-        }
-
-        document.querySelectorAll('.my-modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal && modal.id !== 'announcementModal') { modal.classList.remove('active'); }
-            });
-        });
-
+        
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.my-modal.active').forEach(modal => { if(modal.id !== 'announcementModal') { modal.classList.remove('active'); } });
-            }
-            if (e.key === ' ' && !isSpinning) {
-                if(!document.getElementById('announcementModal').classList.contains('active')) { e.preventDefault(); spin(); }
+            if (e.key === ' ' && !isSpinning && localUserName && !document.getElementById('spinBtn').disabled) {
+                e.preventDefault();
+                spin();
             }
         });
-
+        
         const style = document.createElement('style');
         style.textContent = `@keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } } @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100px); opacity: 0; } }`;
         document.head.appendChild(style);
     </script>
 </body>
 </html>
+
+```
