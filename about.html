@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674"
+     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Daily Saving Challenge</title>
     
-    <!-- 📌 Google AdSense Code -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
-    <!-- 📌 Missing Styles Fix -->
     <style>
         .fb-link-btn { background: #1877F2; color: #ffffff !important; border: none; padding: 15px; border-radius: 16px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: 0.3s; margin-bottom: 20px; box-sizing: border-box; }
         .fb-link-btn:hover { background: #166fe5; transform: translateY(-2px); }
         .feedback-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0,0,0,0.2); color: #ffffff; font-family: inherit; font-size: 0.95rem; outline: none; resize: vertical; min-height: 100px; margin-bottom: 15px; transition: 0.3s; box-sizing: border-box; }
         .feedback-input:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+        
+        /* 📌 New About Us Grids */
+        .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; text-align: left; }
+        @media (max-width: 500px) { .vm-grid { grid-template-columns: 1fr; } }
+        .vm-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .vm-box:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); border-color: #818cf8; }
+        .vm-box h4 { margin-top: 0; margin-bottom: 10px; color: #818cf8; font-size: 1.1rem; display:flex; align-items:center; gap:8px;}
+        .vm-box p { font-size: 0.9rem; color: #cbd5e1; margin: 0; line-height: 1.6; }
+        
+        .features-box { margin-top: 20px; text-align: left; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); }
+        .features-box h4 { color: #f472b6; margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;}
+        .features-list { list-style: none; padding: 0; margin: 0; }
+        .features-list li { font-size: 0.95rem; color: #cbd5e1; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .features-list li i { color: #10b981; margin-top: 4px; font-size: 1rem; }
     </style>
 
-    <!-- 📌 Firebase SDKs for Feedback -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -33,45 +46,66 @@
                 <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Home (ආපසු)</span>
             </button>
             
-            <div class="settings-card" style="text-align: center; padding: 30px 20px;">
-                <img src="dsc_logo.png" style="width: 70px; height: 70px; border-radius:50%; margin-bottom:10px; border:2px solid var(--primary-light);" onerror="this.src='https://via.placeholder.com/70?text=DSC'">
-                <h3 style="border:none; margin-bottom:10px; color:var(--text-primary);" data-i18n="about_us">අපි ගැන (About Us)</h3>
-                <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:20px; line-height: 1.7;" data-i18n="purpose_desc">ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි.</p>
+            <div class="settings-card" style="text-align: center; padding: 35px 20px;">
+                <img src="dsc_logo.png" style="width: 80px; height: 80px; border-radius:50%; margin-bottom:15px; border:3px solid #818cf8; box-shadow: 0 0 15px rgba(129, 140, 248, 0.4);" onerror="this.src='https://via.placeholder.com/80?text=DSC'">
+                <h2 style="border:none; margin-bottom:15px; color:#ffffff; font-size: 1.6rem;" data-i18n="about_us">අපි ගැන (About Us)</h2>
+                
+                <p style="font-size:0.95rem; color:#cbd5e1; margin-bottom:20px; line-height: 1.7; max-width: 600px; margin-left: auto; margin-right: auto;" data-i18n="intro_desc">
+                    Daily Saving Challenge නිර්මාණය කර ඇත්තේ ඔබ තුළ අඛණ්ඩ ඉතිරි කිරීමේ පුරුද්දක් ගොඩනැගීමටයි. දිනපතා කරන කුඩා ඉතිරි කිරීම් මගින් විශාල මූල්‍ය නිදහසක් කරා ළඟා විය හැකි බව අපි විශ්වාස කරමු.
+                </p>
+
+                <div class="vm-grid">
+                    <div class="vm-box">
+                        <h4 data-i18n="vision_title"><i class="fas fa-eye"></i> අපගේ දැක්ම</h4>
+                        <p data-i18n="vision_desc">සරල, දෛනික පුරුදු හරහා මූල්‍ය ස්ථාවරත්වය ළඟා කර ගැනීමට සෑම පුද්ගලයෙකුටම ශක්තියක් වීම.</p>
+                    </div>
+                    <div class="vm-box">
+                        <h4 data-i18n="mission_title" style="color: #60a5fa;"><i class="fas fa-bullseye"></i> අපගේ මෙහෙවර</h4>
+                        <p data-i18n="mission_desc">පරිශීලකයින්ට ඔවුන්ගේ ඉතිරි කිරීමේ ඉලක්ක කරා ළඟා වීමට පෙළඹවීමක් සහ මඟ පෙන්වීමක් සපයන ආරක්ෂිත යෙදුමක් ලබා දීම.</p>
+                    </div>
+                </div>
+
+                <div class="features-box">
+                    <h4 data-i18n="why_title"><i class="fas fa-star"></i> මෙම App එක භාවිත කළ යුත්තේ ඇයි?</h4>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="f1">දිනපතා ඔබ ඉතිරි කරන මුදල් පහසුවෙන් සහ නිවැරදිව සටහන් කර ගැනීමේ හැකියාව.</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="f2">ඔබේ මූල්‍ය ඉලක්ක (Financial Goals) පැහැදිලිව හඳුනාගෙන ඒ සඳහා වැඩ කිරීමට ඇති පෙළඹවීම.</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="f3">අනවශ්‍ය වියදම් අඩු කරගෙන, සාර්ථක අනාගතයක් වෙනුවෙන් හොඳ මූල්‍ය විනයක් ගොඩනගා ගැනීම.</span></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="settings-card" style="padding: 20px;">
-                <h3 style="text-align:center; border:none; margin-bottom:20px; color:var(--primary-light);"><i class="fab fa-facebook"></i> <span data-i18n="fb_title">අපගේ Facebook පිටුව</span></h3>
+                <h3 style="text-align:center; border:none; margin-bottom:20px; color:#60a5fa;"><i class="fab fa-facebook"></i> <span data-i18n="fb_title">අපගේ Facebook පිටුව</span></h3>
                 <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="fb-link-btn">
                     <i class="fab fa-facebook-f" style="font-size: 1.2rem;"></i> <span data-i18n="fb_btn_text">Facebook පිටුවට පිවිසෙන්න</span>
                 </a>
             </div>
             
             <div class="settings-card" style="padding: 20px;">
-                <h3 style="text-align:center; border:none; margin-bottom:10px; color:var(--accent);">
+                <h3 style="text-align:center; border:none; margin-bottom:10px; color:#f472b6;">
                     <i class="fas fa-comment-dots"></i> <span data-i18n="feedback_title">අදහස් දක්වන්න</span>
                 </h3>
                 
-                <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 15px; line-height: 1.6;" data-i18n="feedback_note">
+                <p style="font-size: 0.85rem; color: #cbd5e1; text-align: center; margin-bottom: 15px; line-height: 1.6;" data-i18n="feedback_note">
                     ඔබේ අදහස් අපට ඉතා වැදගත්. අපගේ App එක තවත් දියුණු කිරීමට අවශ්‍ය දේවල් අපට කියන්න!
                 </p>
 
-                <!-- Feedback Textbox -->
                 <textarea id="feedbackText" class="feedback-input" data-i18n-placeholder="feedback_placeholder" placeholder="ඔබගේ අදහස් සහ යෝජනා මෙහි ලියන්න..."></textarea>
                 
-                <button class="action-btn primary" id="feedbackSubmitBtn" onclick="submitFeedback()" style="margin-bottom: 15px;">
+                <button class="action-btn primary" id="feedbackSubmitBtn" onclick="submitFeedback()" style="margin-bottom: 15px; width: 100%; border-radius: 12px; padding: 14px;">
                     <i class="fas fa-paper-plane"></i> <span data-i18n="feedback_submit">යවන්න</span>
                 </button>
 
-                <div style="text-align: center; margin: 10px 0; color: var(--text-muted); font-size: 0.8rem;">--- OR ---</div>
+                <div style="text-align: center; margin: 10px 0; color: #64748b; font-size: 0.8rem;">--- OR ---</div>
 
-                <!-- Email Button -->
-                <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 10px;">
+                <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 10px; border-radius: 12px; padding: 14px;">
                     <i class="fas fa-envelope"></i> <span data-i18n="email_btn">Email මගින් සම්බන්ධ වන්න</span>
                 </a>
             </div>
         </div>
         
-        <div class="global-footer" style="margin-top: 20px;">
+        <div class="global-footer" style="margin-top: 20px; margin-bottom: 20px;">
             <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span data-i18n="footer_rights">සියලුම හිමිකම් ඇවිරිණි.</span></div>
         </div>
     </div>
@@ -84,7 +118,15 @@
             en: {
                 back_btn: "Back to Home",
                 about_us: "About Us",
-                purpose_desc: "Cultivate the habit of saving a small amount daily to secure your future.",
+                intro_desc: "Daily Saving Challenge is designed to help you build a consistent saving habit. We believe that small daily contributions lead to massive financial freedom.",
+                vision_title: "Our Vision",
+                vision_desc: "To empower individuals to achieve financial stability through simple, daily saving habits.",
+                mission_title: "Our Mission",
+                mission_desc: "To provide a user-friendly platform that motivates, tracks, and guides users towards their savings goals securely.",
+                why_title: "Why Use Our App?",
+                f1: "Effortlessly and accurately track your daily savings.",
+                f2: "Identify your financial goals clearly and get motivated to work towards them.",
+                f3: "Reduce unnecessary expenses and build great financial discipline for a successful future.",
                 fb_title: "Our Facebook Page",
                 fb_btn_text: "Visit Facebook Page",
                 feedback_title: "Share Your Feedback",
@@ -99,7 +141,15 @@
             si: {
                 back_btn: "Home (ආපසු)",
                 about_us: "අපි ගැන (About Us)",
-                purpose_desc: "ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි.",
+                intro_desc: "Daily Saving Challenge නිර්මාණය කර ඇත්තේ ඔබ තුළ අඛණ්ඩ ඉතිරි කිරීමේ පුරුද්දක් ගොඩනැගීමටයි. දිනපතා කරන කුඩා ඉතිරි කිරීම් මගින් විශාල මූල්‍ය නිදහසක් කරා ළඟා විය හැකි බව අපි විශ්වාස කරමු.",
+                vision_title: "අපගේ දැක්ම",
+                vision_desc: "සරල, දෛනික පුරුදු හරහා මූල්‍ය ස්ථාවරත්වය ළඟා කර ගැනීමට සෑම පුද්ගලයෙකුටම ශක්තියක් වීම.",
+                mission_title: "අපගේ මෙහෙවර",
+                mission_desc: "පරිශීලකයින්ට ඔවුන්ගේ ඉතිරි කිරීමේ ඉලක්ක කරා ළඟා වීමට පෙළඹවීමක් සහ මඟ පෙන්වීමක් සපයන ආරක්ෂිත යෙදුමක් ලබා දීම.",
+                why_title: "මෙම App එක භාවිත කළ යුත්තේ ඇයි?",
+                f1: "දිනපතා ඔබ ඉතිරි කරන මුදල් පහසුවෙන් සහ නිවැරදිව සටහන් කර ගැනීමේ හැකියාව.",
+                f2: "ඔබේ මූල්‍ය ඉලක්ක (Financial Goals) පැහැදිලිව හඳුනාගෙන ඒ සඳහා වැඩ කිරීමට ඇති පෙළඹවීම.",
+                f3: "අනවශ්‍ය වියදම් අඩු කරගෙන, සාර්ථක අනාගතයක් වෙනුවෙන් හොඳ මූල්‍ය විනයක් ගොඩනගා ගැනීම.",
                 fb_title: "අපගේ Facebook පිටුව",
                 fb_btn_text: "Facebook පිටුවට පිවිසෙන්න",
                 feedback_title: "අදහස් දක්වන්න",
@@ -119,7 +169,7 @@
         function setLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n'); 
-                if (translations[currentLang][key]) el.innerText = translations[currentLang][key];
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
             });
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder'); 
@@ -164,7 +214,7 @@
             };
 
             database.ref('feedback').push(feedbackData).then(() => {
-                btn.innerHTML = `<i class="fas fa-check-circle"></i> <span data-i18n="feedback_success">${translations[currentLang].feedback_success}</span>`;
+                btn.innerHTML = `<i class="fas fa-check-circle"></i> <span>${translations[currentLang].feedback_success}</span>`;
                 btn.classList.replace('primary', 'success');
                 document.getElementById('feedbackText').value = '';
                 
