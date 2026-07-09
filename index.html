@@ -26,7 +26,6 @@
     </div>
 
     <!-- 📌 FIREBASE AUTHENTICATION -->
-    <!-- Removed 'active' class from my-modal to prevent it from showing before Firebase checks auth state -->
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
             
@@ -70,8 +69,7 @@
                     <span id="authSubmitText" data-i18n="tab_login">Login</span>
                 </button>
                 
-                <button class="google-btn" onclick="loginWithGoogle()">
-                    <!-- ✅ Fixed Google Icon -->
+                <button class="google-btn" id="googleLoginBtn" onclick="loginWithGoogle()">
                     <i class="fab fa-google" style="color: #ea4335; font-size: 1.1rem;"></i>
                     <span data-i18n="google_login">Continue with Google</span>
                 </button>
@@ -144,9 +142,6 @@
             <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner (Top)</span></div> -->
-
                 <div class="live-total-container">
                     <div class="live-total">
                         <i class="fas fa-piggy-bank"></i>
@@ -177,9 +172,6 @@
                     </button>
                 </div>
 
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner (Middle)</span></div> -->
-
                 <div class="purpose-section">
                     <h2><i class="fas fa-bullseye"></i> <span data-i18n="purpose_title">Purpose of the Challenge</span></h2>
                     <p data-i18n="purpose_desc">Cultivate the habit of saving a small amount daily to secure your future. This Wheel randomly gives you an amount to save daily, helping you grow your savings account through a fun challenge.</p>
@@ -207,9 +199,6 @@
                     </div>
                 </div>
                 <div id="targetDisplayCalendar" class="target-card"></div>
-                
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
 
                 <div class="live-stats-container">
                     <div class="stat-badge"><span><i class="fas fa-users" style="margin-right:8px; color: var(--primary-light);"></i><span data-i18n="stats_participants">Total Participants:</span></span><span id="userCountDisplay" style="color: white;">...</span></div>
@@ -219,9 +208,6 @@
 
             <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
             <div id="view-hub" class="view-section">
-                
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
                 
                 <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">Financial Advice & Articles</span></h2>
                 <div id="blogGrid">
@@ -235,9 +221,6 @@
                     <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
                 </button>
                 
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner (Top of Article)</span></div> -->
-                
                 <div class="full-article-container">
                     <h2 class="full-article-title" id="fullArticleTitle">Loading...</h2>
                     <div class="full-article-content" id="fullArticleContent">
@@ -245,9 +228,6 @@
                     </div>
                 </div>
                 
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner (Bottom of Article)</span></div> -->
-
             </div>
 
             <!-- 🔹 TAB 5: SETTINGS -->
@@ -256,7 +236,7 @@
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span data-i18n="select_lang">Language / භාෂාව</span></h3>
                     <div class="lang-toggle">
                         <button class="lang-btn btn-si" onclick="setLanguage('si')">Sinhala</button>
-                        <button class="lang-btn btn-en" onclick="setLanguage('en')">English</button>
+                        <button class="lang-btn btn-en active" onclick="setLanguage('en')">English</button>
                     </div>
                 </div>
                 <div class="settings-card">
@@ -282,9 +262,6 @@
                     </button>
                 </div>
                 <div id="targetDisplaySettings" class="target-card"></div>
-                
-                <!-- ❌ Adsense Disabled for Approval -->
-                <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
 
                 <button class="logout-btn" onclick="logoutUser()">
                     <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout_btn">Logout</span>
@@ -458,6 +435,19 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(); const database = firebase.database();
 
+        // 🟢 Handle Mobile Google Redirect Result
+        auth.getRedirectResult().then((result) => {
+            if (result && result.user) {
+                const user = result.user;
+                database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
+                syncLocalDataToCloud(user); 
+                showNotification(translations[currentLang].js_auth_success, "success");
+            }
+        }).catch(error => { 
+            console.error("Redirect Auth Error:", error);
+            if(error.message) showNotification(error.message, "error"); 
+        });
+
         let globalSpinCount = 0; let currentUser = null; let currentUserData = null; let trackingData = {};
         let isLocalMode = localStorage.getItem('dsc_local_session') === 'true';
         let localUserName = localStorage.getItem('dsc_userName') || '';
@@ -539,12 +529,15 @@
             renderCalendar(); checkTodaySpin(); renderTargetUI(); showNotification(`${translations[currentLang].hi_text} ${localUserName}, ${translations[currentLang].js_start_greet}`, "success");
         }
 
+        // 🟢 Use Redirect Instead of Popup for Mobile Compatibility
         function loginWithGoogle() {
+            const btn = document.getElementById('googleLoginBtn');
+            if(btn) {
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#555;"></i> <span style="color:#555;">Redirecting...</span>`;
+                btn.disabled = true;
+            }
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then((result) => {
-                const user = result.user; database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
-                syncLocalDataToCloud(user); showNotification(translations[currentLang].js_auth_success, "success");
-            }).catch(error => { showNotification(error.message, "error"); });
+            auth.signInWithRedirect(provider);
         }
 
         function handleAuthSubmit() {
