@@ -121,50 +121,62 @@ body { font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif; background: var(
 .section-title { font-size: 1.3rem; margin-bottom: 20px; color: var(--primary-light); display: flex; align-items: center; gap: 10px; }
 
 /* ========================================= */
-/* 📌 NEW GRID STYLES FOR BLOGGER FEED       */
+/* 📌 BEAUTIFUL GLASSMORPHISM GRID & CARDS   */
 /* ========================================= */
 #blogGrid { 
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 
     gap: 15px; 
 }
-@media (min-width: 768px) { #blogGrid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1024px) { #blogGrid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 768px) { #blogGrid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+@media (min-width: 1024px) { #blogGrid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
 .article-card { 
-    background: rgba(0,0,0,0.2); 
-    border: 1px solid var(--glass-border); 
+    background: rgba(15, 23, 42, 0.7); 
+    border: 1px solid rgba(255,255,255,0.08); 
     border-radius: var(--radius-lg); 
-    padding: 0; /* Removed padding for edge-to-edge image */
+    padding: 0; 
     overflow: hidden; 
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s; 
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; 
     cursor: pointer; 
     height: 100%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
-.article-card:hover { transform: translateY(-3px); border-color: var(--primary-light); }
+.article-card:hover { 
+    transform: translateY(-5px); 
+    border-color: var(--primary-light); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* New Image Thumbnail Settings */
 .article-thumb { 
     width: 100%; 
-    height: 130px; 
+    height: 150px; 
     background-size: cover; 
     background-position: center; 
-    background-color: var(--dark-lighter); 
-    border-bottom: 1px solid var(--glass-border);
+    background-color: var(--dark-light); 
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+
 .article-info { 
-    padding: 12px; 
+    padding: 15px; 
     display: flex; 
     flex-direction: column; 
     flex: 1; 
-    justify-content: center;
+    justify-content: space-between;
 }
-.article-info h3 { 
-    font-size: 0.95rem; 
-    margin: 0; 
-    line-height: 1.4; 
+
+/* Beautiful Title Settings */
+.article-card-title { 
+    font-size: 1rem; 
+    margin: 0 0 15px 0; 
+    line-height: 1.5; 
     color: var(--text-primary);
-    /* Ellipsis for title if it gets too long */
+    font-weight: 600;
+    
+    /* Strict ellipsis to avoid huge messy titles */
     display: -webkit-box; 
     -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical; 
@@ -172,10 +184,39 @@ body { font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif; background: var(
     text-overflow: ellipsis; 
 }
 
+/* Footer Section Inside Card */
+.article-card-footer {
+    margin-top: auto;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+    padding-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Styled Read More Button inside the Card */
+.read-more-btn { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px; 
+    color: var(--accent); 
+    font-weight: 600; 
+    font-size: 0.85rem; 
+    background: transparent; 
+    border: none; 
+    cursor: pointer; 
+    font-family: inherit;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.article-card:hover .read-more-btn { 
+    color: var(--primary-light);
+    transform: translateX(3px);
+}
+
+/* Load More Section */
 .load-more-btn { 
     display: block; 
     width: 100%; 
-    padding: 12px; 
+    padding: 15px; 
     background: rgba(255,255,255,0.05); 
     color: var(--primary-light); 
     text-align: center; 
@@ -185,9 +226,13 @@ body { font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif; background: var(
     font-weight: 600; 
     transition: 0.3s; 
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
-.load-more-btn:hover { background: var(--primary); color: white; border-style: solid; }
+.load-more-btn:hover { 
+    background: var(--primary); 
+    color: white; 
+    border-style: solid; 
+}
 
 /* ========================================= */
 .full-article-container { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: 25px; margin-bottom: 20px; overflow: hidden; }

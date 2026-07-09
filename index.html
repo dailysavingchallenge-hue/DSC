@@ -8,8 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- 📌 Link to CSS File -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- 📌 Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -18,12 +20,15 @@
 
     <div class="bg-animation"></div>
 
+    <!-- 📌 INITIAL LOADER -->
     <div id="initialLoader" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--primary-light); z-index:9999999;">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
     </div>
 
+    <!-- 📌 FIREBASE AUTHENTICATION -->
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
+            <!-- 🌐 Language Toggle on Modal -->
             <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
                     <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="setLanguage('si')">සිං</button>
@@ -102,6 +107,7 @@
         </div>
     </div>
 
+    <!-- 📌 TARGET SETTING MODAL -->
     <div id="targetModal" class="my-modal">
         <div class="my-modal-content">
             <h2 style="font-size: 1.4rem; margin-bottom:10px; color: var(--primary-light);"><i class="fas fa-bullseye"></i> <span data-i18n="target_title">Set a Target</span></h2>
@@ -118,7 +124,9 @@
         </div>
     </div>
 
+    <!-- 📌 MAIN APP WRAPPER -->
     <div id="app-wrapper">
+        <!-- HEADER -->
         <div class="header-section">
             <div class="header-left-group">
                 <img src="dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
@@ -133,6 +141,7 @@
         </div>
 
         <div class="main-content-flex">
+            <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
                 <div class="live-total-container">
@@ -171,6 +180,7 @@
                 </div>
             </div>
 
+            <!-- 🔹 TAB 2: CALENDAR -->
             <div id="view-calendar" class="view-section" id="calendarCaptureArea">
                 <div class="calendar-section">
                     <h2><i class="fas fa-calendar-alt"></i> <span data-i18n="calendar_title">My Savings Record</span></h2>
@@ -198,15 +208,18 @@
                 </div>
             </div>
 
+            <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
             <div id="view-hub" class="view-section">
                 <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">Financial Advice & Articles</span></h2>
                 
+                <!-- NEW GRID LAYOUT CONTAINER -->
                 <div id="blogGrid">
                     <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">Fetching articles...</p>
                 </div>
                 
             </div>
 
+            <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
                     <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
@@ -219,6 +232,7 @@
                 </div>
             </div>
 
+            <!-- 🔹 TAB 5: SETTINGS -->
             <div id="view-settings" class="view-section">
                 <div class="settings-card">
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span data-i18n="select_lang">Language / භාෂාව</span></h3>
@@ -275,6 +289,7 @@
             </div>
         </div>
 
+        <!-- 📌 GLOBAL FOOTER WITH LEGAL LINKS -->
         <div class="global-footer">
             <div class="social-icons">
                 <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -293,6 +308,7 @@
         </div>
     </div>
 
+    <!-- 📌 BOTTOM NAVIGATION BAR -->
     <div class="bottom-nav" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="switchView('home', this)">
             <i class="fas fa-home"></i><span data-i18n="nav_home">Home</span>
@@ -311,6 +327,7 @@
         </div>
     </div>
 
+    <!-- 📌 MODALS -->
     <div id="customModal" class="my-modal">
         <div class="my-modal-content">
             <h2 style="font-size: 1.2rem; margin-bottom:5px;" data-i18n="modal_setup_title">Setup Wheel</h2>
@@ -341,7 +358,7 @@
 
     <script>
         // =========================================
-        // 📌 TRANSLATIONS (Updated with Load More)
+        // 📌 TRANSLATIONS
         // =========================================
         const translations = {
             en: {
@@ -411,6 +428,9 @@
             if (currentUserData || isLocalMode) { renderCalendar(); checkTodaySpin(); renderTargetUI(); }
             const noArticles = document.getElementById('noArticlesMsg'); if (noArticles) noArticles.innerText = translations[currentLang].js_no_articles;
             const loadMoreBtn = document.getElementById('loadMoreBtnActual'); if (loadMoreBtn) loadMoreBtn.innerText = translations[currentLang].js_load_more;
+            
+            // Update all read more buttons if language changes dynamically
+            document.querySelectorAll('.read-more-text').forEach(el => el.innerText = translations[currentLang].js_read_more);
         }
 
         function switchView(viewName, navElement) {
@@ -596,7 +616,7 @@
         }
 
         // =========================================
-        // 📌 BLOGGER (HEADLESS CMS) - GRID & PAGINATION
+        // 📌 BLOGGER (HEADLESS CMS) - REFINED GRID
         // =========================================
         const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
         let fetchedArticles = []; 
@@ -608,6 +628,7 @@
             if(isFetchingPosts) return;
             isFetchingPosts = true;
             const script = document.createElement('script');
+            // Fetching posts using Blogger JSON feed
             script.src = `${myBloggerURL}/feeds/posts/default?alt=json-in-script&callback=handleBloggerPosts&start-index=${startIndex}&max-results=${postsPerPage}`;
             document.body.appendChild(script);
         }
@@ -636,22 +657,32 @@
                 const title = entry.title.$t;
                 const postId = entry.id.$t.split('post-')[1]; 
                 
-                let imgUrl = 'https://via.placeholder.com/400x250?text=No+Image';
+                // --- IMAGE EXTRACTION LOGIC ---
+                let imgUrl = 'https://via.placeholder.com/400x250/1e293b/cbd5e1?text=Daily+Saving+Challenge'; // Default nice placeholder
                 
-                // Try to get thumbnail or first image in content
+                // 1. Check if Blogger provided a media$thumbnail
                 if (entry.media$thumbnail) {
+                    // Replace small s72-c thumbnail with a larger, higher quality crop
                     imgUrl = entry.media$thumbnail.url.replace(/\/s72\-c\//, '/w400-h250-c/');
-                } else if (entry.content && entry.content.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                } 
+                // 2. Fallback: Regex to find the first <img> tag in the post content
+                else if (entry.content && entry.content.$t.match(/<img.+?src=["'](.*?)["']/)) {
                     imgUrl = entry.content.$t.match(/<img.+?src=["'](.*?)["']/)[1];
-                } else if (entry.summary && entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                } 
+                // 3. Fallback: Regex to find the first <img> tag in the post summary
+                else if (entry.summary && entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)) {
                     imgUrl = entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)[1];
                 }
 
+                // Append purely structured HTML (Image + Title + Styled Read More)
                 blogGrid.innerHTML += `
                     <div class="article-card" onclick="openArticle('${postId}', ${globalIndex})">
                         <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
                         <div class="article-info">
-                            <h3>${title}</h3>
+                            <h3 class="article-card-title">${title}</h3>
+                            <div class="article-card-footer">
+                                <span class="read-more-btn"><span class="read-more-text">${translations[currentLang].js_read_more}</span> <i class="fas fa-arrow-right"></i></span>
+                            </div>
                         </div>
                     </div>`;
             });
@@ -659,7 +690,7 @@
             // Add Load More button if we fetched a full page
             if (entries.length === postsPerPage) {
                 blogGrid.innerHTML += `
-                    <div id="loadMoreContainer" style="grid-column: 1 / -1; margin-top: 10px;">
+                    <div id="loadMoreContainer" style="grid-column: 1 / -1; margin-top: 15px;">
                         <button id="loadMoreBtnActual" class="load-more-btn" onclick="loadNextPosts()">
                             ${translations[currentLang].js_load_more}
                         </button>
@@ -722,7 +753,7 @@
 
         function initializeApp() { 
             setLanguage(currentLang); buildWheel('outerWheel', outerVals, 150, false, false); buildWheel('innerWheel', innerVals, 85, false, true); 
-            loadBloggerPosts(currentStartIndex); // Initial Load
+            loadBloggerPosts(currentStartIndex); 
             setTimeout(checkDirectArticleLink, 500); 
         }
         document.addEventListener("DOMContentLoaded", initializeApp);
