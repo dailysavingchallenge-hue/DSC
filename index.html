@@ -64,6 +64,11 @@
                     <input type="password" id="authPassword" class="auth-input" placeholder="Password" data-i18n-placeholder="password_placeholder">
                     <i class="fas fa-eye password-toggle" onclick="togglePassword('authPassword', this)"></i>
                 </div>
+
+                <!-- ✅ Forgot Password Link in Login Modal -->
+                <div style="text-align: right; margin-bottom: 15px; margin-top: -5px;" id="loginForgotPwdWrapper">
+                    <a href="#" onclick="handleForgotPassword(false)" style="color: var(--accent); font-size: 0.85rem; text-decoration: none;" data-i18n="forgot_password">Forgot Password?</a>
+                </div>
                 
                 <button class="action-btn primary" id="authSubmitBtn" onclick="handleAuthSubmit()">
                     <span id="authSubmitText" data-i18n="tab_login">Login</span>
@@ -208,7 +213,6 @@
 
             <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
             <div id="view-hub" class="view-section">
-                
                 <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">Financial Advice & Articles</span></h2>
                 <div id="blogGrid">
                     <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px;">Fetching articles...</p>
@@ -220,14 +224,12 @@
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
                     <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
                 </button>
-                
                 <div class="full-article-container">
                     <h2 class="full-article-title" id="fullArticleTitle">Loading...</h2>
                     <div class="full-article-content" id="fullArticleContent">
                         Please wait...
                     </div>
                 </div>
-                
             </div>
 
             <!-- 🔹 TAB 5: SETTINGS -->
@@ -248,15 +250,36 @@
                         </label>
                         <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
                     </div>
+
+                    <!-- ✅ Un-editable Email Section -->
+                    <div class="auth-input-wrapper" id="settingsEmailWrapper" style="display: none;">
+                        <i class="fas fa-envelope icon-left"></i>
+                        <input type="text" id="settingsEmail" class="auth-input" readonly style="opacity: 0.6; cursor: not-allowed; background: rgba(0,0,0,0.4);" data-i18n-placeholder="email_placeholder">
+                    </div>
+
+                    <!-- ✅ Editable Name Section -->
                     <div class="auth-input-wrapper">
                         <i class="fas fa-user icon-left"></i>
                         <input type="text" id="settingsName" class="auth-input" placeholder="Your Name" data-i18n-placeholder="name_placeholder">
                     </div>
-                    <div class="auth-input-wrapper" id="settingsPasswordWrapper">
-                        <i class="fas fa-lock icon-left"></i>
-                        <input type="password" id="settingsPassword" class="auth-input" placeholder="New Password" data-i18n-placeholder="new_password_placeholder">
-                        <i class="fas fa-eye password-toggle" onclick="togglePassword('settingsPassword', this)"></i>
+
+                    <!-- ✅ Secure Password Section -->
+                    <div id="settingsPasswordSection" style="display: none;">
+                        <div class="auth-input-wrapper">
+                            <i class="fas fa-unlock-alt icon-left"></i>
+                            <input type="password" id="settingsCurrentPassword" class="auth-input" placeholder="Old Password" data-i18n-placeholder="current_password_placeholder">
+                            <i class="fas fa-eye password-toggle" onclick="togglePassword('settingsCurrentPassword', this)"></i>
+                        </div>
+                        <div class="auth-input-wrapper">
+                            <i class="fas fa-lock icon-left"></i>
+                            <input type="password" id="settingsNewPassword" class="auth-input" placeholder="New Password" data-i18n-placeholder="new_password_placeholder">
+                            <i class="fas fa-eye password-toggle" onclick="togglePassword('settingsNewPassword', this)"></i>
+                        </div>
+                        <div style="text-align: right; margin-bottom: 15px; margin-top: -5px;">
+                            <a href="#" onclick="handleForgotPassword(true)" style="color: var(--accent); font-size: 0.85rem; text-decoration: none;" data-i18n="forgot_password">Forgot Password?</a>
+                        </div>
                     </div>
+
                     <button class="action-btn success" id="saveProfileBtn" onclick="saveProfileSettings()">
                         <i class="fas fa-save"></i> <span data-i18n="save_profile">Save Changes</span>
                     </button>
@@ -358,7 +381,9 @@
                 new_target_btn: "Set a New Target", target_lock_msg: "You can change your target in {days} days.", no_target_title: "No Target Set", js_enter_all: "Please fill out all fields!",
                 js_enter_name: "Please enter your name!", js_auth_success: "Successfully logged in!", js_auth_error: "Authentication Failed. Please check details.", js_completed: "Completed Today",
                 js_spinning: "Spinning...", js_no_articles: "No articles available currently.", js_read_more: "Read More", js_today: "Today", js_start_greet: "let's start the challenge!",
-                popup_blocked: "Popup blocked by browser! Please use Email/Password to login."
+                popup_blocked: "Popup blocked by browser! Please use Email/Password to login.",
+                forgot_password: "Forgot Password?", current_password_placeholder: "Old Password", enter_email_reset: "Please enter your email address in the field to reset password.",
+                reset_link_sent: "Password reset link sent to your email!", wrong_old_password: "The old password you entered is incorrect!", local_acc_email: "Local Account (No Email)"
             },
             si: {
                 site_title: "දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය", select_lang: "භාෂාව / Language", hi_text: "ආයුබෝවන්,", welcome_title: "ආයුබෝවන්!", welcome_sub: "දිනපතා ඉතිරි කිරීමේ විස්තර ආරක්ෂිතව බලාගැනීමට ලොග් වෙන්න.",
@@ -377,7 +402,9 @@
                 new_target_btn: "නව ඉලක්කයක් යොදන්න", target_lock_msg: "ඔබට ඉලක්කය වෙනස් කිරීමට තව දින {days} ක් ඉතිරිව ඇත.", no_target_title: "කිසිදු ඉලක්කයක් යොදා නැත", js_enter_all: "කරුණාකර සියලුම විස්තර පුරවන්න!",
                 js_enter_name: "කරුණාකර ඔබගේ නම ඇතුළත් කරන්න!", js_auth_success: "සාර්ථකව ලොග් විය!", js_auth_error: "ඇතුළත් කළ විස්තර වැරදියි. නැවත උත්සාහ කරන්න.", js_completed: "අද සම්පූර්ණයි",
                 js_spinning: "කරකවමින්...", js_no_articles: "දැනට ලිපි කිසිවක් නොමැත.", js_read_more: "තවත් කියවන්න", js_today: "අද", js_start_greet: "අභියෝගය අරඹමු!",
-                popup_blocked: "බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න."
+                popup_blocked: "බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න.",
+                forgot_password: "මුරපදය අමතකද?", current_password_placeholder: "පැරණි මුරපදය (Old Password)", enter_email_reset: "මුරපදය අලුත් කිරීමට කරුණාකර ඉහළ කොටුවේ ඔබගේ ඊමේල් ලිපිනය ඇතුළත් කරන්න.",
+                reset_link_sent: "මුරපදය අලුත් කිරීමේ ලින්ක් එක ඔබගේ ඊමේල් එකට යැව්වා!", wrong_old_password: "ඔබ ලබා දුන් පැරණි මුරපදය වැරදියි!", local_acc_email: "Local ගිණුම (Email නැත)"
             }
         };
 
@@ -478,10 +505,12 @@
                     launchApp(); document.getElementById('displayUserName').innerText = localUserName;
                     const savedAvatar = localStorage.getItem('dsc_avatar') || generateAvatar(localUserName);
                     document.getElementById('headerProfilePic').src = savedAvatar; document.getElementById('settingsAvatarPreview').src = savedAvatar;
-                    document.getElementById('settingsName').value = localUserName; document.getElementById('settingsPasswordWrapper').style.display = 'none';
+                    document.getElementById('settingsName').value = localUserName; 
+                    document.getElementById('settingsPasswordSection').style.display = 'none';
+                    document.getElementById('settingsEmailWrapper').style.display = 'block';
+                    document.getElementById('settingsEmail').value = translations[currentLang].local_acc_email;
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 } else {
-                    // Only show Auth modal if NOT logged in
                     document.getElementById('authModal').classList.add('active'); 
                     document.getElementById('app-wrapper').style.display = 'none'; 
                     document.getElementById('bottomNav').style.display = 'none';
@@ -500,8 +529,15 @@
 
         let authMode = 'login'; 
         function switchAuthTab(mode) {
-            authMode = mode; document.getElementById('tabLogin').classList.toggle('active', mode === 'login'); document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
-            document.getElementById('authSignupFields').style.display = mode === 'signup' ? 'block' : 'none'; document.getElementById('authSubmitText').innerText = translations[currentLang][mode === 'login' ? 'tab_login' : 'tab_signup'];
+            authMode = mode; 
+            document.getElementById('tabLogin').classList.toggle('active', mode === 'login'); 
+            document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+            document.getElementById('authSignupFields').style.display = mode === 'signup' ? 'block' : 'none'; 
+            
+            const forgotPwd = document.getElementById('loginForgotPwdWrapper');
+            if(forgotPwd) forgotPwd.style.display = mode === 'login' ? 'block' : 'none';
+
+            document.getElementById('authSubmitText').innerText = translations[currentLang][mode === 'login' ? 'tab_login' : 'tab_signup'];
         }
 
         function showGuestUI() { document.getElementById('authMainUI').style.display = 'none'; document.getElementById('guestUI').style.display = 'block'; }
@@ -514,11 +550,13 @@
             isLocalMode = true; localUserName = name; trackingData = localTrackingData; if(localTargetData) userTarget = localTargetData;
             const avatar = generateAvatar(localUserName); localStorage.setItem('dsc_avatar', avatar);
             launchApp(); document.getElementById('displayUserName').innerText = localUserName; document.getElementById('headerProfilePic').src = avatar; document.getElementById('settingsAvatarPreview').src = avatar;
-            document.getElementById('settingsName').value = localUserName; document.getElementById('settingsPasswordWrapper').style.display = 'none';
+            document.getElementById('settingsName').value = localUserName; 
+            document.getElementById('settingsPasswordSection').style.display = 'none';
+            document.getElementById('settingsEmailWrapper').style.display = 'block';
+            document.getElementById('settingsEmail').value = translations[currentLang].local_acc_email;
             renderCalendar(); checkTodaySpin(); renderTargetUI(); showNotification(`${translations[currentLang].hi_text} ${localUserName}, ${translations[currentLang].js_start_greet}`, "success");
         }
 
-        // 🟢 Reverted back to Popup for Mobile Compatibility (To fix sessionStorage issue)
         function loginWithGoogle() {
             const btn = document.getElementById('googleLoginBtn');
             const originalHTML = btn.innerHTML;
@@ -537,8 +575,6 @@
             }).catch(error => { 
                 console.error("Auth Error:", error);
                 if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
-                
-                // Specific error handling for Popup Blockers on Mobile
                 if(error.code === 'auth/popup-blocked') {
                     showNotification(translations[currentLang].popup_blocked, "error");
                 } else if(error.code !== 'auth/popup-closed-by-user') {
@@ -563,6 +599,27 @@
                     });
                 }).catch((error) => { showNotification(error.message, "error"); btn.disabled = false; btn.innerHTML = originalText; });
             }
+        }
+
+        // 🟢 Forgot Password Function
+        function handleForgotPassword(fromSettings = false) {
+            let email = "";
+            if (fromSettings) {
+                email = currentUser ? currentUser.email : "";
+            } else {
+                email = document.getElementById('authEmail').value.trim();
+            }
+
+            if (!email) {
+                showNotification(translations[currentLang].enter_email_reset, "warning");
+                return;
+            }
+
+            auth.sendPasswordResetEmail(email).then(() => {
+                showNotification(translations[currentLang].reset_link_sent, "success");
+            }).catch((error) => {
+                showNotification(error.message, "error");
+            });
         }
 
         function logoutUser() {
@@ -709,9 +766,26 @@
                 currentUserData = snapshot.val() || {};
                 const name = currentUserData.name || currentUser.displayName || 'User'; const photo = currentUserData.photoURL || currentUser.photoURL || generateAvatar(name);
                 trackingData = currentUserData.trackingData || {}; userTarget = currentUserData.targetData || { amount: 0, setDate: null, achievedDate: null };
-                document.getElementById('displayUserName').innerText = name; document.getElementById('headerProfilePic').src = photo;
-                document.getElementById('settingsName').value = name; document.getElementById('settingsAvatarPreview').src = photo;
-                if (currentUser.providerData.some(p => p.providerId === 'google.com')) { document.getElementById('settingsPasswordWrapper').style.display = 'none'; } else { document.getElementById('settingsPasswordWrapper').style.display = 'block'; }
+                
+                document.getElementById('displayUserName').innerText = name; 
+                document.getElementById('headerProfilePic').src = photo;
+                document.getElementById('settingsName').value = name; 
+                document.getElementById('settingsAvatarPreview').src = photo;
+                
+                // Set Settings Display Logic
+                document.getElementById('settingsEmailWrapper').style.display = 'block';
+                if(currentUser.email) {
+                    document.getElementById('settingsEmail').value = currentUser.email;
+                } else {
+                    document.getElementById('settingsEmail').value = translations[currentLang].local_acc_email;
+                }
+
+                if (currentUser.providerData.some(p => p.providerId === 'password')) { 
+                    document.getElementById('settingsPasswordSection').style.display = 'block'; 
+                } else { 
+                    document.getElementById('settingsPasswordSection').style.display = 'none'; 
+                }
+                
                 renderCalendar(); checkTodaySpin(); renderTargetUI();
             });
         }
@@ -733,8 +807,12 @@
         }
 
         function saveProfileSettings() {
-            const newName = document.getElementById('settingsName').value.trim(); const newPass = document.getElementById('settingsPassword').value;
+            const newName = document.getElementById('settingsName').value.trim(); 
+            const currentPass = document.getElementById('settingsCurrentPassword') ? document.getElementById('settingsCurrentPassword').value : "";
+            const newPass = document.getElementById('settingsNewPassword') ? document.getElementById('settingsNewPassword').value : "";
+
             if (!newName) { showNotification(translations[currentLang].js_enter_name, "warning"); return; }
+            
             const btn = document.getElementById('saveProfileBtn'); const originalHTML = btn.innerHTML; btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`; btn.disabled = true;
 
             if (isLocalMode) {
@@ -747,12 +825,38 @@
                 if (Object.keys(authUpdates).length > 0) updatePromises.push(currentUser.updateProfile(authUpdates));
                 
                 let dbUpdates = {}; dbUpdates['/users/' + currentUser.uid + '/name'] = newName; if (tempAvatarBase64) dbUpdates['/users/' + currentUser.uid + '/photoURL'] = tempAvatarBase64;
-                updatePromises.push(database.ref().update(dbUpdates)); if (newPass) updatePromises.push(currentUser.updatePassword(newPass));
+                updatePromises.push(database.ref().update(dbUpdates)); 
                 
-                Promise.all(updatePromises).then(() => {
-                    showNotification("Profile updated successfully!", "success"); btn.innerHTML = originalHTML; btn.disabled = false;
-                    document.getElementById('displayUserName').innerText = newName; if(tempAvatarBase64) document.getElementById('headerProfilePic').src = tempAvatarBase64;
-                }).catch(error => { showNotification(error.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false; });
+                const processUpdates = () => {
+                    Promise.all(updatePromises).then(() => {
+                        showNotification("Profile updated successfully!", "success"); btn.innerHTML = originalHTML; btn.disabled = false;
+                        document.getElementById('displayUserName').innerText = newName; if(tempAvatarBase64) document.getElementById('headerProfilePic').src = tempAvatarBase64;
+                        if(document.getElementById('settingsCurrentPassword')) document.getElementById('settingsCurrentPassword').value = '';
+                        if(document.getElementById('settingsNewPassword')) document.getElementById('settingsNewPassword').value = '';
+                    }).catch(error => { showNotification(error.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false; });
+                };
+
+                // Handle password update securely
+                if (newPass) {
+                    if(!currentPass) {
+                        showNotification(translations[currentLang].wrong_old_password, "warning");
+                        btn.innerHTML = originalHTML; btn.disabled = false;
+                        return;
+                    }
+                    const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, currentPass);
+                    currentUser.reauthenticateWithCredential(credential).then(() => {
+                        currentUser.updatePassword(newPass).then(() => {
+                            processUpdates();
+                        }).catch(err => {
+                            showNotification(err.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false;
+                        });
+                    }).catch(err => {
+                        showNotification(translations[currentLang].wrong_old_password, "error");
+                        btn.innerHTML = originalHTML; btn.disabled = false;
+                    });
+                } else {
+                    processUpdates();
+                }
             }
         }
 
