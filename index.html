@@ -8,10 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- 📌 Link to CSS File -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- 📌 Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -20,16 +18,12 @@
 
     <div class="bg-animation"></div>
 
-    <!-- 📌 INITIAL LOADER (To prevent popup flashing) -->
     <div id="initialLoader" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--primary-light); z-index:9999999;">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
     </div>
 
-    <!-- 📌 FIREBASE AUTHENTICATION -->
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
-            
-            <!-- 🌐 Language Toggle on Modal -->
             <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
                     <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="setLanguage('si')">සිං</button>
@@ -65,7 +59,6 @@
                     <i class="fas fa-eye password-toggle" onclick="togglePassword('authPassword', this)"></i>
                 </div>
 
-                <!-- ✅ Forgot Password Link in Login Modal -->
                 <div style="text-align: right; margin-bottom: 15px; margin-top: -5px;" id="loginForgotPwdWrapper">
                     <a href="#" onclick="handleForgotPassword(false)" style="color: var(--accent); font-size: 0.85rem; text-decoration: none;" data-i18n="forgot_password">Forgot Password?</a>
                 </div>
@@ -86,7 +79,6 @@
                 </button>
             </div>
             
-            <!-- Local Guest UI -->
             <div id="guestUI" style="display: none;">
                 <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--primary-light);" data-i18n="guest_btn">Use Local Account</h2>
                 <div class="attention-note">
@@ -110,7 +102,6 @@
         </div>
     </div>
 
-    <!-- 📌 TARGET SETTING MODAL -->
     <div id="targetModal" class="my-modal">
         <div class="my-modal-content">
             <h2 style="font-size: 1.4rem; margin-bottom:10px; color: var(--primary-light);"><i class="fas fa-bullseye"></i> <span data-i18n="target_title">Set a Target</span></h2>
@@ -127,9 +118,7 @@
         </div>
     </div>
 
-    <!-- 📌 MAIN APP WRAPPER -->
     <div id="app-wrapper">
-        <!-- HEADER -->
         <div class="header-section">
             <div class="header-left-group">
                 <img src="dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
@@ -144,7 +133,6 @@
         </div>
 
         <div class="main-content-flex">
-            <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
                 <div class="live-total-container">
@@ -183,7 +171,6 @@
                 </div>
             </div>
 
-            <!-- 🔹 TAB 2: CALENDAR -->
             <div id="view-calendar" class="view-section" id="calendarCaptureArea">
                 <div class="calendar-section">
                     <h2><i class="fas fa-calendar-alt"></i> <span data-i18n="calendar_title">My Savings Record</span></h2>
@@ -211,15 +198,15 @@
                 </div>
             </div>
 
-            <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
             <div id="view-hub" class="view-section">
                 <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">Financial Advice & Articles</span></h2>
+                
                 <div id="blogGrid">
-                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px;">Fetching articles...</p>
+                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">Fetching articles...</p>
                 </div>
+                
             </div>
 
-            <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW (WITH SEO PARAMS) -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
                     <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
@@ -232,7 +219,6 @@
                 </div>
             </div>
 
-            <!-- 🔹 TAB 5: SETTINGS -->
             <div id="view-settings" class="view-section">
                 <div class="settings-card">
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span data-i18n="select_lang">Language / භාෂාව</span></h3>
@@ -251,19 +237,16 @@
                         <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
                     </div>
 
-                    <!-- ✅ Un-editable Email Section -->
                     <div class="auth-input-wrapper" id="settingsEmailWrapper" style="display: none;">
                         <i class="fas fa-envelope icon-left"></i>
                         <input type="text" id="settingsEmail" class="auth-input" readonly style="opacity: 0.6; cursor: not-allowed; background: rgba(0,0,0,0.4);" data-i18n-placeholder="email_placeholder">
                     </div>
 
-                    <!-- ✅ Editable Name Section -->
                     <div class="auth-input-wrapper">
                         <i class="fas fa-user icon-left"></i>
                         <input type="text" id="settingsName" class="auth-input" placeholder="Your Name" data-i18n-placeholder="name_placeholder">
                     </div>
 
-                    <!-- ✅ Secure Password Section -->
                     <div id="settingsPasswordSection" style="display: none;">
                         <div class="auth-input-wrapper">
                             <i class="fas fa-unlock-alt icon-left"></i>
@@ -292,7 +275,6 @@
             </div>
         </div>
 
-        <!-- 📌 GLOBAL FOOTER WITH LEGAL LINKS -->
         <div class="global-footer">
             <div class="social-icons">
                 <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -311,7 +293,6 @@
         </div>
     </div>
 
-    <!-- 📌 BOTTOM NAVIGATION BAR -->
     <div class="bottom-nav" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="switchView('home', this)">
             <i class="fas fa-home"></i><span data-i18n="nav_home">Home</span>
@@ -330,7 +311,6 @@
         </div>
     </div>
 
-    <!-- 📌 MODALS -->
     <div id="customModal" class="my-modal">
         <div class="my-modal-content">
             <h2 style="font-size: 1.2rem; margin-bottom:5px;" data-i18n="modal_setup_title">Setup Wheel</h2>
@@ -361,7 +341,7 @@
 
     <script>
         // =========================================
-        // 📌 TRANSLATIONS
+        // 📌 TRANSLATIONS (Updated with Load More)
         // =========================================
         const translations = {
             en: {
@@ -383,7 +363,8 @@
                 js_spinning: "Spinning...", js_no_articles: "No articles available currently.", js_read_more: "Read More", js_today: "Today", js_start_greet: "let's start the challenge!",
                 popup_blocked: "Popup blocked by browser! Please use Email/Password to login.",
                 forgot_password: "Forgot Password?", current_password_placeholder: "Old Password", enter_email_reset: "Please enter your email address in the field to reset password.",
-                reset_link_sent: "Password reset link sent to your email!", wrong_old_password: "The old password you entered is incorrect!", local_acc_email: "Local Account (No Email)"
+                reset_link_sent: "Password reset link sent to your email!", wrong_old_password: "The old password you entered is incorrect!", local_acc_email: "Local Account (No Email)",
+                js_load_more: "Load More Articles", js_loading: "Loading..."
             },
             si: {
                 site_title: "දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය", select_lang: "භාෂාව / Language", hi_text: "ආයුබෝවන්,", welcome_title: "ආයුබෝවන්!", welcome_sub: "දිනපතා ඉතිරි කිරීමේ විස්තර ආරක්ෂිතව බලාගැනීමට ලොග් වෙන්න.",
@@ -404,11 +385,11 @@
                 js_spinning: "කරකවමින්...", js_no_articles: "දැනට ලිපි කිසිවක් නොමැත.", js_read_more: "තවත් කියවන්න", js_today: "අද", js_start_greet: "අභියෝගය අරඹමු!",
                 popup_blocked: "බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න.",
                 forgot_password: "මුරපදය අමතකද?", current_password_placeholder: "පැරණි මුරපදය (Old Password)", enter_email_reset: "මුරපදය අලුත් කිරීමට කරුණාකර ඉහළ කොටුවේ ඔබගේ ඊමේල් ලිපිනය ඇතුළත් කරන්න.",
-                reset_link_sent: "මුරපදය අලුත් කිරීමේ ලින්ක් එක ඔබගේ ඊමේල් එකට යැව්වා!", wrong_old_password: "ඔබ ලබා දුන් පැරණි මුරපදය වැරදියි!", local_acc_email: "Local ගිණුම (Email නැත)"
+                reset_link_sent: "මුරපදය අලුත් කිරීමේ ලින්ක් එක ඔබගේ ඊමේල් එකට යැව්වා!", wrong_old_password: "ඔබ ලබා දුන් පැරණි මුරපදය වැරදියි!", local_acc_email: "Local ගිණුම (Email නැත)",
+                js_load_more: "තවත් ලිපි පෙන්වන්න", js_loading: "කරුණාකර රැඳී සිටින්න..."
             }
         };
 
-        // 🟢 Default Language set to 'en'
         let currentLang = localStorage.getItem('dsc_lang') || 'en';
         function getCurrency() { return translations[currentLang].currency; }
 
@@ -429,11 +410,9 @@
 
             if (currentUserData || isLocalMode) { renderCalendar(); checkTodaySpin(); renderTargetUI(); }
             const noArticles = document.getElementById('noArticlesMsg'); if (noArticles) noArticles.innerText = translations[currentLang].js_no_articles;
+            const loadMoreBtn = document.getElementById('loadMoreBtnActual'); if (loadMoreBtn) loadMoreBtn.innerText = translations[currentLang].js_load_more;
         }
 
-        // =========================================
-        // 📌 NAVIGATION & UI LOGIC
-        // =========================================
         function switchView(viewName, navElement) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
@@ -452,7 +431,7 @@
         }
 
         // =========================================
-        // 📌 FIREBASE LOGIC
+        // 📌 FIREBASE LOGIC 
         // =========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U", authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
@@ -491,7 +470,6 @@
         }
 
         auth.onAuthStateChanged((user) => {
-            // Hide initial loader when auth state is confirmed
             const loader = document.getElementById('initialLoader');
             if(loader) loader.style.display = 'none';
 
@@ -601,7 +579,6 @@
             }
         }
 
-        // 🟢 Forgot Password Function
         function handleForgotPassword(fromSettings = false) {
             let email = "";
             if (fromSettings) {
@@ -610,16 +587,8 @@
                 email = document.getElementById('authEmail').value.trim();
             }
 
-            if (!email) {
-                showNotification(translations[currentLang].enter_email_reset, "warning");
-                return;
-            }
-
-            auth.sendPasswordResetEmail(email).then(() => {
-                showNotification(translations[currentLang].reset_link_sent, "success");
-            }).catch((error) => {
-                showNotification(error.message, "error");
-            });
+            if (!email) { showNotification(translations[currentLang].enter_email_reset, "warning"); return; }
+            auth.sendPasswordResetEmail(email).then(() => { showNotification(translations[currentLang].reset_link_sent, "success"); }).catch((error) => { showNotification(error.message, "error"); });
         }
 
         function logoutUser() {
@@ -627,73 +596,105 @@
         }
 
         // =========================================
-        // 📌 BLOGGER (HEADLESS CMS) & SEO URL LOGIC
+        // 📌 BLOGGER (HEADLESS CMS) - GRID & PAGINATION
         // =========================================
         const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
         let fetchedArticles = []; 
+        let currentStartIndex = 1;
+        const postsPerPage = 10;
+        let isFetchingPosts = false;
 
-        function loadBloggerPosts() {
+        function loadBloggerPosts(startIndex = 1) {
+            if(isFetchingPosts) return;
+            isFetchingPosts = true;
             const script = document.createElement('script');
-            script.src = `${myBloggerURL}/feeds/posts/default?alt=json-in-script&callback=handleBloggerPosts&max-results=10`;
+            script.src = `${myBloggerURL}/feeds/posts/default?alt=json-in-script&callback=handleBloggerPosts&start-index=${startIndex}&max-results=${postsPerPage}`;
             document.body.appendChild(script);
         }
 
         window.handleBloggerPosts = function(data) {
-            const blogGrid = document.getElementById('blogGrid'); if(!blogGrid) return;
-            blogGrid.innerHTML = '';
+            isFetchingPosts = false;
+            const blogGrid = document.getElementById('blogGrid'); 
+            if(!blogGrid) return;
+            
+            const noMsg = document.getElementById('noArticlesMsg');
+            if(noMsg) noMsg.remove();
+
+            const oldLoadCont = document.getElementById('loadMoreContainer');
+            if(oldLoadCont) oldLoadCont.remove();
+
             const entries = data.feed.entry || [];
-            fetchedArticles = entries; 
 
-            if (entries.length === 0) { blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px;">${translations[currentLang].js_no_articles}</p>`; return; }
+            if (entries.length === 0 && fetchedArticles.length === 0) { 
+                blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">${translations[currentLang].js_no_articles}</p>`; 
+                return; 
+            }
 
-            entries.forEach((entry, index) => {
+            entries.forEach((entry) => {
+                const globalIndex = fetchedArticles.length;
+                fetchedArticles.push(entry);
                 const title = entry.title.$t;
-                // Get Blogger Post ID
                 const postId = entry.id.$t.split('post-')[1]; 
                 
-                let content = entry.summary ? entry.summary.$t : (entry.content ? entry.content.$t : "");
-                let tempDiv = document.createElement("div"); tempDiv.innerHTML = content;
-                let textContent = tempDiv.textContent || tempDiv.innerText || "";
-                let snippet = textContent.trim().substring(0, 100) + "...";
+                let imgUrl = 'https://via.placeholder.com/400x250?text=No+Image';
+                
+                // Try to get thumbnail or first image in content
+                if (entry.media$thumbnail) {
+                    imgUrl = entry.media$thumbnail.url.replace(/\/s72\-c\//, '/w400-h250-c/');
+                } else if (entry.content && entry.content.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                    imgUrl = entry.content.$t.match(/<img.+?src=["'](.*?)["']/)[1];
+                } else if (entry.summary && entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                    imgUrl = entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)[1];
+                }
 
                 blogGrid.innerHTML += `
-                    <div class="article-card" onclick="openArticle('${postId}', ${index})">
-                        <h3>${title}</h3>
-                        <p>${snippet}</p>
-                        <button class="read-more-btn"><span data-i18n="js_read_more">${translations[currentLang].js_read_more}</span> <i class="fas fa-arrow-right"></i></button>
+                    <div class="article-card" onclick="openArticle('${postId}', ${globalIndex})">
+                        <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
+                        <div class="article-info">
+                            <h3>${title}</h3>
+                        </div>
                     </div>`;
             });
+
+            // Add Load More button if we fetched a full page
+            if (entries.length === postsPerPage) {
+                blogGrid.innerHTML += `
+                    <div id="loadMoreContainer" style="grid-column: 1 / -1; margin-top: 10px;">
+                        <button id="loadMoreBtnActual" class="load-more-btn" onclick="loadNextPosts()">
+                            ${translations[currentLang].js_load_more}
+                        </button>
+                    </div>`;
+            }
         };
 
-        // 🌟 SEO Friendly Open Article (Updates URL without reloading)
+        window.loadNextPosts = function() {
+            const btn = document.getElementById('loadMoreBtnActual');
+            if(btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLang].js_loading}`;
+            currentStartIndex += postsPerPage;
+            loadBloggerPosts(currentStartIndex);
+        }
+
         window.openArticle = function(postId, index) {
             if (!fetchedArticles[index]) return;
             const entry = fetchedArticles[index];
-            
-            // Push State to URL for SEO
             window.history.pushState({articleId: postId}, entry.title.$t, '?article=' + postId);
             
             document.getElementById('fullArticleTitle').innerText = entry.title.$t;
             document.getElementById('fullArticleContent').innerHTML = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
-            
             switchView('article', document.getElementById('nav-explore'));
         }
 
-        // Go back and clear URL
         window.closeArticleView = function() {
             window.history.pushState({}, document.title, window.location.pathname);
             switchView('hub', document.getElementById('nav-explore'));
         }
 
-        // Fetch Single Post from URL directly (If opened from direct link)
         function checkDirectArticleLink() {
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('article');
             if (articleId) {
-                // Keep the app hidden initially or show loading until post loads
                 document.getElementById('fullArticleTitle').innerText = "Loading Article...";
                 switchView('article', document.getElementById('nav-explore'));
-                
                 const script = document.createElement('script');
                 script.src = `${myBloggerURL}/feeds/posts/default/${articleId}?alt=json-in-script&callback=handleSinglePost`;
                 document.body.appendChild(script);
@@ -721,7 +722,7 @@
 
         function initializeApp() { 
             setLanguage(currentLang); buildWheel('outerWheel', outerVals, 150, false, false); buildWheel('innerWheel', innerVals, 85, false, true); 
-            loadBloggerPosts(); 
+            loadBloggerPosts(currentStartIndex); // Initial Load
             setTimeout(checkDirectArticleLink, 500); 
         }
         document.addEventListener("DOMContentLoaded", initializeApp);
@@ -772,19 +773,10 @@
                 document.getElementById('settingsName').value = name; 
                 document.getElementById('settingsAvatarPreview').src = photo;
                 
-                // Set Settings Display Logic
                 document.getElementById('settingsEmailWrapper').style.display = 'block';
-                if(currentUser.email) {
-                    document.getElementById('settingsEmail').value = currentUser.email;
-                } else {
-                    document.getElementById('settingsEmail').value = translations[currentLang].local_acc_email;
-                }
+                if(currentUser.email) { document.getElementById('settingsEmail').value = currentUser.email; } else { document.getElementById('settingsEmail').value = translations[currentLang].local_acc_email; }
 
-                if (currentUser.providerData.some(p => p.providerId === 'password')) { 
-                    document.getElementById('settingsPasswordSection').style.display = 'block'; 
-                } else { 
-                    document.getElementById('settingsPasswordSection').style.display = 'none'; 
-                }
+                if (currentUser.providerData.some(p => p.providerId === 'password')) { document.getElementById('settingsPasswordSection').style.display = 'block'; } else { document.getElementById('settingsPasswordSection').style.display = 'none'; }
                 
                 renderCalendar(); checkTodaySpin(); renderTargetUI();
             });
@@ -836,27 +828,16 @@
                     }).catch(error => { showNotification(error.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false; });
                 };
 
-                // Handle password update securely
                 if (newPass) {
                     if(!currentPass) {
                         showNotification(translations[currentLang].wrong_old_password, "warning");
-                        btn.innerHTML = originalHTML; btn.disabled = false;
-                        return;
+                        btn.innerHTML = originalHTML; btn.disabled = false; return;
                     }
                     const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, currentPass);
                     currentUser.reauthenticateWithCredential(credential).then(() => {
-                        currentUser.updatePassword(newPass).then(() => {
-                            processUpdates();
-                        }).catch(err => {
-                            showNotification(err.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false;
-                        });
-                    }).catch(err => {
-                        showNotification(translations[currentLang].wrong_old_password, "error");
-                        btn.innerHTML = originalHTML; btn.disabled = false;
-                    });
-                } else {
-                    processUpdates();
-                }
+                        currentUser.updatePassword(newPass).then(() => { processUpdates(); }).catch(err => { showNotification(err.message, "error"); btn.innerHTML = originalHTML; btn.disabled = false; });
+                    }).catch(err => { showNotification(translations[currentLang].wrong_old_password, "error"); btn.innerHTML = originalHTML; btn.disabled = false; });
+                } else { processUpdates(); }
             }
         }
 
