@@ -20,64 +20,88 @@
 
     <div class="bg-animation"></div>
 
+    <!-- 📌 INITIAL LOADER (To prevent popup flashing) -->
+    <div id="initialLoader" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--primary-light); z-index:9999999;">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+    </div>
+
     <!-- 📌 FIREBASE AUTHENTICATION -->
-    <div id="authModal" class="my-modal active">
+    <!-- Removed 'active' class from my-modal to prevent it from showing before Firebase checks auth state -->
+    <div id="authModal" class="my-modal">
         <div class="my-modal-content">
+            
+            <!-- 🌐 Language Toggle on Modal -->
+            <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
+                <div class="lang-toggle" style="gap: 5px; margin: 0;">
+                    <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="setLanguage('si')">සිං</button>
+                    <button class="lang-btn btn-en" style="padding: 5px 10px; font-size: 0.8rem;" onclick="setLanguage('en')">EN</button>
+                </div>
+            </div>
+
             <div id="authMainUI">
                 <img src="dsc_logo.png" alt="Logo" style="width: 70px; height: 70px; border-radius:50%; margin-bottom:10px; border: 2px solid rgba(255,255,255,0.2);" onerror="this.src='https://via.placeholder.com/70?text=DSC'">
-                <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 5px; text-align:center;" data-i18n="welcome_title">ආයුබෝවන්!</h2>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="welcome_sub">දිනපතා ඉතිරි කිරීමේ විස්තර ආරක්ෂිතව බලාගැනීමට ලොග් වෙන්න.</p>
+                <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 5px; text-align:center;" data-i18n="welcome_title">Welcome!</h2>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="welcome_sub">Sign in to save and sync your progress securely.</p>
+                
                 <div class="auth-tabs">
-                    <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')" data-i18n="tab_login">ලොග් වෙන්න</div>
-                    <div class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')" data-i18n="tab_signup">ලියාපදිංචි වෙන්න</div>
+                    <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')" data-i18n="tab_login">Login</div>
+                    <div class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')" data-i18n="tab_signup">Sign Up</div>
                 </div>
+                
                 <div id="authSignupFields" style="display: none;">
                     <div class="auth-input-wrapper">
                         <i class="fas fa-user icon-left"></i>
-                        <input type="text" id="authName" class="auth-input" placeholder="ඔබගේ නම" data-i18n-placeholder="name_placeholder">
+                        <input type="text" id="authName" class="auth-input" placeholder="Your Name" data-i18n-placeholder="name_placeholder">
                     </div>
                 </div>
+                
                 <div class="auth-input-wrapper">
                     <i class="fas fa-envelope icon-left"></i>
-                    <input type="email" id="authEmail" class="auth-input" placeholder="ඊමේල් ලිපිනය" data-i18n-placeholder="email_placeholder">
+                    <input type="email" id="authEmail" class="auth-input" placeholder="Email Address" data-i18n-placeholder="email_placeholder">
                 </div>
+                
                 <div class="auth-input-wrapper">
                     <i class="fas fa-lock icon-left"></i>
-                    <input type="password" id="authPassword" class="auth-input" placeholder="මුරපදය (Password)" data-i18n-placeholder="password_placeholder">
+                    <input type="password" id="authPassword" class="auth-input" placeholder="Password" data-i18n-placeholder="password_placeholder">
                     <i class="fas fa-eye password-toggle" onclick="togglePassword('authPassword', this)"></i>
                 </div>
+                
                 <button class="action-btn primary" id="authSubmitBtn" onclick="handleAuthSubmit()">
-                    <span id="authSubmitText" data-i18n="tab_login">ලොග් වෙන්න</span>
+                    <span id="authSubmitText" data-i18n="tab_login">Login</span>
                 </button>
+                
                 <button class="google-btn" onclick="loginWithGoogle()">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20"> 
-                    <span data-i18n="google_login">Google හරහා ලොග් වෙන්න</span>
+                    <!-- ✅ Fixed Google Icon -->
+                    <i class="fab fa-google" style="color: #ea4335; font-size: 1.1rem;"></i>
+                    <span data-i18n="google_login">Continue with Google</span>
                 </button>
+                
                 <hr style="border: none; border-top: 1px dashed var(--glass-border); margin: 25px 0 20px;">
-                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;" data-i18n="guest_prompt">ලොග් වීමට අවශ්‍ය නැත්නම් මෙතනින් රෝදය කරකවන්න</p>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;" data-i18n="guest_prompt">If you don't want to log in, spin the wheel from here</p>
                 <button class="action-btn secondary" onclick="showGuestUI()">
-                    <i class="fas fa-gamepad"></i> <span data-i18n="guest_btn">Local ගිණුමකින් යන්න</span>
+                    <i class="fas fa-gamepad"></i> <span data-i18n="guest_btn">Use Local Account</span>
                 </button>
             </div>
+            
             <!-- Local Guest UI -->
             <div id="guestUI" style="display: none;">
-                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--primary-light);" data-i18n="guest_btn">Local ගිණුමකින් යන්න</h2>
+                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--primary-light);" data-i18n="guest_btn">Use Local Account</h2>
                 <div class="attention-note">
                     <i class="fas fa-exclamation-triangle"></i>
                     <div>
-                        <strong data-i18n="important">වැදගත්:</strong> 
-                        <span data-i18n="guest_warning">ඔබගේ දත්ත ආරක්ෂිතව පවතින බවට අපට සහතික විය නොහැක. යම් හෙයකින් දත්ත මැකී ගියහොත් අපට ඒ සඳහා වගකිය නොහැක. තවද රෝදය කැරකැවිය හැක්කේ දිනකට එක් වරක් පමණි.</span>
+                        <strong data-i18n="important">Important:</strong> 
+                        <span data-i18n="guest_warning">We cannot guarantee your data will be saved permanently. If data is lost locally, we cannot recover it.</span>
                     </div>
                 </div>
                 <div class="auth-input-wrapper">
                     <i class="fas fa-user icon-left"></i>
-                    <input type="text" id="guestNameInput" class="auth-input" placeholder="ඔබගේ නම" data-i18n-placeholder="name_placeholder">
+                    <input type="text" id="guestNameInput" class="auth-input" placeholder="Your Name" data-i18n-placeholder="name_placeholder">
                 </div>
                 <button class="action-btn primary" onclick="handleGuestSubmit()">
-                    <span data-i18n="start_btn">ආරම්භ කරමු</span> <i class="fas fa-arrow-right"></i>
+                    <span data-i18n="start_btn">Let's Start</span> <i class="fas fa-arrow-right"></i>
                 </button>
                 <button class="action-btn secondary" style="margin-top: 15px;" onclick="hideGuestUI()">
-                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">ආපසු</span>
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
                 </button>
             </div>
         </div>
@@ -86,17 +110,17 @@
     <!-- 📌 TARGET SETTING MODAL -->
     <div id="targetModal" class="my-modal">
         <div class="my-modal-content">
-            <h2 style="font-size: 1.4rem; margin-bottom:10px; color: var(--primary-light);"><i class="fas fa-bullseye"></i> <span data-i18n="target_title">ඉලක්කයක් සකසමු</span></h2>
+            <h2 style="font-size: 1.4rem; margin-bottom:10px; color: var(--primary-light);"><i class="fas fa-bullseye"></i> <span data-i18n="target_title">Set a Target</span></h2>
             <div class="attention-note">
                 <i class="fas fa-exclamation-circle"></i>
-                <div><span data-i18n="target_warning">වැදගත්: මෙම අගය නැවත වෙනස් කළ හැක්කේ දින 30 කට පසුව පමණි.</span></div>
+                <div><span data-i18n="target_warning">Important: You can only change this amount after 30 days.</span></div>
             </div>
             <div class="auth-input-wrapper">
                 <i class="fas fa-money-bill-wave icon-left"></i>
-                <input type="number" id="targetAmountInput" class="auth-input" placeholder="ඉලක්කගත මුදල (උදා: 100000)" data-i18n-placeholder="target_placeholder">
+                <input type="number" id="targetAmountInput" class="auth-input" placeholder="Target Amount (e.g. 100000)" data-i18n-placeholder="target_placeholder">
             </div>
-            <button class="action-btn primary" style="margin-bottom:10px;" onclick="saveTargetAmount()"><i class="fas fa-check"></i> <span data-i18n="modal_save">සුරකින්න</span></button>
-            <button class="action-btn secondary" onclick="closeTargetModal()"><span data-i18n="modal_cancel">අවලංගු කරන්න</span></button>
+            <button class="action-btn primary" style="margin-bottom:10px;" onclick="saveTargetAmount()"><i class="fas fa-check"></i> <span data-i18n="modal_save">Save</span></button>
+            <button class="action-btn secondary" onclick="closeTargetModal()"><span data-i18n="modal_cancel">Cancel</span></button>
         </div>
     </div>
 
@@ -107,7 +131,7 @@
             <div class="header-left-group">
                 <img src="dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
                 <div class="title-group">
-                    <h1 class="main-title" data-i18n="site_title">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</h1>
+                    <h1 class="main-title" data-i18n="site_title">Daily Saving Challenge</h1>
                 </div>
             </div>
             <div class="user-profile-wrapper" onclick="switchView('settings', document.getElementById('nav-settings'))">
@@ -126,8 +150,8 @@
                 <div class="live-total-container">
                     <div class="live-total">
                         <i class="fas fa-piggy-bank"></i>
-                        <span data-i18n="save_label" style="font-size: 1rem; color: var(--text-secondary); margin-right: 5px;">ඉතුරු කරමු:</span>
-                        <span class="amount" id="liveAmount">රු. 0</span>
+                        <span data-i18n="save_label" style="font-size: 1rem; color: var(--text-secondary); margin-right: 5px;">Let's Save:</span>
+                        <span class="amount" id="liveAmount">Rs. 0</span>
                     </div>
                 </div>
                 <div class="wheel-section">
@@ -139,17 +163,17 @@
                         <div class="wheel-center"><i class="fas fa-star"></i></div>
                     </div>
                     <button id="spinBtn" class="spin-btn" onclick="spin()">
-                        <i class="fas fa-sync-alt"></i> <span id="spinBtnText" data-i18n="spin_btn">කරකවමු</span>
+                        <i class="fas fa-sync-alt"></i> <span id="spinBtnText" data-i18n="spin_btn">Spin Wheel</span>
                     </button>
                     <button class="custom-btn" onclick="openCustom()">
-                        <i class="fas fa-cog"></i> <span data-i18n="change_wheel_btn">ලොකු රවුමේ අගයන් වෙනස් කරමු</span>
+                        <i class="fas fa-cog"></i> <span data-i18n="change_wheel_btn">Change Outer Wheel Values</span>
                     </button>
                 </div>
                 <div id="homeTargetWinNote" class="target-win-note">
-                    <h2>🎉 <span data-i18n="target_achieved_msg">සුභපැතුම්! ඔබ ඔබේ ඉලක්කය සම්පූර්ණ කර ඇත!</span> 🎉</h2>
-                    <p data-i18n="win_note_desc">අද දවස ඔබට සුවිශේෂී දවසක්! ඔබගේ කැපවීම සාර්ථක වී ඇත.</p>
+                    <h2>🎉 <span data-i18n="target_achieved_msg">Congratulations! You've achieved your target!</span> 🎉</h2>
+                    <p data-i18n="win_note_desc">Today is a special day! Your dedication has paid off.</p>
                     <button class="action-btn primary" onclick="openTargetModal()">
-                        <i class="fas fa-plus"></i> <span data-i18n="new_target_btn">නව ඉලක්කයක් යොදන්න</span>
+                        <i class="fas fa-plus"></i> <span data-i18n="new_target_btn">Set a New Target</span>
                     </button>
                 </div>
 
@@ -157,27 +181,27 @@
                 <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner (Middle)</span></div> -->
 
                 <div class="purpose-section">
-                    <h2><i class="fas fa-bullseye"></i> <span data-i18n="purpose_title">අභියෝගයේ අරමුන</span></h2>
-                    <p data-i18n="purpose_desc">ඔබේ අනාගතය සුරක්ෂිත කර ගැනීම සඳහා දිනපතා කුඩා මුදලක් හෝ ඉතිරි කිරීමේ පුරුද්දක් ඇති කිරීම මෙහි ප්‍රධාන අරමුණයි. මෙම Wheel එක මගින් ඔබට දිනපතා ඉතිරි කළ යුතු මුදල අහඹු ලෙස ලබා දෙන අතර, එය විනෝදාත්මක අභියෝගයක් ලෙසින් ඔබේ ඉතිරුම් ගිණුම වර්ධනය කර ගැනීමට උපකාරී වේ.</p>
+                    <h2><i class="fas fa-bullseye"></i> <span data-i18n="purpose_title">Purpose of the Challenge</span></h2>
+                    <p data-i18n="purpose_desc">Cultivate the habit of saving a small amount daily to secure your future. This Wheel randomly gives you an amount to save daily, helping you grow your savings account through a fun challenge.</p>
                 </div>
             </div>
 
             <!-- 🔹 TAB 2: CALENDAR -->
             <div id="view-calendar" class="view-section" id="calendarCaptureArea">
                 <div class="calendar-section">
-                    <h2><i class="fas fa-calendar-alt"></i> <span data-i18n="calendar_title">මගේ ඉතිරි කිරීමේ සටහන</span></h2>
+                    <h2><i class="fas fa-calendar-alt"></i> <span data-i18n="calendar_title">My Savings Record</span></h2>
                     <div class="calendar-grid" id="calendarGrid"></div>
                     <div class="monthly-total-box">
                         <button id="showTotalBtn" class="action-btn secondary" style="width: auto; padding: 12px 30px;" onclick="showMonthlyTotal()">
-                            <i class="fas fa-eye"></i> <span data-i18n="show_total_btn">මේ මාසයේ මුළු ඉතිරිය පෙන්වන්න</span>
+                            <i class="fas fa-eye"></i> <span data-i18n="show_total_btn">Show This Month's Total</span>
                         </button>
                         <div id="totalAmountContainer" class="monthly-total-display" style="display:none;">
-                            <div style="font-size: 1rem; color: var(--text-secondary); margin-bottom:5px;" data-i18n="month_total_title">මේ මාසයේ මුළු ඉතිරිය</div>
-                            <div class="total-amount" id="monthTotalAmount">රු. 0</div>
+                            <div style="font-size: 1rem; color: var(--text-secondary); margin-bottom:5px;" data-i18n="month_total_title">Total Savings This Month</div>
+                            <div class="total-amount" id="monthTotalAmount">Rs. 0</div>
                         </div>
                         <div id="calendarDownloadArea" style="text-align: center; margin-top: 15px; display: none; width: 100%;">
                             <button class="action-btn primary" onclick="downloadCalendar()">
-                                <i class="fas fa-download"></i> <span data-i18n="download_calendar">මේ මාසේ සටහන ඩවුන්ලෝඩ් කරගමු</span>
+                                <i class="fas fa-download"></i> <span data-i18n="download_calendar">Download This Month's Record</span>
                             </button>
                         </div>
                     </div>
@@ -188,8 +212,8 @@
                 <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
 
                 <div class="live-stats-container">
-                    <div class="stat-badge"><span><i class="fas fa-users" style="margin-right:8px; color: var(--primary-light);"></i><span data-i18n="stats_participants">සහභාගී වූ ගණන:</span></span><span id="userCountDisplay" style="color: white;">...</span></div>
-                    <div class="stat-badge"><span><i class="fas fa-trophy" style="margin-right:8px; color: var(--accent);"></i><span data-i18n="stats_winner">අවසන් ඉතුරුම්කරු:</span></span><span id="lastWinnerDisplay" style="color: white;">...</span></div>
+                    <div class="stat-badge"><span><i class="fas fa-users" style="margin-right:8px; color: var(--primary-light);"></i><span data-i18n="stats_participants">Total Participants:</span></span><span id="userCountDisplay" style="color: white;">...</span></div>
+                    <div class="stat-badge"><span><i class="fas fa-trophy" style="margin-right:8px; color: var(--accent);"></i><span data-i18n="stats_winner">Last Saver:</span></span><span id="lastWinnerDisplay" style="color: white;">...</span></div>
                 </div>
             </div>
 
@@ -199,16 +223,16 @@
                 <!-- ❌ Adsense Disabled for Approval -->
                 <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
                 
-                <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">මූල්‍ය උපදෙස් සහ ලිපි</span></h2>
+                <h2 class="section-title"><i class="fas fa-book-open"></i> <span data-i18n="blog_title">Financial Advice & Articles</span></h2>
                 <div id="blogGrid">
-                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px;">ලිපි ලබා ගනිමින්...</p>
+                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px;">Fetching articles...</p>
                 </div>
             </div>
 
             <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW (WITH SEO PARAMS) -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
-                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">ආපසු</span>
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Back</span>
                 </button>
                 
                 <!-- ❌ Adsense Disabled for Approval -->
@@ -229,14 +253,14 @@
             <!-- 🔹 TAB 5: SETTINGS -->
             <div id="view-settings" class="view-section">
                 <div class="settings-card">
-                    <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span data-i18n="select_lang">භාෂාව / Language</span></h3>
+                    <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span data-i18n="select_lang">Language / භාෂාව</span></h3>
                     <div class="lang-toggle">
-                        <button class="lang-btn btn-si active" onclick="setLanguage('si')">Sinhala</button>
+                        <button class="lang-btn btn-si" onclick="setLanguage('si')">Sinhala</button>
                         <button class="lang-btn btn-en" onclick="setLanguage('en')">English</button>
                     </div>
                 </div>
                 <div class="settings-card">
-                    <h3><i class="fas fa-user-edit" style="margin-right:8px; color:var(--primary-light);"></i> <span data-i18n="profile_settings">ගිණුමේ සැකසුම් (Profile)</span></h3>
+                    <h3><i class="fas fa-user-edit" style="margin-right:8px; color:var(--primary-light);"></i> <span data-i18n="profile_settings">User Profile</span></h3>
                     <div style="text-align: center; margin-bottom: 20px;">
                         <label for="avatarUpload" style="cursor: pointer; position: relative; display: inline-block;">
                             <img id="settingsAvatarPreview" src="" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); background: var(--dark-lighter);">
@@ -246,15 +270,15 @@
                     </div>
                     <div class="auth-input-wrapper">
                         <i class="fas fa-user icon-left"></i>
-                        <input type="text" id="settingsName" class="auth-input" placeholder="ඔබගේ නම" data-i18n-placeholder="name_placeholder">
+                        <input type="text" id="settingsName" class="auth-input" placeholder="Your Name" data-i18n-placeholder="name_placeholder">
                     </div>
                     <div class="auth-input-wrapper" id="settingsPasswordWrapper">
                         <i class="fas fa-lock icon-left"></i>
-                        <input type="password" id="settingsPassword" class="auth-input" placeholder="අලුත් මුරපදය (New Password)" data-i18n-placeholder="new_password_placeholder">
+                        <input type="password" id="settingsPassword" class="auth-input" placeholder="New Password" data-i18n-placeholder="new_password_placeholder">
                         <i class="fas fa-eye password-toggle" onclick="togglePassword('settingsPassword', this)"></i>
                     </div>
                     <button class="action-btn success" id="saveProfileBtn" onclick="saveProfileSettings()">
-                        <i class="fas fa-save"></i> <span data-i18n="save_profile">සුරකින්න</span>
+                        <i class="fas fa-save"></i> <span data-i18n="save_profile">Save Changes</span>
                     </button>
                 </div>
                 <div id="targetDisplaySettings" class="target-card"></div>
@@ -263,7 +287,7 @@
                 <!-- <div class="adsense-slot"><i class="fas fa-ad"></i><span>AdSense Banner</span></div> -->
 
                 <button class="logout-btn" onclick="logoutUser()">
-                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout_btn">ඉවත් වෙන්න (Logout)</span>
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout_btn">Logout</span>
                 </button>
             </div>
         </div>
@@ -282,7 +306,7 @@
             </div>
 
             <div class="footer-text">
-                &copy; 2026 Daily Saving Challenge<br><span data-i18n="footer_rights">සියලුම හිමිකම් ඇවිරිණි.</span>
+                &copy; 2026 Daily Saving Challenge<br><span data-i18n="footer_rights">All Rights Reserved.</span>
             </div>
         </div>
     </div>
@@ -290,33 +314,33 @@
     <!-- 📌 BOTTOM NAVIGATION BAR -->
     <div class="bottom-nav" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="switchView('home', this)">
-            <i class="fas fa-home"></i><span data-i18n="nav_home">මුල් පිටුව</span>
+            <i class="fas fa-home"></i><span data-i18n="nav_home">Home</span>
         </div>
         <div class="nav-item" onclick="switchView('calendar', this)">
-            <i class="fas fa-calendar-alt"></i><span data-i18n="nav_calendar">දින දර්ශනය</span>
+            <i class="fas fa-calendar-alt"></i><span data-i18n="nav_calendar">Calendar</span>
         </div>
         <div class="nav-item" id="nav-explore" onclick="switchView('hub', this)">
-            <i class="fas fa-book-open"></i><span data-i18n="nav_explore">තොරතුරු</span>
+            <i class="fas fa-book-open"></i><span data-i18n="nav_explore">Explore</span>
         </div>
         <div class="nav-item" onclick="window.location.href='about.html'">
-            <i class="fas fa-info-circle"></i><span data-i18n="nav_about">අපි ගැන</span>
+            <i class="fas fa-info-circle"></i><span data-i18n="nav_about">About Us</span>
         </div>
         <div class="nav-item" id="nav-settings" onclick="switchView('settings', this)">
-            <i class="fas fa-cog"></i><span data-i18n="nav_settings">සැකසුම්</span>
+            <i class="fas fa-cog"></i><span data-i18n="nav_settings">Settings</span>
         </div>
     </div>
 
     <!-- 📌 MODALS -->
     <div id="customModal" class="my-modal">
         <div class="my-modal-content">
-            <h2 style="font-size: 1.2rem; margin-bottom:5px;" data-i18n="modal_setup_title">ලොකු රවුම සකසන්න</h2>
-            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="modal_setup_sub">උපරිම අගය තෝරා ගන්න (0 - 900)</p>
+            <h2 style="font-size: 1.2rem; margin-bottom:5px;" data-i18n="modal_setup_title">Setup Wheel</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="modal_setup_sub">Select Max Value (0 - 900)</p>
             <div class="slider-container">
                 <input type="range" id="wheelSlider" min="0" max="900" step="100" value="900" oninput="updateSliderText(this.value)">
                 <div class="slider-value" id="sliderValDisplay">900</div>
             </div>
-            <button class="action-btn primary" style="margin-bottom:10px;" onclick="saveCustom()"><i class="fas fa-check"></i> <span data-i18n="modal_save">සුරකින්න</span></button>
-            <button class="action-btn secondary" onclick="closeCustom()"><span data-i18n="modal_cancel">අවලංගු කරන්න</span></button>
+            <button class="action-btn primary" style="margin-bottom:10px;" onclick="saveCustom()"><i class="fas fa-check"></i> <span data-i18n="modal_save">Save</span></button>
+            <button class="action-btn secondary" onclick="closeCustom()"><span data-i18n="modal_cancel">Cancel</span></button>
         </div>
     </div>
 
@@ -326,12 +350,12 @@
                 <div id="captureDate" class="capture-date"></div>
                 <img id="popupAvatar" src="" alt="Profile" class="profile-pic">
                 <h2 id="cardName">Hi Name</h2>
-                <p class="capture-subtitle" data-i18n="card_subtitle" style="margin:5px 0 10px;">අද ඔයාට ඉතුරු කරනන් වෙන මුදල</p>
+                <p class="capture-subtitle" data-i18n="card_subtitle" style="margin:5px 0 10px;">Amount to save today</p>
                 <div class="amount" id="cardTotal">Rs. 0</div>
                 <div class="capture-footer" style="margin-top:15px; font-size:0.9rem;"><i class="fab fa-facebook"></i>Daily Saving Challenge</div>
             </div>
             <button class="action-btn primary" style="margin-bottom:10px;" onclick="shareAndDownload()"><i class="fas fa-download"></i> Download & Share</button>
-            <button class="action-btn secondary" onclick="closeModal()"><span data-i18n="card_close">වසන්න</span></button>
+            <button class="action-btn secondary" onclick="closeModal()"><span data-i18n="card_close">Close</span></button>
         </div>
     </div>
 
@@ -378,7 +402,8 @@
             }
         };
 
-        let currentLang = localStorage.getItem('dsc_lang') || 'si';
+        // 🟢 Default Language set to 'en'
+        let currentLang = localStorage.getItem('dsc_lang') || 'en';
         function getCurrency() { return translations[currentLang].currency; }
 
         function setLanguage(lang) {
@@ -460,6 +485,10 @@
         }
 
         auth.onAuthStateChanged((user) => {
+            // Hide initial loader when auth state is confirmed
+            const loader = document.getElementById('initialLoader');
+            if(loader) loader.style.display = 'none';
+
             if (user) {
                 isLocalMode = false; localStorage.setItem('dsc_local_session', 'false');
                 currentUser = user; launchApp(); loadUserData(user.uid);
@@ -473,7 +502,10 @@
                     document.getElementById('settingsName').value = localUserName; document.getElementById('settingsPasswordWrapper').style.display = 'none';
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 } else {
-                    document.getElementById('authModal').classList.add('active'); document.getElementById('app-wrapper').style.display = 'none'; document.getElementById('bottomNav').style.display = 'none';
+                    // Only show Auth modal if NOT logged in
+                    document.getElementById('authModal').classList.add('active'); 
+                    document.getElementById('app-wrapper').style.display = 'none'; 
+                    document.getElementById('bottomNav').style.display = 'none';
                 }
             }
         });
