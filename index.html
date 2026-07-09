@@ -357,7 +357,8 @@
                 target_placeholder: "Target Amount (e.g. 100000)", target_remaining: "Remaining for Target:", target_achieved_msg: "Congratulations! You've achieved your target!", win_note_desc: "Today is a special day! Your dedication has paid off.",
                 new_target_btn: "Set a New Target", target_lock_msg: "You can change your target in {days} days.", no_target_title: "No Target Set", js_enter_all: "Please fill out all fields!",
                 js_enter_name: "Please enter your name!", js_auth_success: "Successfully logged in!", js_auth_error: "Authentication Failed. Please check details.", js_completed: "Completed Today",
-                js_spinning: "Spinning...", js_no_articles: "No articles available currently.", js_read_more: "Read More", js_today: "Today", js_start_greet: "let's start the challenge!"
+                js_spinning: "Spinning...", js_no_articles: "No articles available currently.", js_read_more: "Read More", js_today: "Today", js_start_greet: "let's start the challenge!",
+                popup_blocked: "Popup blocked by browser! Please use Email/Password to login."
             },
             si: {
                 site_title: "දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය", select_lang: "භාෂාව / Language", hi_text: "ආයුබෝවන්,", welcome_title: "ආයුබෝවන්!", welcome_sub: "දිනපතා ඉතිරි කිරීමේ විස්තර ආරක්ෂිතව බලාගැනීමට ලොග් වෙන්න.",
@@ -375,7 +376,8 @@
                 target_placeholder: "ඉලක්කගත මුදල (උදා: 100000)", target_remaining: "ඉලක්කයට තව:", target_achieved_msg: "සුභපැතුම්! ඔබ ඔබේ ඉලක්කය සම්පූර්ණ කර ඇත!", win_note_desc: "අද දවස ඔබට සුවිශේෂී දවසක්! ඔබගේ කැපවීම සාර්ථක වී ඇත.",
                 new_target_btn: "නව ඉලක්කයක් යොදන්න", target_lock_msg: "ඔබට ඉලක්කය වෙනස් කිරීමට තව දින {days} ක් ඉතිරිව ඇත.", no_target_title: "කිසිදු ඉලක්කයක් යොදා නැත", js_enter_all: "කරුණාකර සියලුම විස්තර පුරවන්න!",
                 js_enter_name: "කරුණාකර ඔබගේ නම ඇතුළත් කරන්න!", js_auth_success: "සාර්ථකව ලොග් විය!", js_auth_error: "ඇතුළත් කළ විස්තර වැරදියි. නැවත උත්සාහ කරන්න.", js_completed: "අද සම්පූර්ණයි",
-                js_spinning: "කරකවමින්...", js_no_articles: "දැනට ලිපි කිසිවක් නොමැත.", js_read_more: "තවත් කියවන්න", js_today: "අද", js_start_greet: "අභියෝගය අරඹමු!"
+                js_spinning: "කරකවමින්...", js_no_articles: "දැනට ලිපි කිසිවක් නොමැත.", js_read_more: "තවත් කියවන්න", js_today: "අද", js_start_greet: "අභියෝගය අරඹමු!",
+                popup_blocked: "බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න."
             }
         };
 
@@ -434,19 +436,6 @@
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(); const database = firebase.database();
-
-        // 🟢 Handle Mobile Google Redirect Result
-        auth.getRedirectResult().then((result) => {
-            if (result && result.user) {
-                const user = result.user;
-                database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
-                syncLocalDataToCloud(user); 
-                showNotification(translations[currentLang].js_auth_success, "success");
-            }
-        }).catch(error => { 
-            console.error("Redirect Auth Error:", error);
-            if(error.message) showNotification(error.message, "error"); 
-        });
 
         let globalSpinCount = 0; let currentUser = null; let currentUserData = null; let trackingData = {};
         let isLocalMode = localStorage.getItem('dsc_local_session') === 'true';
@@ -529,15 +518,33 @@
             renderCalendar(); checkTodaySpin(); renderTargetUI(); showNotification(`${translations[currentLang].hi_text} ${localUserName}, ${translations[currentLang].js_start_greet}`, "success");
         }
 
-        // 🟢 Use Redirect Instead of Popup for Mobile Compatibility
+        // 🟢 Reverted back to Popup for Mobile Compatibility (To fix sessionStorage issue)
         function loginWithGoogle() {
             const btn = document.getElementById('googleLoginBtn');
+            const originalHTML = btn.innerHTML;
             if(btn) {
-                btn.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#555;"></i> <span style="color:#555;">Redirecting...</span>`;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-i18n="google_login">Connecting...</span>`;
                 btn.disabled = true;
             }
+            
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithRedirect(provider);
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
+                syncLocalDataToCloud(user); 
+                showNotification(translations[currentLang].js_auth_success, "success");
+                if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
+            }).catch(error => { 
+                console.error("Auth Error:", error);
+                if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
+                
+                // Specific error handling for Popup Blockers on Mobile
+                if(error.code === 'auth/popup-blocked') {
+                    showNotification(translations[currentLang].popup_blocked, "error");
+                } else if(error.code !== 'auth/popup-closed-by-user') {
+                    showNotification(error.message, "error"); 
+                }
+            });
         }
 
         function handleAuthSubmit() {
