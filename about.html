@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Daily Saving Challenge</title>
+    <title>About Us & Support - Daily Saving Challenge</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
 
@@ -16,10 +14,9 @@
     <style>
         .fb-link-btn { background: #1877F2; color: #ffffff !important; border: none; padding: 15px; border-radius: 16px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: 0.3s; margin-bottom: 20px; box-sizing: border-box; }
         .fb-link-btn:hover { background: #166fe5; transform: translateY(-2px); }
-        .feedback-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0,0,0,0.2); color: #ffffff; font-family: inherit; font-size: 0.95rem; outline: none; resize: vertical; min-height: 100px; margin-bottom: 15px; transition: 0.3s; box-sizing: border-box; }
+        .feedback-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0,0,0,0.2); color: #ffffff; font-family: inherit; font-size: 0.95rem; outline: none; resize: none; transition: 0.3s; box-sizing: border-box; }
         .feedback-input:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
         
-        /* 📌 New About Us Grids */
         .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; text-align: left; }
         @media (max-width: 500px) { .vm-grid { grid-template-columns: 1fr; } }
         .vm-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
@@ -84,22 +81,31 @@
             
             <div class="settings-card" style="padding: 20px;">
                 <h3 style="text-align:center; border:none; margin-bottom:10px; color:#f472b6;">
-                    <i class="fas fa-comment-dots"></i> <span data-i18n="feedback_title">අදහස් දක්වන්න</span>
+                    <i class="fas fa-headset"></i> <span data-i18n="feedback_title">Live Support / Chat</span>
                 </h3>
                 
                 <p style="font-size: 0.85rem; color: #cbd5e1; text-align: center; margin-bottom: 15px; line-height: 1.6;" data-i18n="feedback_note">
-                    ඔබේ අදහස් අපට ඉතා වැදගත්. අපගේ App එක තවත් දියුණු කිරීමට අවශ්‍ය දේවල් අපට කියන්න!
+                    ඔබට ඇති ගැටලු හෝ යෝජනා අප වෙත යොමු කරන්න. අපගේ කණ්ඩායම ඉක්මනින්ම ඔබට මෙතැනින්ම පිළිතුරු ලබා දෙනු ඇත.
                 </p>
 
-                <textarea id="feedbackText" class="feedback-input" data-i18n-placeholder="feedback_placeholder" placeholder="ඔබගේ අදහස් සහ යෝජනා මෙහි ලියන්න..."></textarea>
-                
-                <button class="action-btn primary" id="feedbackSubmitBtn" onclick="submitFeedback()" style="margin-bottom: 15px; width: 100%; border-radius: 12px; padding: 14px;">
-                    <i class="fas fa-paper-plane"></i> <span data-i18n="feedback_submit">යවන්න</span>
-                </button>
+                <div id="chatContainer" class="chat-container">
+                    <div style="text-align:center; color:#94a3b8; font-size:0.85rem; margin-top:auto; margin-bottom:auto;">
+                        <i class="fas fa-comments" style="font-size: 2rem; opacity: 0.5; margin-bottom: 10px;"></i><br>
+                        ඔබේ පණිවිඩය මෙහි යොමු කරන්න...
+                    </div>
+                </div>
 
-                <div style="text-align: center; margin: 10px 0; color: #64748b; font-size: 0.8rem;">--- OR ---</div>
+                <div style="display: flex; gap: 10px; align-items: flex-end;">
+                    <textarea id="feedbackText" class="feedback-input" rows="2" data-i18n-placeholder="feedback_placeholder" placeholder="පණිවිඩයක් ලියන්න..."></textarea>
+                    
+                    <button class="action-btn primary" id="feedbackSubmitBtn" onclick="sendMessage()" style="width: 60px; height: 50px; border-radius: 12px; padding: 0;">
+                        <i class="fas fa-paper-plane" style="font-size: 1.2rem;"></i>
+                    </button>
+                </div>
 
-                <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 10px; border-radius: 12px; padding: 14px;">
+                <div style="text-align: center; margin: 15px 0 10px 0; color: #64748b; font-size: 0.8rem;">--- OR ---</div>
+
+                <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 5px; border-radius: 12px; padding: 14px;">
                     <i class="fas fa-envelope"></i> <span data-i18n="email_btn">Email මගින් සම්බන්ධ වන්න</span>
                 </a>
             </div>
@@ -129,14 +135,11 @@
                 f3: "Reduce unnecessary expenses and build great financial discipline for a successful future.",
                 fb_title: "Our Facebook Page",
                 fb_btn_text: "Visit Facebook Page",
-                feedback_title: "Share Your Feedback",
-                feedback_note: "Your feedback is highly valuable to us. Please let us know how we can improve or what new features you'd like to see!",
-                feedback_placeholder: "Write your thoughts, suggestions or ideas for improvement here...",
-                feedback_submit: "Send Feedback",
+                feedback_title: "Live Support / Chat",
+                feedback_note: "Send us your issues or suggestions. Our team will reply to you right here!",
+                feedback_placeholder: "Type your message here...",
                 email_btn: "Contact via Email",
-                footer_rights: "All Rights Reserved.",
-                feedback_success: "Sent Successfully!",
-                feedback_empty: "Please write something before sending."
+                footer_rights: "All Rights Reserved."
             },
             si: {
                 back_btn: "Home (ආපසු)",
@@ -152,18 +155,14 @@
                 f3: "අනවශ්‍ය වියදම් අඩු කරගෙන, සාර්ථක අනාගතයක් වෙනුවෙන් හොඳ මූල්‍ය විනයක් ගොඩනගා ගැනීම.",
                 fb_title: "අපගේ Facebook පිටුව",
                 fb_btn_text: "Facebook පිටුවට පිවිසෙන්න",
-                feedback_title: "අදහස් දක්වන්න",
-                feedback_note: "ඔබේ අදහස් අපට ඉතා වැදගත්. අපගේ App එක තවත් දියුණු කිරීමට අවශ්‍ය දේවල් අපට කියන්න!",
-                feedback_placeholder: "ඔබගේ අදහස් සහ යෝජනා මෙහි ලියන්න...",
-                feedback_submit: "යවන්න",
+                feedback_title: "Live Support / Chat",
+                feedback_note: "ඔබට ඇති ගැටලු හෝ යෝජනා අප වෙත යොමු කරන්න. අපගේ කණ්ඩායම ඉක්මනින්ම ඔබට මෙතැනින්ම පිළිතුරු ලබා දෙනු ඇත.",
+                feedback_placeholder: "පණිවිඩයක් ලියන්න...",
                 email_btn: "Email මගින් සම්බන්ධ වන්න",
-                footer_rights: "සියලුම හිමිකම් ඇවිරිණි.",
-                feedback_success: "සාර්ථකව යවන ලදී!",
-                feedback_empty: "කරුණාකර යැවීමට පෙර යමක් ලියන්න."
+                footer_rights: "සියලුම හිමිකම් ඇවිරිණි."
             }
         };
 
-        // Get language from Main Page's local storage
         let currentLang = localStorage.getItem('dsc_lang') || 'en';
 
         function setLanguage() {
@@ -178,12 +177,15 @@
         }
 
         // =========================================
-        // 📌 FIREBASE LOGIC FOR FEEDBACK
+        // 📌 FIREBASE CHAT LOGIC
         // =========================================
         const firebaseConfig = {
-            apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U", authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
-            projectId: "dailysavingchallenge-b7f58", storageBucket: "dailysavingchallenge-b7f58.firebasestorage.app",
-            messagingSenderId: "936731731201", appId: "1:936731731201:web:bb3e841e7664b805102700",
+            apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U", 
+            authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
+            projectId: "dailysavingchallenge-b7f58", 
+            storageBucket: "dailysavingchallenge-b7f58.firebasestorage.app",
+            messagingSenderId: "936731731201", 
+            appId: "1:936731731201:web:bb3e841e7664b805102700",
             databaseURL: "https://dailysavingchallenge-b7f58-default-rtdb.firebaseio.com" 
         };
 
@@ -191,14 +193,64 @@
         const database = firebase.database();
         const auth = firebase.auth();
 
-        let localUserName = localStorage.getItem('dsc_userName') || 'Guest';
+        // Generate Guest ID if not logged in
+        let localUserId = localStorage.getItem('dsc_guestId');
+        if (!localUserId) {
+            localUserId = 'guest_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('dsc_guestId', localUserId);
+        }
 
-        function submitFeedback() {
-            const text = document.getElementById('feedbackText').value.trim();
-            if (!text) {
-                alert(translations[currentLang].feedback_empty);
-                return;
+        let chatRef = null;
+        let isFirstMessage = true;
+
+        auth.onAuthStateChanged((user) => {
+            const currentUserId = user ? user.uid : localUserId;
+            chatRef = database.ref('chats/' + currentUserId);
+            
+            // Listen for new messages
+            chatRef.on('child_added', (snapshot) => {
+                if(isFirstMessage) {
+                    document.getElementById('chatContainer').innerHTML = ''; // Clear placeholder
+                    isFirstMessage = false;
+                }
+                const msg = snapshot.val();
+                displayMessage(msg);
+            });
+        });
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            return hours + ':' + minutes + ' ' + ampm;
+        }
+
+        function displayMessage(msg) {
+            const chatContainer = document.getElementById('chatContainer');
+            const msgDiv = document.createElement('div');
+            const timeStr = formatTime(msg.timestamp);
+            
+            if (msg.sender === 'admin') {
+                msgDiv.className = 'chat-msg msg-admin';
+                msgDiv.innerHTML = `<i class="fas fa-headset" style="font-size:0.8rem; margin-right:5px; color:#9ca3af;"></i> <b>Admin</b><br>${msg.text} <span class="chat-time">${timeStr}</span>`;
+            } else {
+                msgDiv.className = 'chat-msg msg-user';
+                msgDiv.innerHTML = `${msg.text} <span class="chat-time" style="color:rgba(255,255,255,0.8);">${timeStr}</span>`;
             }
+            
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const textInput = document.getElementById('feedbackText');
+            const text = textInput.value.trim();
+            
+            if (!text || !chatRef) return;
             
             const btn = document.getElementById('feedbackSubmitBtn');
             const originalHTML = btn.innerHTML;
@@ -206,24 +258,17 @@
             btn.disabled = true;
 
             const user = auth.currentUser;
-            const feedbackData = {
+            const messageData = {
                 text: text,
-                userName: user ? user.displayName : localUserName,
-                userId: user ? user.uid : "local_guest",
-                timestamp: new Date().toISOString()
+                sender: 'user',
+                userName: user ? user.displayName : (localStorage.getItem('dsc_userName') || 'Guest'),
+                timestamp: Date.now()
             };
 
-            database.ref('feedback').push(feedbackData).then(() => {
-                btn.innerHTML = `<i class="fas fa-check-circle"></i> <span>${translations[currentLang].feedback_success}</span>`;
-                btn.classList.replace('primary', 'success');
-                document.getElementById('feedbackText').value = '';
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.classList.replace('success', 'primary');
-                    btn.disabled = false;
-                    setLanguage(); // Reset text to correct language
-                }, 3000);
+            chatRef.push(messageData).then(() => {
+                textInput.value = '';
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
             }).catch(error => {
                 alert("Error: " + error.message);
                 btn.innerHTML = originalHTML;
@@ -231,7 +276,14 @@
             });
         }
 
-        // Run when page loads
+        // Send message on Enter key press
+        document.getElementById("feedbackText").addEventListener("keypress", function(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
             setLanguage();
         });
