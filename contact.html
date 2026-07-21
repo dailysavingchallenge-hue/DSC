@@ -4,6 +4,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 📌 SEO & Favicon -->
     <title>Contact Us | DSCSaving</title>
     <meta name="description" content="Contact DSCSaving. Reach out for any questions, suggestions, or technical support regarding the Daily Saving Challenge.">
     <meta name="keywords" content="DSCSaving contact, email DSC, Daily Saving Challenge support">
@@ -18,6 +19,12 @@
     <style>
         .feedback-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0,0,0,0.2); color: #ffffff; font-family: inherit; font-size: 0.95rem; outline: none; resize: none; transition: 0.3s; box-sizing: border-box; }
         .feedback-input:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+        
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: left; }
+        @media (min-width: 768px) { .contact-grid { grid-template-columns: 1.2fr 1fr; } }
+
+        .direct-contact-box { background: rgba(0,0,0,0.2); padding: 30px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
+        .direct-contact-box:hover { background: rgba(255,255,255,0.05); transform: translateY(-3px); border-color: rgba(255,255,255,0.1); }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -30,23 +37,26 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-0ZGDSMXY3R');
     </script>
+    
 </head>
 <body>
     <div class="bg-animation"></div>
-    <div id="app-wrapper" style="display: flex; max-width: 800px; padding-top: 40px; min-height: 100vh;">
+    <div id="app-wrapper" style="display: flex; max-width: 900px; padding-top: 40px; min-height: 100vh;">
         <div class="main-content-flex">
             <button class="back-to-hub-btn" onclick="window.location.href='index.html'" style="width: fit-content; text-decoration: none; margin-bottom: 20px;">
                 <i class="fas fa-arrow-left"></i> <span>Back to Home</span>
             </button>
             
-            <div class="settings-card" style="padding: 25px;">
-                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.6rem;">Contact Us</h2>
-                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:25px; line-height: 1.7;">
-                    If you have any questions, suggestions, or require technical support regarding the Daily Saving Challenge, please feel free to reach out to us using the live chat below or via email.
+            <div class="settings-card" style="padding: 30px;">
+                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.8rem;">Contact Us</h2>
+                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:30px; line-height: 1.7;">
+                    If you have any questions, suggestions, or require technical support regarding the Daily Saving Challenge, please feel free to reach out to us.
                 </p>
 
+                <!-- 💬 LIVE CHAT SECTION -->
                 <h3 style="text-align:center; border:none; margin-bottom:10px; color:#f472b6;">
                     <i class="fas fa-headset"></i> <span>Live Support / Chat</span>
                 </h3>
@@ -70,21 +80,101 @@
                     </button>
                 </div>
 
-                <div style="text-align: center; margin: 15px 0 10px 0; color: #64748b; font-size: 0.8rem;">--- OR ---</div>
+                <!-- 📌 NEW: CONTACT FORM & DIRECT LINKS -->
+                <div style="margin-top: 45px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 35px;">
+                    <h3 style="text-align:center; border:none; margin-bottom:20px; color:#60a5fa; font-size: 1.4rem;">
+                        <i class="fas fa-envelope-open-text"></i> Get in Touch
+                    </h3>
+                    <p style="text-align: center; font-size:0.9rem; color:#cbd5e1; margin-bottom:30px; line-height: 1.6;">
+                        Prefer not to use live chat? You can also reach us via email, our Facebook page, or by filling out the contact form below.
+                    </p>
 
-                <div style="text-align: center;">
-                    <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 5px; border-radius: 12px; padding: 14px;">
-                        <i class="fas fa-envelope"></i> <span>Contact via Email</span>
-                    </a>
+                    <div class="contact-grid">
+                        <!-- 📝 Contact Form -->
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                            <h4 style="color: #fff; margin-bottom: 20px; font-size: 1.1rem;"><i class="fas fa-pen" style="color: #ec4899; margin-right: 8px;"></i> Send a Message</h4>
+                            
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-user icon-left"></i>
+                                <input type="text" id="contactName" class="auth-input" placeholder="Your Name">
+                            </div>
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-at icon-left"></i>
+                                <input type="email" id="contactEmail" class="auth-input" placeholder="Your Email Address">
+                            </div>
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-heading icon-left"></i>
+                                <input type="text" id="contactSubject" class="auth-input" placeholder="Subject">
+                            </div>
+                            
+                            <textarea id="contactMessage" class="feedback-input" rows="5" placeholder="Write your message here..." style="margin-bottom: 15px; border-radius: 12px; padding: 15px; width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.95rem;"></textarea>
+                            
+                            <button class="action-btn primary" onclick="submitContactForm()" id="contactSubmitBtn">
+                                <i class="fas fa-paper-plane"></i> <span>Send Message</span>
+                            </button>
+                        </div>
+
+                        <!-- 📞 Direct Contact Methods -->
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <!-- Email Box -->
+                            <div class="direct-contact-box">
+                                <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <i class="fas fa-envelope" style="font-size: 1.8rem; color: #818cf8;"></i>
+                                </div>
+                                <h4 style="color: #fff; margin-bottom: 5px; font-size: 1.1rem;">Email Us Directly</h4>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">We usually reply within 24 hours.</p>
+                                <a href="mailto:dailysavingchallenge@gmail.com" style="color: #60a5fa; text-decoration: none; font-weight: 600; font-size: 1rem; word-break: break-all;">dailysavingchallenge@gmail.com</a>
+                            </div>
+
+                            <!-- Facebook Box -->
+                            <div class="direct-contact-box">
+                                <div style="width: 60px; height: 60px; background: rgba(24, 119, 242, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <i class="fab fa-facebook-f" style="font-size: 1.8rem; color: #1877F2;"></i>
+                                </div>
+                                <h4 style="color: #fff; margin-bottom: 5px; font-size: 1.1rem;">Our Facebook Page</h4>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">Follow us for updates and news.</p>
+                                <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" style="background: #1877F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);">
+                                    <i class="fab fa-facebook"></i> Visit Page
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="global-footer" style="margin-top: 20px;">
+            <div class="footer-links">
+                <a href="about.html">About Us</a> | 
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Service</a> | 
+                <a href="contact.html">Contact Us</a>
+            </div>
             <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span>All Rights Reserved.</span></div>
         </div>
     </div>
 
     <script>
+        // =========================================
+        // 📌 NOTIFICATION SYSTEM
+        // =========================================
+        function showNotification(message, type = 'info') {
+            const colors = { success: '#10b981', error: '#ef4444', warning: '#f59e0b', info: '#6366f1' }; 
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+            const notification = document.createElement('div'); 
+            notification.style.cssText = `position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, ${colors[type]}, ${colors[type]}dd); color: white; padding: 15px 25px; border-radius: 12px; font-weight: 600; z-index: 9999999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 10px; animation: slideInRight 0.4s ease; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);`;
+            notification.innerHTML = `<i class="fas ${icons[type]}"></i> ${message}`; 
+            document.body.appendChild(notification); 
+            setTimeout(() => { 
+                notification.style.animation = 'slideOutRight 0.4s ease forwards'; 
+                setTimeout(() => notification.remove(), 400); 
+            }, 3000);
+        }
+
+        const style = document.createElement('style'); 
+        style.textContent = `@keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } } @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100px); opacity: 0; } }`; 
+        document.head.appendChild(style);
+
         // =========================================
         // 📌 FIREBASE CHAT LOGIC
         // =========================================
@@ -102,6 +192,7 @@
         const database = firebase.database();
         const auth = firebase.auth();
 
+        // Generate Guest ID if not logged in
         let localUserId = localStorage.getItem('dsc_guestId');
         if (!localUserId) {
             localUserId = 'guest_' + Math.random().toString(36).substr(2, 9);
@@ -115,9 +206,10 @@
             const currentUserId = user ? user.uid : localUserId;
             chatRef = database.ref('chats/' + currentUserId);
             
+            // Listen for new messages
             chatRef.on('child_added', (snapshot) => {
                 if(isFirstMessage) {
-                    document.getElementById('chatContainer').innerHTML = ''; 
+                    document.getElementById('chatContainer').innerHTML = ''; // Clear placeholder
                     isFirstMessage = false;
                 }
                 const msg = snapshot.val();
@@ -177,18 +269,64 @@
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
             }).catch(error => {
-                alert("Error: " + error.message);
+                showNotification("Error: " + error.message, "error");
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
             });
         }
 
+        // Send message on Enter key press
         document.getElementById("feedbackText").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 sendMessage();
             }
         });
+
+        // =========================================
+        // 📌 CONTACT FORM SUBMISSION LOGIC
+        // =========================================
+        function submitContactForm() {
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const subject = document.getElementById('contactSubject').value.trim();
+            const msg = document.getElementById('contactMessage').value.trim();
+
+            if (!name || !email || !msg) {
+                showNotification("Please fill out your name, email, and message.", "warning");
+                return;
+            }
+
+            const btn = document.getElementById('contactSubmitBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>`;
+            btn.disabled = true;
+
+            const user = auth.currentUser;
+            
+            // Push directly to a new Firebase node for Form Submissions
+            database.ref('contact_form_messages').push({
+                name: name,
+                email: email,
+                subject: subject,
+                message: msg,
+                userId: user ? user.uid : (localStorage.getItem('dsc_guestId') || 'unknown'),
+                timestamp: Date.now(),
+                status: "unread"
+            }).then(() => {
+                showNotification("Message sent successfully! We will get back to you soon.", "success");
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactSubject').value = '';
+                document.getElementById('contactMessage').value = '';
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }).catch(error => {
+                showNotification("Error: " + error.message, "error");
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            });
+        }
     </script>
 </body>
 </html>
