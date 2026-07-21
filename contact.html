@@ -4,8 +4,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex">
-    <!-- 📌 SEO & Favicon අංශය -->
     <title>Contact Us | DSCSaving</title>
     <meta name="description" content="Contact DSCSaving. Reach out for any questions, suggestions, or technical support regarding the Daily Saving Challenge.">
     <meta name="keywords" content="DSCSaving contact, email DSC, Daily Saving Challenge support">
@@ -32,42 +30,40 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-0ZGDSMXY3R');
     </script>
-    
 </head>
 <body>
     <div class="bg-animation"></div>
     <div id="app-wrapper" style="display: flex; max-width: 800px; padding-top: 40px; min-height: 100vh;">
         <div class="main-content-flex">
             <button class="back-to-hub-btn" onclick="window.location.href='index.html'" style="width: fit-content; text-decoration: none; margin-bottom: 20px;">
-                <i class="fas fa-arrow-left"></i> <span data-i18n="back_btn">Home (ආපසු)</span>
+                <i class="fas fa-arrow-left"></i> <span>Back to Home</span>
             </button>
             
             <div class="settings-card" style="padding: 25px;">
-                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.6rem;" data-i18n="contact_title">Contact Us</h2>
-                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:25px; line-height: 1.7;" data-i18n="contact_desc">
+                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.6rem;">Contact Us</h2>
+                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:25px; line-height: 1.7;">
                     If you have any questions, suggestions, or require technical support regarding the Daily Saving Challenge, please feel free to reach out to us using the live chat below or via email.
                 </p>
 
                 <h3 style="text-align:center; border:none; margin-bottom:10px; color:#f472b6;">
-                    <i class="fas fa-headset"></i> <span data-i18n="feedback_title">Live Support / Chat</span>
+                    <i class="fas fa-headset"></i> <span>Live Support / Chat</span>
                 </h3>
                 
-                <p style="font-size: 0.85rem; color: #cbd5e1; text-align: center; margin-bottom: 15px; line-height: 1.6;" data-i18n="feedback_note">
+                <p style="font-size: 0.85rem; color: #cbd5e1; text-align: center; margin-bottom: 15px; line-height: 1.6;">
                     Send us your issues or suggestions. Our team will reply to you right here!
                 </p>
 
                 <div id="chatContainer" class="chat-container">
                     <div style="text-align:center; color:#94a3b8; font-size:0.85rem; margin-top:auto; margin-bottom:auto;">
                         <i class="fas fa-comments" style="font-size: 2rem; opacity: 0.5; margin-bottom: 10px;"></i><br>
-                        <span data-i18n="chat_placeholder">Type your message here...</span>
+                        <span>Type your message here...</span>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px; align-items: flex-end;">
-                    <textarea id="feedbackText" class="feedback-input" rows="2" data-i18n-placeholder="feedback_placeholder" placeholder="Type your message here..."></textarea>
+                    <textarea id="feedbackText" class="feedback-input" rows="2" placeholder="Type your message here..."></textarea>
                     
                     <button class="action-btn primary" id="feedbackSubmitBtn" onclick="sendMessage()" style="width: 60px; height: 50px; border-radius: 12px; padding: 0;">
                         <i class="fas fa-paper-plane" style="font-size: 1.2rem;"></i>
@@ -78,58 +74,17 @@
 
                 <div style="text-align: center;">
                     <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 5px; border-radius: 12px; padding: 14px;">
-                        <i class="fas fa-envelope"></i> <span data-i18n="email_btn">Contact via Email</span>
+                        <i class="fas fa-envelope"></i> <span>Contact via Email</span>
                     </a>
                 </div>
             </div>
         </div>
         <div class="global-footer" style="margin-top: 20px;">
-            <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span data-i18n="footer_rights">All Rights Reserved.</span></div>
+            <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span>All Rights Reserved.</span></div>
         </div>
     </div>
 
     <script>
-        // =========================================
-        // 📌 TRANSLATIONS FOR CONTACT PAGE
-        // =========================================
-        const translations = {
-            en: {
-                back_btn: "Back to Home",
-                contact_title: "Contact Us",
-                contact_desc: "If you have any questions, suggestions, or require technical support regarding the Daily Saving Challenge, please feel free to reach out to us using the live chat below or via email.",
-                feedback_title: "Live Support / Chat",
-                feedback_note: "Send us your issues or suggestions. Our team will reply to you right here!",
-                feedback_placeholder: "Type your message here...",
-                chat_placeholder: "Type your message here...",
-                email_btn: "Contact via Email",
-                footer_rights: "All Rights Reserved."
-            },
-            si: {
-                back_btn: "Home (ආපසු)",
-                contact_title: "අපව සම්බන්ධ කරගන්න",
-                contact_desc: "Daily Saving Challenge පිළිබඳ ඔබට යම් ගැටළුවක්, යෝජනාවක් හෝ තාක්ෂණික සහයක් අවශ්‍ය නම්, පහත Live Chat එක මඟින් හෝ Email මඟින් අපව සම්බන්ධ කරගන්න.",
-                feedback_title: "Live Support / Chat",
-                feedback_note: "ඔබට ඇති ගැටලු හෝ යෝජනා අප වෙත යොමු කරන්න. අපගේ කණ්ඩායම ඉක්මනින්ම ඔබට මෙතැනින්ම පිළිතුරු ලබා දෙනු ඇත.",
-                feedback_placeholder: "පණිවිඩයක් ලියන්න...",
-                chat_placeholder: "ඔබේ පණිවිඩය මෙහි යොමු කරන්න...",
-                email_btn: "Email මගින් සම්බන්ධ වන්න",
-                footer_rights: "සියලුම හිමිකම් ඇවිරිණි."
-            }
-        };
-
-        let currentLang = localStorage.getItem('dsc_lang') || 'en';
-
-        function setLanguage() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n'); 
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder'); 
-                if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
-            });
-        }
-
         // =========================================
         // 📌 FIREBASE CHAT LOGIC
         // =========================================
@@ -147,7 +102,6 @@
         const database = firebase.database();
         const auth = firebase.auth();
 
-        // Generate Guest ID if not logged in
         let localUserId = localStorage.getItem('dsc_guestId');
         if (!localUserId) {
             localUserId = 'guest_' + Math.random().toString(36).substr(2, 9);
@@ -161,10 +115,9 @@
             const currentUserId = user ? user.uid : localUserId;
             chatRef = database.ref('chats/' + currentUserId);
             
-            // Listen for new messages
             chatRef.on('child_added', (snapshot) => {
                 if(isFirstMessage) {
-                    document.getElementById('chatContainer').innerHTML = ''; // Clear placeholder
+                    document.getElementById('chatContainer').innerHTML = ''; 
                     isFirstMessage = false;
                 }
                 const msg = snapshot.val();
@@ -230,16 +183,11 @@
             });
         }
 
-        // Send message on Enter key press
         document.getElementById("feedbackText").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 sendMessage();
             }
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            setLanguage();
         });
     </script>
 </body>
