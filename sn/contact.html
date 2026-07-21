@@ -4,6 +4,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 📌 SEO & Favicon -->
     <title>අපව සම්බන්ධ කරගන්න | DSCSaving</title>
     <meta name="description" content="DSCSaving ගැන දැනගන්න සහ අපව සම්බන්ධ කරගන්න. Daily Saving Challenge හරහා ඔබගේ දෛනික ඉතිරිකිරීම් පහසුවෙන් සටහන් කරගන්න.">
     <meta name="keywords" content="DSCSaving contact, email DSC, Daily Saving Challenge support">
@@ -20,6 +21,12 @@
     <style>
         .feedback-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0,0,0,0.2); color: #ffffff; font-family: inherit; font-size: 0.95rem; outline: none; resize: none; transition: 0.3s; box-sizing: border-box; }
         .feedback-input:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+        
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: left; }
+        @media (min-width: 768px) { .contact-grid { grid-template-columns: 1.2fr 1fr; } }
+
+        .direct-contact-box { background: rgba(0,0,0,0.2); padding: 30px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
+        .direct-contact-box:hover { background: rgba(255,255,255,0.05); transform: translateY(-3px); border-color: rgba(255,255,255,0.1); }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -32,23 +39,26 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-0ZGDSMXY3R');
     </script>
+    
 </head>
 <body>
     <div class="bg-animation"></div>
-    <div id="app-wrapper" style="display: flex; max-width: 800px; padding-top: 40px; min-height: 100vh;">
+    <div id="app-wrapper" style="display: flex; max-width: 900px; padding-top: 40px; min-height: 100vh;">
         <div class="main-content-flex">
             <button class="back-to-hub-btn" onclick="window.location.href='index.html'" style="width: fit-content; text-decoration: none; margin-bottom: 20px;">
                 <i class="fas fa-arrow-left"></i> <span>ආපසු (Home)</span>
             </button>
             
-            <div class="settings-card" style="padding: 25px;">
-                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.6rem;">අපව සම්බන්ධ කරගන්න</h2>
-                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:25px; line-height: 1.7;">
-                    Daily Saving Challenge පිළිබඳ ඔබට යම් ගැටළුවක්, යෝජනාවක් හෝ තාක්ෂණික සහයක් අවශ්‍ය නම්, පහත Live Chat එක මඟින් හෝ Email මඟින් අපව සම්බන්ධ කරගන්න.
+            <div class="settings-card" style="padding: 30px;">
+                <h2 style="text-align:center; border:none; margin-bottom:15px; color:#ffffff; font-size: 1.8rem;">අපව සම්බන්ධ කරගන්න</h2>
+                <p style="text-align: center; font-size:0.95rem; color:#cbd5e1; margin-bottom:30px; line-height: 1.7;">
+                    Daily Saving Challenge පිළිබඳ ඔබට යම් ගැටළුවක්, යෝජනාවක් හෝ තාක්ෂණික සහයක් අවශ්‍ය නම්, පහත Live Chat එක මඟින් හෝ වෙනත් ක්‍රමයක් මඟින් අපව සම්බන්ධ කරගන්න.
                 </p>
 
+                <!-- 💬 LIVE CHAT SECTION -->
                 <h3 style="text-align:center; border:none; margin-bottom:10px; color:#f472b6;">
                     <i class="fas fa-headset"></i> <span>Live Support / Chat</span>
                 </h3>
@@ -72,21 +82,101 @@
                     </button>
                 </div>
 
-                <div style="text-align: center; margin: 15px 0 10px 0; color: #64748b; font-size: 0.8rem;">--- OR ---</div>
+                <!-- 📌 NEW: CONTACT FORM & DIRECT LINKS -->
+                <div style="margin-top: 45px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 35px;">
+                    <h3 style="text-align:center; border:none; margin-bottom:20px; color:#60a5fa; font-size: 1.4rem;">
+                        <i class="fas fa-envelope-open-text"></i> වෙනත් ක්‍රම මගින් සම්බන්ධ වීමට
+                    </h3>
+                    <p style="text-align: center; font-size:0.9rem; color:#cbd5e1; margin-bottom:30px; line-height: 1.6;">
+                        Live Chat එක භාවිතා කිරීමට අකමැති නම්, ඔබට අපව Email, Facebook හරහා හෝ පහත පෝරමය පිරවීමෙන් සම්බන්ධ කරගත හැක.
+                    </p>
 
-                <div style="text-align: center;">
-                    <a href="mailto:dailysavingchallenge@gmail.com" class="action-btn secondary" style="width: 100%; justify-content: center; text-decoration: none; margin-top: 5px; border-radius: 12px; padding: 14px;">
-                        <i class="fas fa-envelope"></i> <span>Email මගින් සම්බන්ධ වන්න</span>
-                    </a>
+                    <div class="contact-grid">
+                        <!-- 📝 Contact Form -->
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                            <h4 style="color: #fff; margin-bottom: 20px; font-size: 1.1rem;"><i class="fas fa-pen" style="color: #ec4899; margin-right: 8px;"></i> පණිවිඩයක් යවන්න</h4>
+                            
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-user icon-left"></i>
+                                <input type="text" id="contactName" class="auth-input" placeholder="ඔබගේ නම">
+                            </div>
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-at icon-left"></i>
+                                <input type="email" id="contactEmail" class="auth-input" placeholder="ඔබගේ ඊමේල් ලිපිනය">
+                            </div>
+                            <div class="auth-input-wrapper">
+                                <i class="fas fa-heading icon-left"></i>
+                                <input type="text" id="contactSubject" class="auth-input" placeholder="මාතෘකාව">
+                            </div>
+                            
+                            <textarea id="contactMessage" class="feedback-input" rows="5" placeholder="ඔබගේ පණිවිඩය මෙහි ලියන්න..." style="margin-bottom: 15px; border-radius: 12px; padding: 15px; width: 100%; box-sizing: border-box; font-family: inherit; font-size: 0.95rem;"></textarea>
+                            
+                            <button class="action-btn primary" onclick="submitContactForm()" id="contactSubmitBtn">
+                                <i class="fas fa-paper-plane"></i> <span>පණිවිඩය යවන්න</span>
+                            </button>
+                        </div>
+
+                        <!-- 📞 Direct Contact Methods -->
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <!-- Email Box -->
+                            <div class="direct-contact-box">
+                                <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <i class="fas fa-envelope" style="font-size: 1.8rem; color: #818cf8;"></i>
+                                </div>
+                                <h4 style="color: #fff; margin-bottom: 5px; font-size: 1.1rem;">සෘජුවම Email කරන්න</h4>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">අපි සාමාන්‍යයෙන් පැය 24ක් ඇතුළත පිළිතුරු සපයන්නෙමු.</p>
+                                <a href="mailto:dailysavingchallenge@gmail.com" style="color: #60a5fa; text-decoration: none; font-weight: 600; font-size: 1rem; word-break: break-all;">dailysavingchallenge@gmail.com</a>
+                            </div>
+
+                            <!-- Facebook Box -->
+                            <div class="direct-contact-box">
+                                <div style="width: 60px; height: 60px; background: rgba(24, 119, 242, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <i class="fab fa-facebook-f" style="font-size: 1.8rem; color: #1877F2;"></i>
+                                </div>
+                                <h4 style="color: #fff; margin-bottom: 5px; font-size: 1.1rem;">අපගේ Facebook පිටුව</h4>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">නවතම තොරතුරු දැනගන්න අප හා එක්වන්න.</p>
+                                <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" style="background: #1877F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);">
+                                    <i class="fab fa-facebook"></i> පිටුවට පිවිසෙන්න
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="global-footer" style="margin-top: 20px;">
+            <div class="footer-links">
+                <a href="about.html">අපි ගැන</a> | 
+                <a href="privacy.html">රහස්‍යතා ප්‍රතිපත්තිය</a> | 
+                <a href="terms.html">සේවා කොන්දේසි</a> | 
+                <a href="contact.html">සම්බන්ධ වන්න</a>
+            </div>
             <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span>සියලුම හිමිකම් ඇවිරිණි.</span></div>
         </div>
     </div>
 
     <script>
+        // =========================================
+        // 📌 NOTIFICATION SYSTEM
+        // =========================================
+        function showNotification(message, type = 'info') {
+            const colors = { success: '#10b981', error: '#ef4444', warning: '#f59e0b', info: '#6366f1' }; 
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+            const notification = document.createElement('div'); 
+            notification.style.cssText = `position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, ${colors[type]}, ${colors[type]}dd); color: white; padding: 15px 25px; border-radius: 12px; font-weight: 600; z-index: 9999999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 10px; animation: slideInRight 0.4s ease; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);`;
+            notification.innerHTML = `<i class="fas ${icons[type]}"></i> ${message}`; 
+            document.body.appendChild(notification); 
+            setTimeout(() => { 
+                notification.style.animation = 'slideOutRight 0.4s ease forwards'; 
+                setTimeout(() => notification.remove(), 400); 
+            }, 3000);
+        }
+
+        const style = document.createElement('style'); 
+        style.textContent = `@keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } } @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100px); opacity: 0; } }`; 
+        document.head.appendChild(style);
+
         // =========================================
         // 📌 FIREBASE CHAT LOGIC
         // =========================================
@@ -104,6 +194,7 @@
         const database = firebase.database();
         const auth = firebase.auth();
 
+        // Generate Guest ID if not logged in
         let localUserId = localStorage.getItem('dsc_guestId');
         if (!localUserId) {
             localUserId = 'guest_' + Math.random().toString(36).substr(2, 9);
@@ -117,9 +208,10 @@
             const currentUserId = user ? user.uid : localUserId;
             chatRef = database.ref('chats/' + currentUserId);
             
+            // Listen for new messages
             chatRef.on('child_added', (snapshot) => {
                 if(isFirstMessage) {
-                    document.getElementById('chatContainer').innerHTML = ''; 
+                    document.getElementById('chatContainer').innerHTML = ''; // Clear placeholder
                     isFirstMessage = false;
                 }
                 const msg = snapshot.val();
@@ -179,18 +271,64 @@
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
             }).catch(error => {
-                alert("Error: " + error.message);
+                showNotification("දෝෂයකි: " + error.message, "error");
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
             });
         }
 
+        // Send message on Enter key press
         document.getElementById("feedbackText").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 sendMessage();
             }
         });
+
+        // =========================================
+        // 📌 CONTACT FORM SUBMISSION LOGIC
+        // =========================================
+        function submitContactForm() {
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const subject = document.getElementById('contactSubject').value.trim();
+            const msg = document.getElementById('contactMessage').value.trim();
+
+            if (!name || !email || !msg) {
+                showNotification("කරුණාකර ඔබගේ නම, ඊමේල් ලිපිනය සහ පණිවිඩය ඇතුළත් කරන්න.", "warning");
+                return;
+            }
+
+            const btn = document.getElementById('contactSubmitBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>යවමින් පවතී...</span>`;
+            btn.disabled = true;
+
+            const user = auth.currentUser;
+            
+            // Push directly to a new Firebase node for Form Submissions
+            database.ref('contact_form_messages').push({
+                name: name,
+                email: email,
+                subject: subject,
+                message: msg,
+                userId: user ? user.uid : (localStorage.getItem('dsc_guestId') || 'unknown'),
+                timestamp: Date.now(),
+                status: "unread"
+            }).then(() => {
+                showNotification("පණිවිඩය සාර්ථකව යවන ලදී! අපි ඉක්මනින්ම ඔබව සම්බන්ධ කරගන්නෙමු.", "success");
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactSubject').value = '';
+                document.getElementById('contactMessage').value = '';
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }).catch(error => {
+                showNotification("දෝෂයකි: " + error.message, "error");
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            });
+        }
     </script>
 </body>
 </html>
