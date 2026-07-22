@@ -324,15 +324,17 @@
                     metaDesc: metaDesc,
                     heroImage: heroUrl,
                     content: content,
-                    timestamp: editId ? undefined : Date.now(), // keep old timestamp if editing
                     updatedAt: Date.now()
                 };
 
                 // 3. Save to Realtime Database
                 if(editId) {
+                    // Only update specific fields, don't touch the original timestamp
                     await database.ref('articles/' + editId).update(postData);
                     alert("Post Updated Successfully!");
                 } else {
+                    // If it's a new post, add the original timestamp
+                    postData.timestamp = Date.now();
                     await database.ref('articles').push(postData);
                     alert("Post Published Successfully!");
                 }
