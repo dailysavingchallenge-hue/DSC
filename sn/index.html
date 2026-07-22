@@ -19,6 +19,7 @@
     <!-- CSS එක ප්‍රධාන Folder එකෙන් ගනී -->
     <link rel="stylesheet" href="../style.css">
 
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -29,33 +30,28 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-0ZGDSMXY3R');
     </script>
-    
 </head>
 <body>
 
     <div class="bg-animation"></div>
 
-    <div id="initialLoader" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--primary-light); z-index:9999999;">
-        <i class="fas fa-spinner fa-spin fa-3x"></i>
-    </div>
-
+    <!-- Auth Modal -->
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
             <button class="close-modal-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
             <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
                     <button class="lang-btn btn-si active" style="padding: 5px 10px; font-size: 0.8rem;">සිං</button>
-                    <button class="lang-btn btn-en" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='/'">EN</button>
+                    <button class="lang-btn btn-en" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='../index.html'">EN</button>
                 </div>
             </div>
 
             <!-- Login / Signup -->
             <div id="authMainUI">
                 <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--dark-lighter); border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 15px auto;">
-                    <img src="../dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/70?text=DSC'">
+                    <img src="../dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://placehold.co/70?text=DSC'">
                 </div>
                 
                 <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 5px; text-align:center; background: linear-gradient(135deg, #f472b6, #fb7185); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ආයුබෝවන්!</h2>
@@ -125,6 +121,7 @@
         </div>
     </div>
 
+    <!-- Target Modal -->
     <div id="targetModal" class="my-modal">
         <div class="my-modal-content">
             <h2 style="font-size: 1.4rem; margin-bottom:10px; color: var(--primary-light);"><i class="fas fa-bullseye"></i> <span>ඉලක්කයක් සකසමු</span></h2>
@@ -141,11 +138,10 @@
         </div>
     </div>
 
-    <!-- 📌 MAIN APP WRAPPER -->
-    <div id="app-wrapper">
+    <div id="app-wrapper" style="display: flex;">
         <div class="header-section">
             <div class="header-left-group">
-                <img src="../dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
+                <img src="../dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://placehold.co/60?text=DSC'">
                 <div class="title-group">
                     <h1 class="main-title">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</h1>
                 </div>
@@ -175,6 +171,7 @@
             <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
+                <!-- 🏆 WINNERS BANNER (Strictly Today Only) -->
                 <div id="homeAchievers" style="display: none;"></div>
 
                 <div class="live-total-container">
@@ -250,7 +247,7 @@
 
             </div>
 
-            <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
+            <!-- 🔹 TAB 3: ARTICLES (CUSTOM CMS) -->
             <div id="view-hub" class="view-section">
                 
                 <div class="advice-intro-card">
@@ -263,10 +260,10 @@
                     </div>
                 </div>
 
-                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>මූල්‍ය උපදෙස් සහ ලිපි</span></h2>
+                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>ලිපි සහ මූල්‍ය උපදෙස්</span></h2>
                 
                 <div id="blogGrid">
-                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">ලිපි සොයමින් පවතී...</p>
+                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); width:100%; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i> ලිපි සොයමින් පවතී...</p>
                 </div>
             </div>
 
@@ -276,6 +273,7 @@
                     <i class="fas fa-arrow-left"></i> <span>ආපසු</span>
                 </button>
                 <div class="full-article-container">
+                    <div id="fullArticleHero" style="display:none; width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: var(--radius); margin-bottom: 20px;"></div>
                     <h2 class="full-article-title" id="fullArticleTitle">Loading...</h2>
                     <div class="full-article-content" id="fullArticleContent">
                         Please wait...
@@ -290,7 +288,7 @@
                     <h3><i class="fas fa-coins" style="margin-right:8px; color:#f59e0b;"></i> <span>මුදල් ඒකකය (Currency)</span></h3>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">සටහන: LKR හැර වෙනත් මුදල් ඒකකයක් තේරීමේදී භාෂාව ඉංග්‍රීසි වලට ස්වයංක්‍රීයව මාරු වේ.</p>
                     <select id="currencySelector" class="auth-input" style="padding-left: 20px; font-weight: 600; cursor: pointer;" onchange="changeCurrency(this)">
-                        <option value="LKR">Loading Currencies...</option>
+                        <option value="LKR">LKR - Sri Lankan Rupee (Rs.)</option>
                     </select>
                 </div>
 
@@ -298,7 +296,7 @@
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span>භාෂාව / Language</span></h3>
                     <div class="lang-toggle" id="settingsLangToggle">
                         <button class="lang-btn btn-si active">Sinhala</button>
-                        <button class="lang-btn btn-en" onclick="window.location.href='/'">English</button>
+                        <button class="lang-btn btn-en" onclick="window.location.href='../index.html'">English</button>
                     </div>
                 </div>
 
@@ -361,6 +359,8 @@
                 <a href="about.html">අපි ගැන</a> | 
                 <a href="privacy.html">රහස්‍යතා ප්‍රතිපත්තිය</a> | 
                 <a href="terms.html">සේවා කොන්දේසි</a> | 
+                <a href="../cookie-policy.html">Cookie Policy</a> | 
+                <a href="../disclaimer.html">Disclaimer</a> | 
                 <a href="contact.html">සම්බන්ධ වන්න</a>
             </div>
 
@@ -371,7 +371,7 @@
     </div>
 
     <!-- 📌 BOTTOM NAVIGATION BAR -->
-    <div class="bottom-nav" id="bottomNav" style="display: none;">
+    <div class="bottom-nav" id="bottomNav" style="display: flex;">
         <div class="nav-item active" onclick="switchView('home', this)">
             <i class="fas fa-home"></i><span>මුල් පිටුව</span>
         </div>
@@ -379,7 +379,7 @@
             <i class="fas fa-calendar-alt"></i><span>දින දර්ශනය</span>
         </div>
         <div class="nav-item" id="nav-explore" onclick="switchView('hub', this)">
-            <i class="fas fa-book-open"></i><span>තොරතුරු</span>
+            <i class="fas fa-book-open"></i><span>ලිපි</span>
         </div>
         <div class="nav-item" onclick="window.location.href='about.html'">
             <i class="fas fa-info-circle"></i><span>අපි ගැන</span>
@@ -420,7 +420,7 @@
 
     <script>
         // =========================================
-        // 📌 CURRENCY LOGIC
+        // 📌 GLOBALS & CURRENCY LOGIC
         // =========================================
         let currentCurrencyCode = localStorage.getItem('dsc_currency') || 'LKR';
         let globalCurrenciesDB = {}; 
@@ -430,37 +430,49 @@
             return currentCurrencyCode === 'LKR' ? 'Rs. ' : currentCurrencyCode + ' '; 
         }
 
-        // 📌 Firebase Currency Load Logic
         function populateCurrencyDropdown() {
+            // Check cache for instant load
+            const cached = localStorage.getItem('dsc_currencies_cache');
+            if (cached) {
+                globalCurrenciesDB = JSON.parse(cached);
+                renderCurrencyDropdown();
+            }
+
+            // Fetch in background to keep data fresh without blocking
             database.ref('currencies').once('value').then(snapshot => {
                 globalCurrenciesDB = snapshot.val() || {};
-                const select = document.getElementById('currencySelector');
-                if(!select) return;
-                select.innerHTML = ''; 
-                
-                const currencyNames = {
-                    LKR: "Sri Lankan Rupee (Rs.)", USD: "US Dollar ($)", EUR: "Euro (€)", GBP: "British Pound (£)", AUD: "Australian Dollar (A$)",
-                    INR: "Indian Rupee (₹)", JPY: "Japanese Yen (¥)", AED: "UAE Dirham (د.إ)", CAD: "Canadian Dollar (C$)",
-                    SGD: "Singapore Dollar (S$)", NZD: "New Zealand Dollar (NZ$)", KRW: "South Korean Won (₩)", ZAR: "South African Rand (R)",
-                    MYR: "Malaysian Ringgit (RM)", THB: "Thai Baht (฿)", PHP: "Philippine Peso (₱)", QAR: "Qatari Riyal (ر.ق)",
-                    SAR: "Saudi Riyal (ر.س)", OMR: "Omani Rial (ر.ع.)", KWD: "Kuwaiti Dinar (د.ك)", BHD: "Bahraini Dinar (.د.ب)"
-                };
-
-                const allCodes = Object.keys(globalCurrenciesDB).sort();
-                if(!allCodes.includes('LKR')) allCodes.unshift('LKR'); 
-
-                allCodes.forEach(code => {
-                    const name = currencyNames[code] ? currencyNames[code] : `${code}`;
-                    select.innerHTML += `<option value="${code}">${code} - ${name}</option>`;
-                });
-
-                select.value = currentCurrencyCode;
+                localStorage.setItem('dsc_currencies_cache', JSON.stringify(globalCurrenciesDB));
+                renderCurrencyDropdown();
                 applyWheelFromDB();
             }).catch(err => {
                 const select = document.getElementById('currencySelector');
                 if(select) select.innerHTML = `<option value="LKR">LKR - Sri Lankan Rupee (Rs.)</option>`;
                 applyWheelFromDB();
             });
+        }
+        
+        function renderCurrencyDropdown() {
+            const select = document.getElementById('currencySelector');
+            if(!select || !globalCurrenciesDB) return;
+            select.innerHTML = ''; 
+            
+            const currencyNames = {
+                LKR: "Sri Lankan Rupee (Rs.)", USD: "US Dollar ($)", EUR: "Euro (€)", GBP: "British Pound (£)", AUD: "Australian Dollar (A$)",
+                INR: "Indian Rupee (₹)", JPY: "Japanese Yen (¥)", AED: "UAE Dirham (د.إ)", CAD: "Canadian Dollar (C$)",
+                SGD: "Singapore Dollar (S$)", NZD: "New Zealand Dollar (NZ$)", KRW: "South Korean Won (₩)", ZAR: "South African Rand (R)",
+                MYR: "Malaysian Ringgit (RM)", THB: "Thai Baht (฿)", PHP: "Philippine Peso (₱)", QAR: "Qatari Riyal (ر.ق)",
+                SAR: "Saudi Riyal (ر.س)", OMR: "Omani Rial (ر.ع.)", KWD: "Kuwaiti Dinar (د.ك)", BHD: "Bahraini Dinar (.د.ب)"
+            };
+
+            const allCodes = Object.keys(globalCurrenciesDB).sort();
+            if(!allCodes.includes('LKR')) allCodes.unshift('LKR'); 
+
+            allCodes.forEach(code => {
+                const name = currencyNames[code] ? currencyNames[code] : `${code}`;
+                select.innerHTML += `<option value="${code}">${code} - ${name}</option>`;
+            });
+
+            select.value = currentCurrencyCode;
         }
 
         function changeCurrency(selectEl) {
@@ -469,36 +481,23 @@
             currentCurrencyCode = code;
 
             if(code !== 'LKR') {
-                window.location.href = '/'; // Switch back to English if not LKR
+                window.location.href = '../index.html'; // Force English if not LKR
             }
-            
+
             applyWheelFromDB();
             if (currentUserData || isLocalMode) { renderCalendar(); checkTodaySpin(); renderTargetUI(); }
             if (lastWinnerData) updateLastWinnerDisplay(lastWinnerData);
         }
 
-        // 📌 GEO IP Logic (Redirect to English if not LK)
-        function enforceLocationRules() {
-            fetch('https://get.geojs.io/v1/ip/country.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data.country !== 'LK') {
-                    window.location.href = '/'; // Force English Root
-                }
-            })
-            .catch(error => { console.log('Location check failed'); });
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
-            enforceLocationRules();
             if(currentCurrencyCode !== 'LKR') {
-                window.location.href = '/'; // Force English Root
+                window.location.href = '../index.html'; // Force English Root
             }
             initializeApp();
         });
 
         // =========================================
-        // 📌 FIREBASE LOGIC 
+        // 📌 FIREBASE INIT
         // =========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U", authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
@@ -545,25 +544,16 @@
             }
         }
 
-        function launchApp() {
-            document.getElementById('authModal').classList.remove('active'); document.getElementById('app-wrapper').style.display = 'flex'; document.getElementById('bottomNav').style.display = 'flex';
-        }
-
         auth.onAuthStateChanged((user) => {
-            const loader = document.getElementById('initialLoader');
-            if(loader) loader.style.display = 'none';
-
             if (user) {
                 isLocalMode = false; localStorage.setItem('dsc_local_session', 'false');
                 currentUser = user; 
-                launchApp(); 
                 updateHeaderState(true);
                 loadUserData(user.uid);
             } else {
                 currentUser = null; currentUserData = null;
                 if (isLocalMode && localUserName) {
                     trackingData = localTrackingData; if(localTargetData) userTarget = localTargetData;
-                    launchApp(); 
                     updateHeaderState(true);
                     document.getElementById('displayUserName').innerText = localUserName;
                     const savedAvatar = localStorage.getItem('dsc_avatar') || generateAvatar(localUserName);
@@ -574,7 +564,6 @@
                     document.getElementById('settingsEmail').value = "Local ගිණුම (Email නැත)";
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 } else {
-                    launchApp(); 
                     updateHeaderState(false);
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 }
@@ -613,28 +602,22 @@
             }
         });
 
+        // 📌 STRICTLY shows ONLY today's achievers. Force Hide if Empty.
         function fetchTargetAchievers() {
-            const slDate = getSLDate();
             const todayStr = getTodayString();
+            
+            database.ref('achievers').off(); 
             
             database.ref('achievers/' + todayStr).on('value', snap => {
                 const data = snap.val();
-                if(data && Object.keys(data).length > 0) {
+                const homeContainer = document.getElementById('homeAchievers');
+                const calContainer = document.getElementById('calAchievers');
+                
+                if (data && Object.keys(data).length > 0) {
                     renderAchieversBanner(data, "🎉 අද දවසේ ඉලක්කය සම්පූර්ණ කළ අය:");
                 } else {
-                    const yesterdayDate = new Date(slDate);
-                    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-                    const yesterdayStr = `${yesterdayDate.getFullYear()}-${String(yesterdayDate.getMonth()+1).padStart(2, '0')}-${String(yesterdayDate.getDate()).padStart(2, '0')}`;
-                    
-                    database.ref('achievers/' + yesterdayStr).once('value').then(ySnap => {
-                        const yData = ySnap.val();
-                        if (yData && Object.keys(yData).length > 0) {
-                            renderAchieversBanner(yData, "අවසන් ඉතුරුම්කරු / ඊයේ ජයග්‍රාහකයින්:");
-                        } else {
-                            document.getElementById('homeAchievers').style.display = 'none';
-                            document.getElementById('calAchievers').style.display = 'none';
-                        }
-                    });
+                    if(homeContainer) { homeContainer.style.display = 'none'; homeContainer.innerHTML = ''; }
+                    if(calContainer) { calContainer.style.display = 'none'; calContainer.innerHTML = ''; }
                 }
             });
         }
@@ -649,24 +632,18 @@
                 html += `<b>${d.name}</b> (${curSymbol}${d.amount.toLocaleString()}) &nbsp;&nbsp;&nbsp;&nbsp;⭐&nbsp;&nbsp;&nbsp;&nbsp;`;
             });
             html += '</marquee></div>';
-            homeContainer.innerHTML = html; calContainer.innerHTML = html;
-            homeContainer.style.display = 'block'; calContainer.style.display = 'block';
+            
+            if(homeContainer) { homeContainer.innerHTML = html; homeContainer.style.display = 'block'; }
+            if(calContainer) { calContainer.innerHTML = html; calContainer.style.display = 'block'; }
         }
 
-        // 📌 1. LOGIN SCENE
         let authMode = 'login'; 
         function openAuthModal(mode) {
             document.getElementById('authModal').classList.add('active');
-            if (mode === 'local') {
-                showGuestUI();
-            } else {
-                hideGuestUI();
-                switchAuthTab(mode);
-            }
+            if (mode === 'local') { showGuestUI(); } 
+            else { hideGuestUI(); switchAuthTab(mode); }
         }
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.remove('active');
-        }
+        function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
         function switchAuthTab(mode) {
             authMode = mode; 
@@ -704,26 +681,18 @@
         function loginWithGoogle() {
             const btn = document.getElementById('googleLoginBtn');
             const originalHTML = btn.innerHTML;
-            if(btn) {
-                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>`;
-                btn.disabled = true;
-            }
+            if(btn) { btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>`; btn.disabled = true; }
             
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then((result) => {
                 const user = result.user;
                 database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
-                syncLocalDataToCloud(user); 
-                closeAuthModal();
-                showNotification("සාර්ථකව ලොග් විය!", "success");
+                syncLocalDataToCloud(user); closeAuthModal(); showNotification("සාර්ථකව ලොග් විය!", "success");
                 if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
             }).catch(error => { 
                 if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
-                if(error.code === 'auth/popup-blocked') {
-                    showNotification("බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න.", "error");
-                } else if(error.code !== 'auth/popup-closed-by-user') {
-                    showNotification(error.message, "error"); 
-                }
+                if(error.code === 'auth/popup-blocked') { showNotification("බ්‍රව්සර් එකෙන් Popup Block කර ඇත! කරුණාකර Email/Password මගින් ලොග් වන්න.", "error"); } 
+                else if(error.code !== 'auth/popup-closed-by-user') { showNotification(error.message, "error"); }
             });
         }
 
@@ -746,13 +715,7 @@
         }
 
         function handleForgotPassword(fromSettings = false) {
-            let email = "";
-            if (fromSettings) {
-                email = currentUser ? currentUser.email : "";
-            } else {
-                email = document.getElementById('authEmail').value.trim();
-            }
-
+            let email = fromSettings ? (currentUser ? currentUser.email : "") : document.getElementById('authEmail').value.trim();
             if (!email) { showNotification("මුරපදය අලුත් කිරීමට කරුණාකර ඉහළ කොටුවේ ඔබගේ ඊමේල් ලිපිනය ඇතුළත් කරන්න.", "warning"); return; }
             auth.sendPasswordResetEmail(email).then(() => { showNotification("මුරපදය අලුත් කිරීමේ ලින්ක් එක ඔබගේ ඊමේල් එකට යැව්වා!", "success"); }).catch((error) => { showNotification(error.message, "error"); });
         }
@@ -762,93 +725,56 @@
         }
 
         // =========================================
-        // 📌 BLOGGER (HEADLESS CMS)
+        // 📌 CUSTOM CMS (ARTICLES)
         // =========================================
-        const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
-        let fetchedArticles = []; 
-        let currentStartIndex = 1;
-        const postsPerPage = 10;
-        let isFetchingPosts = false;
+        let allFetchedPosts = [];
 
-        function loadBloggerPosts(startIndex = 1) {
-            if(isFetchingPosts) return;
-            isFetchingPosts = true;
-            
-            // Only fetch Sinhala label
-            const script = document.createElement('script');
-            script.src = `${myBloggerURL}/feeds/posts/default/-/Sin?alt=json-in-script&callback=handleBloggerPosts&start-index=${startIndex}&max-results=${postsPerPage}`;
-            document.body.appendChild(script);
-        }
-
-        window.handleBloggerPosts = function(data) {
-            isFetchingPosts = false;
-            const blogGrid = document.getElementById('blogGrid'); 
+        function loadFirebasePosts() {
+            const blogGrid = document.getElementById('blogGrid');
             if(!blogGrid) return;
             
-            const noMsg = document.getElementById('noArticlesMsg');
-            if(noMsg) noMsg.remove();
-
-            const oldLoadCont = document.getElementById('loadMoreContainer');
-            if(oldLoadCont) oldLoadCont.remove();
-
-            const entries = data.feed.entry || [];
-
-            if (entries.length === 0 && fetchedArticles.length === 0) { 
-                blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">දැනට ලිපි කිසිවක් නොමැත.</p>`; 
-                return; 
-            }
-
-            entries.forEach((entry) => {
-                const globalIndex = fetchedArticles.length;
-                fetchedArticles.push(entry);
-                const title = entry.title.$t;
-                const postId = entry.id.$t.split('post-')[1]; 
+            // Only fetch Sinhala ('si') articles
+            database.ref('articles').orderByChild('language').equalTo('si').once('value').then(snapshot => {
+                const data = snapshot.val();
+                blogGrid.innerHTML = '';
                 
-                let imgUrl = 'https://via.placeholder.com/400x250/1e293b/cbd5e1?text=Daily+Saving+Challenge'; 
-                if (entry.media$thumbnail) {
-                    imgUrl = entry.media$thumbnail.url.replace(/\/s72\-c\//, '/w400-h250-c/');
-                } else if (entry.content && entry.content.$t.match(/<img.+?src=["'](.*?)["']/)) {
-                    imgUrl = entry.content.$t.match(/<img.+?src=["'](.*?)["']/)[1];
-                } else if (entry.summary && entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)) {
-                    imgUrl = entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)[1];
+                if (!data) {
+                    blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); width:100%; grid-column: 1 / -1;">දැනට ලිපි කිසිවක් නොමැත.</p>`;
+                    return;
                 }
 
-                blogGrid.innerHTML += `
-                    <div class="article-card" onclick="openArticle('${postId}', ${globalIndex})">
-                        <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
-                        <div class="article-info">
-                            <h3 class="article-card-title">${title}</h3>
-                            <div class="article-card-footer">
-                                <span class="read-more-btn"><span class="read-more-text">තවත් කියවන්න</span> <i class="fas fa-arrow-right"></i></span>
+                allFetchedPosts = Object.keys(data).map(key => ({ id: key, ...data[key] })).sort((a, b) => b.timestamp - a.timestamp);
+
+                allFetchedPosts.forEach((post) => {
+                    let imgUrl = post.heroImage || 'https://placehold.co/400x250/1e293b/cbd5e1?text=Daily+Saving+Challenge';
+                    
+                    blogGrid.innerHTML += `
+                        <div class="article-card" onclick="openArticle('${post.id}')">
+                            <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
+                            <div class="article-info">
+                                <h3 class="article-card-title">${post.title}</h3>
+                                <div class="article-card-footer">
+                                    <span class="read-more-btn"><span class="read-more-text">තවත් කියවන්න</span> <i class="fas fa-arrow-right"></i></span>
+                                </div>
                             </div>
-                        </div>
-                    </div>`;
+                        </div>`;
+                });
+            }).catch(error => {
+                blogGrid.innerHTML = `<p style="text-align:center; color:var(--danger); width:100%; grid-column: 1 / -1;">ලිපි ලබාගැනීමේ දෝෂයකි.</p>`;
             });
-
-            if (entries.length === postsPerPage) {
-                blogGrid.innerHTML += `
-                    <div id="loadMoreContainer" style="grid-column: 1 / -1; margin-top: 15px;">
-                        <button id="loadMoreBtnActual" class="load-more-btn" onclick="loadNextPosts()">
-                            තවත් ලිපි පෙන්වන්න
-                        </button>
-                    </div>`;
-            }
-        };
-
-        window.loadNextPosts = function() {
-            const btn = document.getElementById('loadMoreBtnActual');
-            if(btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> කරුණාකර රැඳී සිටින්න...`;
-            currentStartIndex += postsPerPage;
-            loadBloggerPosts(currentStartIndex);
         }
 
-        window.openArticle = function(postId, index) {
-            if (!fetchedArticles[index]) return;
-            const entry = fetchedArticles[index];
-            window.history.pushState({articleId: postId}, entry.title.$t, '?article=' + postId);
+        window.openArticle = function(postId) {
+            const post = allFetchedPosts.find(p => p.id === postId);
+            if (!post) return;
             
-            document.getElementById('fullArticleTitle').innerText = entry.title.$t;
-            document.getElementById('fullArticleContent').innerHTML = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
+            window.history.pushState({articleId: post.id}, post.title, '?article=' + post.id);
+            
+            document.getElementById('fullArticleTitle').innerText = post.title;
+            const heroDiv = document.getElementById('fullArticleHero');
+            if(post.heroImage) { heroDiv.style.backgroundImage = `url('${post.heroImage}')`; heroDiv.style.display = 'block'; } 
+            else { heroDiv.style.display = 'none'; }
+            document.getElementById('fullArticleContent').innerHTML = post.content || "";
             switchView('article', document.getElementById('nav-explore'));
         }
 
@@ -863,19 +789,22 @@
             if (articleId) {
                 document.getElementById('fullArticleTitle').innerText = "Loading Article...";
                 switchView('article', document.getElementById('nav-explore'));
-                const script = document.createElement('script');
-                script.src = `${myBloggerURL}/feeds/posts/default/${articleId}?alt=json-in-script&callback=handleSinglePost`;
-                document.body.appendChild(script);
+                
+                database.ref('articles/' + articleId).once('value').then(snapshot => {
+                    const post = snapshot.val();
+                    if(post) {
+                        document.getElementById('fullArticleTitle').innerText = post.title;
+                        const heroDiv = document.getElementById('fullArticleHero');
+                        if(post.heroImage) { heroDiv.style.backgroundImage = `url('${post.heroImage}')`; heroDiv.style.display = 'block'; } 
+                        else { heroDiv.style.display = 'none'; }
+                        document.getElementById('fullArticleContent').innerHTML = post.content || "";
+                    } else {
+                        document.getElementById('fullArticleTitle').innerText = "Article Not Found";
+                        document.getElementById('fullArticleContent').innerHTML = "මෙම ලිපිය ඉවත් කර ඇත.";
+                    }
+                });
             }
         }
-
-        window.handleSinglePost = function(data) {
-            const entry = data.entry;
-            if(entry) {
-                document.getElementById('fullArticleTitle').innerText = entry.title.$t;
-                document.getElementById('fullArticleContent').innerHTML = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
-            }
-        };
 
         window.addEventListener('popstate', function(event) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -885,11 +814,7 @@
         function switchView(viewName, navElement) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
-            
-            if(navElement) {
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                navElement.classList.add('active');
-            }
+            if(navElement) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); navElement.classList.add('active'); }
             window.scrollTo(0,0);
         }
 
@@ -899,15 +824,12 @@
             else { input.type = "password"; iconElement.classList.remove('fa-eye-slash'); iconElement.classList.add('fa-eye'); }
         }
 
-        // =========================================
-        // 📌 APP INIT
-        // =========================================
         function getSLDate() { const d = new Date(); const utc = d.getTime() + (d.getTimezoneOffset() * 60000); return new Date(utc + (3600000 * 5.5)); }
         function getTodayString() { const slDate = getSLDate(); return `${slDate.getFullYear()}-${String(slDate.getMonth()+1).padStart(2, '0')}-${String(slDate.getDate()).padStart(2, '0')}`; }
 
         function initializeApp() { 
             populateCurrencyDropdown();
-            loadBloggerPosts(1);
+            loadFirebasePosts(); // Background load CMS Posts
             setTimeout(checkDirectArticleLink, 500); 
         }
         
@@ -928,7 +850,7 @@
                 const dayStr = `${year}-${String(month+1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
                 const card = document.createElement('div'); card.className = 'day-card'; let amountHtml = '-';
                 const isPastDay = dayStr < todayStr;
-                if (trackingData[dayStr]) { card.classList.add('completed'); amountHtml = `${getCurrency()}${trackingData[dayStr]}`; currentMonthTotal += trackingData[dayStr]; } 
+                if (trackingData && trackingData[dayStr]) { card.classList.add('completed'); amountHtml = `${getCurrency()}${trackingData[dayStr]}`; currentMonthTotal += trackingData[dayStr]; } 
                 else if (dayStr === todayStr) { card.classList.add('today'); amountHtml = "අද"; } 
                 else if (isPastDay) { card.classList.add('missed'); amountHtml = '<i class="fas fa-times"></i>'; }
                 card.innerHTML = `<div class="date">${i}</div><div class="amount">${amountHtml}</div>`; grid.appendChild(card);
@@ -938,13 +860,11 @@
 
         function checkTodaySpin() {
             const todayStr = getTodayString(); const spinBtn = document.getElementById('spinBtn');
-            if (trackingData[todayStr]) {
+            if (trackingData && trackingData[todayStr]) {
                 spinBtn.disabled = true; spinBtn.innerHTML = `<i class="fas fa-check-circle"></i> <span>අද සම්පූර්ණයි</span>`; document.getElementById('liveAmount').innerText = `${getCurrency()}${trackingData[todayStr].toLocaleString()}`;
             } else {
                 spinBtn.disabled = false; spinBtn.innerHTML = `<i class="fas fa-sync-alt"></i> <span id="spinBtnText">කරකවමු</span>`; document.getElementById('liveAmount').innerText = `${getCurrency()}0`;
-                if (outerVals[outerVals.length - 1] !== (9 * globalBase) || outerVals.length === 1) { 
-                    applyWheelFromDB(); 
-                }
+                if (outerVals[outerVals.length - 1] !== (9 * globalBase) || outerVals.length === 1) { applyWheelFromDB(); }
             }
         }
 
@@ -954,10 +874,8 @@
                 const name = currentUserData.name || currentUser.displayName || 'User'; const photo = currentUserData.photoURL || currentUser.photoURL || generateAvatar(name);
                 trackingData = currentUserData.trackingData || {}; userTarget = currentUserData.targetData || { amount: 0, setDate: null, achievedDate: null };
                 
-                document.getElementById('displayUserName').innerText = name; 
-                document.getElementById('headerProfilePic').src = photo;
-                document.getElementById('settingsName').value = name; 
-                document.getElementById('settingsAvatarPreview').src = photo;
+                document.getElementById('displayUserName').innerText = name; document.getElementById('headerProfilePic').src = photo;
+                document.getElementById('settingsName').value = name; document.getElementById('settingsAvatarPreview').src = photo;
                 
                 document.getElementById('settingsEmailWrapper').style.display = 'block';
                 if(currentUser.email) { document.getElementById('settingsEmail').value = currentUser.email; } else { document.getElementById('settingsEmail').value = "Local ගිණුම (Email නැත)"; }
@@ -990,7 +908,6 @@
             const newPass = document.getElementById('settingsNewPassword') ? document.getElementById('settingsNewPassword').value : "";
 
             if (!newName) { showNotification("කරුණාකර ඔබගේ නම ඇතුළත් කරන්න!", "warning"); return; }
-            
             const btn = document.getElementById('saveProfileBtn'); const originalHTML = btn.innerHTML; btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`; btn.disabled = true;
 
             if (isLocalMode) {
@@ -1039,6 +956,7 @@
 
         function renderTargetUI() {
             if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null };
+            trackingData = trackingData || {};
             const totalSaved = Object.values(trackingData).reduce((sum, val) => sum + val, 0); const today = getTodayString();
             let canEdit = false; let daysLeft = 0;
             if (!userTarget.amount || (userTarget.amount > 0 && userTarget.achievedDate)) { canEdit = true; } 
@@ -1076,23 +994,15 @@
                 globalBase = globalCurrenciesDB[currentCurrencyCode].base || 100;
             }
 
-            outerVals = outer;
-            innerVals = inner;
-
-            buildWheel('outerWheel', outerVals, 150, false, false); 
-            buildWheel('innerWheel', innerVals, 85, false, true);
+            outerVals = outer; innerVals = inner;
+            buildWheel('outerWheel', outerVals, 150, false, false); buildWheel('innerWheel', innerVals, 85, false, true);
             
             const slider = document.getElementById('wheelSlider');
             if(slider) {
-                slider.max = outerVals[outerVals.length - 1] || (9 * globalBase);
-                slider.step = globalBase;
-                slider.value = outerVals[outerVals.length - 1] || (9 * globalBase);
+                slider.max = outerVals[outerVals.length - 1] || (9 * globalBase); slider.step = globalBase; slider.value = outerVals[outerVals.length - 1] || (9 * globalBase);
                 updateSliderText(slider.value);
-
                 const subTxt = document.getElementById('modalSetupSub');
-                if(subTxt) {
-                    subTxt.innerText = `උපරිම අගය තෝරා ගන්න (0 - ${9 * globalBase})`;
-                }
+                if(subTxt) { subTxt.innerText = `උපරිම අගය තෝරා ගන්න (0 - ${9 * globalBase})`; }
             }
         }
         
@@ -1112,17 +1022,9 @@
         function updateSliderText(val) { document.getElementById('sliderValDisplay').innerText = val; }
         function closeCustom() { document.getElementById('customModal').classList.remove('active'); }
         function saveCustom() {
-            const maxVal = parseFloat(document.getElementById('wheelSlider').value);
-            const stepVal = parseFloat(document.getElementById('wheelSlider').step);
+            const maxVal = parseFloat(document.getElementById('wheelSlider').value); const stepVal = parseFloat(document.getElementById('wheelSlider').step);
             outerVals = []; let isZero = false;
-            
-            if (maxVal <= 0) { 
-                outerVals = [0]; isZero = true; 
-            } else { 
-                for(let i = stepVal; i <= maxVal; i += stepVal) { 
-                    outerVals.push(Number(i.toFixed(2))); 
-                } 
-            }
+            if (maxVal <= 0) { outerVals = [0]; isZero = true; } else { for(let i = stepVal; i <= maxVal; i += stepVal) { outerVals.push(Number(i.toFixed(2))); } }
             buildWheel('outerWheel', outerVals, 150, isZero, false); closeCustom(); document.getElementById('outerWheel').style.transition = 'none'; document.getElementById('innerWheel').style.transition = 'none';
             void document.getElementById('outerWheel').offsetWidth; document.getElementById('outerWheel').style.transform = `rotate(0deg)`; document.getElementById('innerWheel').style.transform = `rotate(0deg)`; outerDeg = 0; innerDeg = 0;
         }
@@ -1134,43 +1036,87 @@
         }
 
         function spin() {
-            if (isSpinning) return; if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
-            isSpinning = true; const spinDuration = Math.floor(Math.random() * 5000) + 10000;  const spinBtn = document.getElementById('spinBtn');
-            spinBtn.disabled = true; spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>කරකවමින්...</span>`; document.getElementById('liveAmount').innerText = "කරකවමින්...";
+            if (isSpinning) return; 
+            if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
+
+            const todayStr = getTodayString();
+            if (trackingData && trackingData[todayStr]) {
+                showNotification("ඔබ අද දවසේ ඉලක්කය සම්පූර්ණ කර ඇත", "warning");
+                checkTodaySpin();
+                return;
+            }
+
+            isSpinning = true; 
+            const spinDuration = Math.floor(Math.random() * 5000) + 10000;  
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true; 
+            spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>කරකවමින්...</span>`; 
+            document.getElementById('liveAmount').innerText = "කරකවමින්...";
+            
             const outIndex = Math.floor(Math.random() * outerVals.length); const inIndex = Math.floor(Math.random() * innerVals.length);
             const outTarget = 360 - (outIndex * (360 / outerVals.length)); const inTarget = 360 - (inIndex * (360 / innerVals.length));
             outerDeg += 3600 + outTarget - (outerDeg % 360); innerDeg += 5040 + inTarget - (innerDeg % 360);
+            
             const outerWheel = document.getElementById('outerWheel'); const innerWheel = document.getElementById('innerWheel');
-            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
+            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; 
+            outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
+            
             setTimeout(() => {
-                const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); const todayStr = getTodayString(); trackingData[todayStr] = total; let userNameToDisplay = "User"; let photoToDisplay = "";
-                if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null }; const totalSavedNow = Object.values(trackingData).reduce((sum, val) => sum + val, 0);
-                
-                let justAchievedTarget = false;
-                if (userTarget.amount > 0 && totalSavedNow >= userTarget.amount && !userTarget.achievedDate) { 
-                    userTarget.achievedDate = todayStr; 
-                    justAchievedTarget = true;
-                }
-                
-                if (isLocalMode) { localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); localStorage.setItem('dsc_target', JSON.stringify(userTarget)); userNameToDisplay = localUserName; photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(localUserName); } 
-                else if (currentUser && currentUserData) { database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total); database.ref('users/' + currentUser.uid + '/targetData').set(userTarget); userNameToDisplay = currentUserData.name || "User"; photoToDisplay = currentUserData.photoURL || currentUser.photoURL || generateAvatar(userNameToDisplay); }
-                
-                // Add to public achievers list if target was hit today
-                if (justAchievedTarget && !isLocalMode && currentUser) {
-                    database.ref('achievers/' + todayStr).push({
-                        name: userNameToDisplay,
-                        amount: userTarget.amount,
-                        currency: getCurrency()
-                    });
-                }
+                try {
+                    const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); 
+                    
+                    trackingData = trackingData || {}; 
+                    trackingData[todayStr] = total; 
+                    
+                    let userNameToDisplay = "User"; let photoToDisplay = "";
+                    if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null }; 
+                    const totalSavedNow = Object.values(trackingData).reduce((sum, val) => sum + val, 0);
+                    
+                    let justAchievedTarget = false;
+                    if (userTarget.amount > 0 && totalSavedNow >= userTarget.amount && !userTarget.achievedDate) { 
+                        userTarget.achievedDate = todayStr; 
+                        justAchievedTarget = true;
+                    }
+                    
+                    if (isLocalMode) { 
+                        localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); 
+                        localStorage.setItem('dsc_target', JSON.stringify(userTarget)); 
+                        userNameToDisplay = localUserName || "Guest"; 
+                        photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(userNameToDisplay); 
+                    } 
+                    else if (currentUser) { 
+                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total); 
+                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget); 
+                        
+                        userNameToDisplay = (currentUserData && currentUserData.name) ? currentUserData.name : (currentUser.displayName || "User"); 
+                        photoToDisplay = (currentUserData && currentUserData.photoURL) ? currentUserData.photoURL : (currentUser.photoURL || generateAvatar(userNameToDisplay)); 
+                    }
+                    
+                    if (justAchievedTarget && !isLocalMode && currentUser) { 
+                        database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }); 
+                    }
 
-                renderCalendar(); checkTodaySpin(); renderTargetUI(); document.getElementById('cardName').innerText = `ආයුබෝවන් ${userNameToDisplay}`; document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
-                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); document.getElementById('popupAvatar').src = photoToDisplay;
-                
-                database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }); 
-                const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime });
-                
-                document.getElementById('resultModal').classList.add('active'); createConfetti(); isSpinning = false;
+                    renderCalendar(); 
+                    checkTodaySpin(); 
+                    renderTargetUI(); 
+                    
+                    document.getElementById('cardName').innerText = `ආයුබෝවන් ${userNameToDisplay}`; 
+                    document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
+                    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; 
+                    document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); 
+                    document.getElementById('popupAvatar').src = photoToDisplay;
+                    
+                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }); 
+                    const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); 
+                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime });
+                    
+                    document.getElementById('resultModal').classList.add('active'); 
+                    createConfetti(); 
+                } catch(e) {
+                    console.error("Error occurred after spin: ", e);
+                } finally {
+                    isSpinning = false;
+                }
             }, spinDuration);
         }
 

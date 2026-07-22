@@ -4,7 +4,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875755235721674" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 📌 SEO & Favicon -->
     <title>අපව සම්බන්ධ කරගන්න | DSCSaving</title>
     <meta name="description" content="DSCSaving ගැන දැනගන්න සහ අපව සම්බන්ධ කරගන්න. Daily Saving Challenge හරහා ඔබගේ දෛනික ඉතිරිකිරීම් පහසුවෙන් සටහන් කරගන්න.">
     <meta name="keywords" content="DSCSaving contact, email DSC, Daily Saving Challenge support">
@@ -14,8 +13,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS එක ප්‍රධාන Folder එකෙන් ගනී -->
     <link rel="stylesheet" href="../style.css">
 
     <style>
@@ -82,7 +79,7 @@
                     </button>
                 </div>
 
-                <!-- 📌 NEW: CONTACT FORM & DIRECT LINKS -->
+                <!-- 📌 CONTACT FORM & DIRECT LINKS -->
                 <div style="margin-top: 45px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 35px;">
                     <h3 style="text-align:center; border:none; margin-bottom:20px; color:#60a5fa; font-size: 1.4rem;">
                         <i class="fas fa-envelope-open-text"></i> වෙනත් ක්‍රම මගින් සම්බන්ධ වීමට
@@ -146,10 +143,13 @@
             </div>
         </div>
         <div class="global-footer" style="margin-top: 20px;">
-            <div class="footer-links">
+            <!-- 📌 NEW: Updated Footer Links (Cookie Policy / Disclaimer included) -->
+            <div class="footer-links" style="margin-bottom: 15px;">
                 <a href="about.html">අපි ගැන</a> | 
                 <a href="privacy.html">රහස්‍යතා ප්‍රතිපත්තිය</a> | 
                 <a href="terms.html">සේවා කොන්දේසි</a> | 
+                <a href="../cookie-policy.html">Cookie Policy</a> | 
+                <a href="../disclaimer.html">Disclaimer</a> |
                 <a href="contact.html">සම්බන්ධ වන්න</a>
             </div>
             <div class="footer-text">&copy; 2026 Daily Saving Challenge<br><span>සියලුම හිමිකම් ඇවිරිණි.</span></div>
@@ -194,7 +194,6 @@
         const database = firebase.database();
         const auth = firebase.auth();
 
-        // Generate Guest ID if not logged in
         let localUserId = localStorage.getItem('dsc_guestId');
         if (!localUserId) {
             localUserId = 'guest_' + Math.random().toString(36).substr(2, 9);
@@ -208,7 +207,6 @@
             const currentUserId = user ? user.uid : localUserId;
             chatRef = database.ref('chats/' + currentUserId);
             
-            // Listen for new messages
             chatRef.on('child_added', (snapshot) => {
                 if(isFirstMessage) {
                     document.getElementById('chatContainer').innerHTML = ''; // Clear placeholder
@@ -277,7 +275,6 @@
             });
         }
 
-        // Send message on Enter key press
         document.getElementById("feedbackText").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
@@ -285,9 +282,6 @@
             }
         });
 
-        // =========================================
-        // 📌 CONTACT FORM SUBMISSION LOGIC
-        // =========================================
         function submitContactForm() {
             const name = document.getElementById('contactName').value.trim();
             const email = document.getElementById('contactEmail').value.trim();
@@ -306,7 +300,6 @@
 
             const user = auth.currentUser;
             
-            // Push directly to a new Firebase node for Form Submissions
             database.ref('contact_form_messages').push({
                 name: name,
                 email: email,
