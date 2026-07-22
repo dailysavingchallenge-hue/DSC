@@ -42,7 +42,8 @@
             <button class="close-modal-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
             <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
-                    <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='sn/index.html'">සිං</button>
+                    <!-- 📌 CRITICAL FIX: URL without .html -->
+                    <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='/sn/'">සිං</button>
                     <button class="lang-btn btn-en active" style="padding: 5px 10px; font-size: 0.8rem;">EN</button>
                 </div>
             </div>
@@ -50,7 +51,7 @@
             <!-- Login / Signup -->
             <div id="authMainUI">
                 <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--dark-lighter); border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 15px auto;">
-                    <img src="dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://placehold.co/70?text=DSC'">
+                    <img src="dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/70?text=DSC'">
                 </div>
                 
                 <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 5px; text-align:center; background: linear-gradient(135deg, #f472b6, #fb7185); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome!</h2>
@@ -137,10 +138,10 @@
         </div>
     </div>
 
-    <div id="app-wrapper" style="display: flex;">
+    <div id="app-wrapper">
         <div class="header-section">
             <div class="header-left-group">
-                <img src="dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://placehold.co/60?text=DSC'">
+                <img src="dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
                 <div class="title-group">
                     <h1 class="main-title">Daily Saving Challenge</h1>
                 </div>
@@ -254,7 +255,7 @@
                         <i class="fas fa-lightbulb text-accent" style="font-size: 2rem; color: var(--accent);"></i>
                         <h2 style="margin:0; font-size:1.4rem;">Master Your Money</h2>
                     </div>
-                    <div class="advice-content-box">
+                    <div class="advice-content-box" style="margin-top: 15px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;">
                         Navigating the complex world of personal finance does not have to be an intimidating or complicated process. Welcome to our Financial Advice Hub, a dedicated space designed to provide you with clear, actionable, and user-friendly insights to help you completely master your money. We firmly believe that financial literacy is the essential cornerstone of a secure, stress-free future. Our ultimate goal is to empower you with the comprehensive knowledge and practical tools necessary to make informed, confident decisions about your wealth, no matter where you currently stand on your financial journey.<br><br>A fundamental pillar of achieving and maintaining financial health is the creation of a realistic, sustainable budget. We often recommend starting with the widely recognized 50/30/20 rule. This straightforward framework suggests allocating 50% of your net income to essential needs like housing, groceries, and utilities; 30% to wants and lifestyle choices such as dining out and entertainment; and a critical 20% dedicated entirely to savings and debt repayment. Implementing this simple structure ensures that you consistently live within your means while still enjoying your life today and actively preparing for whatever tomorrow may bring.<br><br>Alongside diligent budgeting, building a robust emergency fund is absolutely crucial. Life is inherently unpredictable, bringing unexpected medical bills, urgent home repairs, or sudden changes in employment. Having three to six months' worth of living expenses safely set aside in an accessible account can be the critical difference between experiencing a minor temporary setback and falling into a major, stressful financial crisis. An emergency fund is your personal financial shock absorber.<br><br>Beyond the act of saving, understanding the profound difference between saving and investing is key to long-term wealth building. While saving protects your money from loss and keeps it liquid, investing is what actually grows your wealth and protects your purchasing power against inflation. In our articles below, we provide clear introductory guides on how to make your money work tirelessly for you. We explore various low-risk investment avenues suitable for beginners, explaining concepts like compound interest, diversification, and long-term market trends in simple, plain language.<br><br>Additionally, we delve deeply into the psychology of spending. We understand that personal finance is often more about behavior than math. We offer practical, real-world tips on how to curb impulsive buying habits, how to accurately differentiate between true necessities and fleeting wants, and how to cultivate a resilient mindset of abundance and intentionality. By aligning your daily spending habits with your deepest values and long-term goals, you create a financial life that brings you genuine satisfaction.<br><br>Whether you are a complete beginner just starting your financial journey, someone looking to aggressively pay down high-interest debt, or an advanced saver aiming to accelerate your wealth accumulation and achieve early retirement, our carefully curated selection of articles is here to guide you every single step of the way. Remember, financial independence is not an overnight achievement; it is a marathon that requires patience, discipline, and continuous learning. Make it a habit to revisit your financial goals regularly, track your net worth, and celebrate the small milestones along the way. Every dollar saved and invested is a step closer to the freedom to live life on your own terms. Explore our articles below and equip yourself with the knowledge to thrive.
                     </div>
                 </div>
@@ -269,7 +270,7 @@
             <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
-                    <i class="fas fa-arrow-left"></i> <span>Back</span>
+                    <i class="fas fa-arrow-left"></i> <span>Back to Articles</span>
                 </button>
                 <div class="full-article-container">
                     <div id="fullArticleHero" style="display:none; width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: var(--radius); margin-bottom: 20px;"></div>
@@ -294,7 +295,8 @@
                 <div class="settings-card">
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span>Language</span></h3>
                     <div class="lang-toggle" id="settingsLangToggle">
-                        <button class="lang-btn btn-si" onclick="window.location.href='sn/index.html'">Sinhala</button>
+                        <!-- 📌 CRITICAL FIX: URL without .html -->
+                        <button class="lang-btn btn-si" onclick="window.location.href='/sn/'">Sinhala</button>
                         <button class="lang-btn btn-en active">English</button>
                     </div>
                 </div>
@@ -402,15 +404,16 @@
         </div>
     </div>
 
+    <!-- 📌 CRITICAL FIX: Removed inline styles causing Mobile UI issues -->
     <div id="resultModal" class="my-modal">
         <div class="my-modal-content" style="background: transparent; border: none; box-shadow: none; padding: 0;">
             <div id="captureArea" class="capture-card">
-                <div id="captureDate" class="capture-date"></div>
+                <div id="captureDate" class="capture-date" style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 10px;"></div>
                 <img id="popupAvatar" src="" alt="Profile" class="profile-pic">
                 <h2 id="cardName">Hi Name</h2>
-                <p class="capture-subtitle" style="margin:5px 0 10px;">Amount to save today</p>
+                <p class="capture-subtitle" style="margin:5px 0 10px; color: rgba(255,255,255,0.9); font-size: 0.95rem;">Amount to save today</p>
                 <div class="amount" id="cardTotal">Rs. 0</div>
-                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem;"><i class="fab fa-facebook"></i>Daily Saving Challenge</div>
+                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; gap: 5px;"><i class="fab fa-facebook"></i> Daily Saving Challenge</div>
             </div>
             <button class="action-btn primary" style="margin-bottom:10px;" onclick="shareAndDownload()"><i class="fas fa-download"></i> Download & Share</button>
             <button class="action-btn secondary" onclick="closeModal()"><span>Close</span></button>
@@ -483,6 +486,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('app-wrapper').style.display = 'flex'; // Instantly show
             initializeApp();
         });
 
@@ -592,7 +596,7 @@
             }
         });
 
-        // 📌 FIXED: Strictly shows ONLY today's achievers. Force Hide if Empty.
+        // 📌 CRITICAL FIX: Only show TODAY'S achievers. Force hide if null.
         function fetchTargetAchievers() {
             const todayStr = getTodayString();
             
@@ -603,6 +607,7 @@
                 const homeContainer = document.getElementById('homeAchievers');
                 const calContainer = document.getElementById('calAchievers');
                 
+                // If there is data for TODAY, show it. Otherwise, firmly hide it.
                 if (data && Object.keys(data).length > 0) {
                     renderAchieversBanner(data, "🎉 Today's Target Achievers:");
                 } else {
@@ -1024,8 +1029,14 @@
             return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
         }
 
+        // 📌 CRITICAL FIX: Safe execution for mobile updates
         function spin() {
             if (isSpinning) return; 
+            
+            // Prevent double clicks instantly
+            const spinBtn = document.getElementById('spinBtn');
+            if(spinBtn.disabled) return;
+
             if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
 
             const todayStr = getTodayString();
@@ -1037,7 +1048,6 @@
 
             isSpinning = true; 
             const spinDuration = Math.floor(Math.random() * 5000) + 10000;  
-            const spinBtn = document.getElementById('spinBtn');
             spinBtn.disabled = true; 
             spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Spinning...</span>`; 
             document.getElementById('liveAmount').innerText = "Spinning...";
@@ -1050,6 +1060,7 @@
             outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; 
             outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
             
+            // Wait for transition + 100ms extra padding for mobile lags
             setTimeout(() => {
                 try {
                     const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); 
@@ -1067,6 +1078,12 @@
                         justAchievedTarget = true;
                     }
                     
+                    // UI Instant Update for Mobile reliability
+                    renderCalendar(); 
+                    checkTodaySpin(); 
+                    renderTargetUI(); 
+                    
+                    // Database sync (caught in promises so UI doesn't freeze)
                     if (isLocalMode) { 
                         localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); 
                         localStorage.setItem('dsc_target', JSON.stringify(userTarget)); 
@@ -1074,39 +1091,40 @@
                         photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(userNameToDisplay); 
                     } 
                     else if (currentUser) { 
-                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total); 
-                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget); 
-                        
                         userNameToDisplay = (currentUserData && currentUserData.name) ? currentUserData.name : (currentUser.displayName || "User"); 
                         photoToDisplay = (currentUserData && currentUserData.photoURL) ? currentUserData.photoURL : (currentUser.photoURL || generateAvatar(userNameToDisplay)); 
-                    }
-                    
-                    if (justAchievedTarget && !isLocalMode && currentUser) { 
-                        database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }); 
+                        
+                        // Fire and forget, UI is already updated
+                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total).catch(e => showNotification("Cloud Sync Error", "warning")); 
+                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget).catch(e => console.error(e));
+                        
+                        if (justAchievedTarget) { 
+                            database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }).catch(e => console.error(e)); 
+                        }
                     }
 
-                    renderCalendar(); 
-                    checkTodaySpin(); 
-                    renderTargetUI(); 
-                    
+                    // Popup UI Update
                     document.getElementById('cardName').innerText = `Hi ${userNameToDisplay}`; 
                     document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
                     const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; 
                     document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); 
                     document.getElementById('popupAvatar').src = photoToDisplay;
                     
-                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }); 
+                    // Push Global Stats silently
+                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }).catch(e => console.error(e)); 
                     const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); 
-                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime });
+                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime }).catch(e => console.error(e));
                     
                     document.getElementById('resultModal').classList.add('active'); 
                     createConfetti(); 
+
                 } catch(e) {
                     console.error("Error occurred after spin: ", e);
+                    showNotification("Oops, something went wrong updating your data.", "error");
                 } finally {
                     isSpinning = false;
                 }
-            }, spinDuration);
+            }, spinDuration + 100); 
         }
 
         function closeModal() { 
