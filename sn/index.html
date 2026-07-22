@@ -43,15 +43,16 @@
             <button class="close-modal-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
             <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
+                    <!-- 📌 CRITICAL FIX: URL without .html -->
                     <button class="lang-btn btn-si active" style="padding: 5px 10px; font-size: 0.8rem;">සිං</button>
-                    <button class="lang-btn btn-en" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='../index.html'">EN</button>
+                    <button class="lang-btn btn-en" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='/'">EN</button>
                 </div>
             </div>
 
             <!-- Login / Signup -->
             <div id="authMainUI">
                 <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--dark-lighter); border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 15px auto;">
-                    <img src="../dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://placehold.co/70?text=DSC'">
+                    <img src="../dsc_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius:50%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/70?text=DSC'">
                 </div>
                 
                 <h2 class="main-title" style="font-size: 1.8rem; margin-bottom: 5px; text-align:center; background: linear-gradient(135deg, #f472b6, #fb7185); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ආයුබෝවන්!</h2>
@@ -138,10 +139,10 @@
         </div>
     </div>
 
-    <div id="app-wrapper" style="display: flex;">
+    <div id="app-wrapper">
         <div class="header-section">
             <div class="header-left-group">
-                <img src="../dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://placehold.co/60?text=DSC'">
+                <img src="../dsc_logo.png" alt="DSC Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/60?text=DSC'">
                 <div class="title-group">
                     <h1 class="main-title">දිනපතා මුදල් ඉතිරි කිරීමේ අභියෝගය</h1>
                 </div>
@@ -255,7 +256,7 @@
                         <i class="fas fa-lightbulb text-accent" style="font-size: 2rem; color: var(--accent);"></i>
                         <h2 style="margin:0; font-size:1.4rem;">මූල්‍ය කළමනාකරණය</h2>
                     </div>
-                    <div class="advice-content-box">
+                    <div class="advice-content-box" style="margin-top: 15px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;">
                         පුද්ගලික මූල්‍ය කළමනාකරණය යනු සංකීර්ණ හෝ බියගන්වනසුලු ක්‍රියාවලියක් විය යුතු නැත. ඔබේ මුදල් නිවැරදිව කළමනාකරණය කිරීමට අවශ්‍ය පැහැදිලි, ප්‍රායෝගික සහ පරිශීලක-හිතකාමී මඟපෙන්වීමක් ලබාදෙන අපගේ මූල්‍ය උපදේශන මධ්‍යස්ථානයට (Financial Advice Hub) ඔබව සාදරයෙන් පිළිගනිමු. මූල්‍ය සාක්ෂරතාවය (financial literacy) යනු ආරක්ෂිත සහ ආතතියෙන් තොර අනාගතයක ප්‍රධානතම පදනම බව අපි තරයේ විශ්වාස කරමු. ඔබගේ මූල්‍ය ගමනේ ඔබ දැනට සිටින්නේ කුමන තත්ත්වයක වුවද, ඔබේ ධනය පිළිබඳව නිවැරදි සහ විශ්වාසදායක තීරණ ගැනීමට අවශ්‍ය පූර්ණ දැනුම හා ප්‍රායෝගික මෙවලම් ඔබට ලබාදීම අපගේ ප්‍රධාන අරමුණයි.<br><br>යහපත් මූල්‍ය සෞඛ්‍යයක් ගොඩනගා ගැනීමේ මූලික පියවරක් වන්නේ යථාර්ථවාදී සහ ප්‍රායෝගික අයවැයක් (Budget) නිර්මාණය කිරීමයි. මේ සඳහා ලොව පුරා පිළිගත් 50/30/20 නීතිය භාවිතා කිරීම අපි නිර්දේශ කරමු. මෙම සරල ක්‍රමවේදයට අනුව, ඔබේ ශුද්ධ ආදායමෙන් 50%ක් නිවාස, ආහාර සහ බිල්පත් වැනි අත්‍යවශ්‍ය දෑ සඳහාද, 30%ක් විනෝදාස්වාදය, ආපනශාලා වලින් ආහාර ගැනීම වැනි ඔබේ කැමැත්තන් සඳහාද, ඉතිරි 20% අනිවාර්යයෙන්ම ඉතුරුම් සහ ණය පියවීම සඳහාද වෙන් කළ යුතුය. මෙම ක්‍රමය තුළින් ඔබට වර්තමානය සතුටින් ගත කරන අතරම අනාගතයටත් සාර්ථකව මුහුණ දීමට හැකි මනා මූල්‍ය විනයක් ගොඩනැගේ.<br><br>නිසි අයවැයකරණයට අමතරව ශක්තිමත් හදිසි අරමුදලක් (Emergency fund) ගොඩනගා ගැනීමද අතිශයින්ම වැදගත්ය. ජීවිතය අනපේක්ෂිතය. හදිසි වෛද්‍ය ප්‍රතිකාර, නිවාස අලුත්වැඩියාවන් හෝ හදිසියේ රැකියාව අහිමිවීම් වැනි ඕනෑම දෙයක් සිදුවිය හැක. අවම වශයෙන් මාස 3ත් 6ත් අතර කාලයක ඔබේ ජීවන වියදම් පියවාගත හැකි මුදලක් පහසුවෙන් ලබාගත හැකි ගිණුමක තැන්පත් කර තිබීම, සුළු මූල්‍ය ගැටලුවක් විශාල අර්බුදයක් දක්වා වර්ධනය වීම වළක්වයි. ඔබේ හදිසි අරමුදල යනු ඔබේ ජීවිතයේ මූල්‍ය කම්පන අවශෝෂකයයි.<br><br>මුදල් ඉතිරි කිරීමට අමතරව, ඉතිරි කිරීම (Saving) සහ ආයෝජනය කිරීම (Investing) අතර ඇති පැහැදිලි වෙනස අවබෝධ කරගැනීම දිගුකාලීන ධනය ගොඩනැගීමේ රහසයි. ඉතිරි කිරීම මගින් ඔබේ මුදල් ආරක්ෂිතව සහ ද්‍රවශීලව තබාගන්නා අතර, ආයෝජනය කිරීම මගින් ඔබේ ධනය වර්ධනය කරමින් උද්ධමනයෙන් ඔබේ මුදලේ වටිනාකම අඩුවීම වළක්වයි. සංයුක්ත පොලිය (Compound interest), විවිධාංගීකරණය සහ වෙළඳපල ප්‍රවණතා වැනි සංකල්ප සරලව පැහැදිලි කරමින්, අඩු අවදානම් සහගත ආයෝජන අවස්ථා පිළිබඳව අපගේ පහත ලිපි මගින් ඔබට මඟපෙන්වනු ඇත.<br><br>එසේම, වියදම් කිරීම පිටුපස ඇති මනෝවිද්‍යාව පිළිබඳවත් අපි අවධානය යොමු කරමු. බොහෝවිට පුද්ගලික මූල්‍ය කළමනාකරණය රඳා පවතින්නේ ගණිතයට වඩා අපගේ හැසිරීම් මතය. ආවේගශීලීව මුදල් වියදම් කිරීම පාලනය කරගන්නා ආකාරය, සැබෑ අවශ්‍යතා සහ ක්ෂණික ආශාවන් වෙන්කර හඳුනාගන්නා ආකාරය පිළිබඳව ප්‍රායෝගික උපදෙස් අපි ඔබට ලබා දෙමු. ඔබේ දෛනික වියදම් ඔබේ දිගුකාලීන ඉලක්ක සමඟ පෙළගැස්වීමෙන් ඔබට සැබෑ තෘප්තියක් ගෙනදෙන මූල්‍ය ජීවිතයක් නිර්මාණය කරගත හැක.<br><br>ඔබ මූල්‍ය ලෝකයට නවකයෙකු වුවද, ඉහළ පොලී සහිත ණය ඉක්මනින් ගෙවා දැමීමට උත්සාහ කරන්නෙකු වුවද, නැතහොත් ඉක්මන් විශ්‍රාම ගැන්වීමක් අපේක්ෂාවෙන් ධනය ගොඩනගන අයෙකු වුවද, අපගේ මෙම ලිපි පෙළ ඔබට සෑම පියවරකදීම මඟ පෙන්වනු ඇත. මතක තබාගන්න, මූල්‍ය ස්වාධීනත්වය යනු එක රැයකින් ළඟා කරගත හැකි දෙයක් නොවේ. එය ඉවසීම, විනය සහ අඛණ්ඩ ඉගෙනීම අවශ්‍ය වන දිගු ගමනකි. ඔබ ඉතිරි කරන සහ ආයෝජනය කරන සෑම රුපියලක්ම, ඔබේම නීති යටතේ නිදහසේ ජීවත් වීමට ඔබට ලබාදෙන ශක්තියකි. පහත ලිපි කියවා සාර්ථක මූල්‍ය අනාගතයකට අවශ්‍ය දැනුමෙන් සන්නද්ධ වන්න.
                     </div>
                 </div>
@@ -270,7 +271,7 @@
             <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
-                    <i class="fas fa-arrow-left"></i> <span>ආපසු</span>
+                    <i class="fas fa-arrow-left"></i> <span>ලිපි වෙත ආපසු යන්න</span>
                 </button>
                 <div class="full-article-container">
                     <div id="fullArticleHero" style="display:none; width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: var(--radius); margin-bottom: 20px;"></div>
@@ -296,7 +297,8 @@
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span>භාෂාව / Language</span></h3>
                     <div class="lang-toggle" id="settingsLangToggle">
                         <button class="lang-btn btn-si active">Sinhala</button>
-                        <button class="lang-btn btn-en" onclick="window.location.href='../index.html'">English</button>
+                        <!-- 📌 CRITICAL FIX: URL without .html -->
+                        <button class="lang-btn btn-en" onclick="window.location.href='/'">English</button>
                     </div>
                 </div>
 
@@ -403,15 +405,16 @@
         </div>
     </div>
 
+    <!-- 📌 CRITICAL FIX: Removed inline styles causing Mobile UI issues -->
     <div id="resultModal" class="my-modal">
         <div class="my-modal-content" style="background: transparent; border: none; box-shadow: none; padding: 0;">
             <div id="captureArea" class="capture-card">
-                <div id="captureDate" class="capture-date"></div>
+                <div id="captureDate" class="capture-date" style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 10px;"></div>
                 <img id="popupAvatar" src="" alt="Profile" class="profile-pic">
                 <h2 id="cardName">Hi Name</h2>
-                <p class="capture-subtitle" style="margin:5px 0 10px;">අද ඔයාට ඉතුරු කරනන් වෙන මුදල</p>
+                <p class="capture-subtitle" style="margin:5px 0 10px; color: rgba(255,255,255,0.9); font-size: 0.95rem;">අද ඔයාට ඉතුරු කරන්න වෙන මුදල</p>
                 <div class="amount" id="cardTotal">Rs. 0</div>
-                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem;"><i class="fab fa-facebook"></i>Daily Saving Challenge</div>
+                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; gap: 5px;"><i class="fab fa-facebook"></i> Daily Saving Challenge</div>
             </div>
             <button class="action-btn primary" style="margin-bottom:10px;" onclick="shareAndDownload()"><i class="fas fa-download"></i> Download & Share</button>
             <button class="action-btn secondary" onclick="closeModal()"><span>වසන්න</span></button>
@@ -481,7 +484,7 @@
             currentCurrencyCode = code;
 
             if(code !== 'LKR') {
-                window.location.href = '../index.html'; // Force English if not LKR
+                window.location.href = '/'; // Force English Root
             }
 
             applyWheelFromDB();
@@ -491,8 +494,9 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             if(currentCurrencyCode !== 'LKR') {
-                window.location.href = '../index.html'; // Force English Root
+                window.location.href = '/'; // Force English Root
             }
+            document.getElementById('app-wrapper').style.display = 'flex'; // Instantly show
             initializeApp();
         });
 
@@ -602,7 +606,7 @@
             }
         });
 
-        // 📌 STRICTLY shows ONLY today's achievers. Force Hide if Empty.
+        // 📌 CRITICAL FIX: Only show TODAY'S achievers. Force hide if null.
         function fetchTargetAchievers() {
             const todayStr = getTodayString();
             
@@ -1035,8 +1039,14 @@
             return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
         }
 
+        // 📌 CRITICAL FIX: Safe execution for mobile updates
         function spin() {
             if (isSpinning) return; 
+            
+            // Prevent double clicks instantly
+            const spinBtn = document.getElementById('spinBtn');
+            if(spinBtn.disabled) return;
+
             if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
 
             const todayStr = getTodayString();
@@ -1048,7 +1058,6 @@
 
             isSpinning = true; 
             const spinDuration = Math.floor(Math.random() * 5000) + 10000;  
-            const spinBtn = document.getElementById('spinBtn');
             spinBtn.disabled = true; 
             spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>කරකවමින්...</span>`; 
             document.getElementById('liveAmount').innerText = "කරකවමින්...";
@@ -1061,6 +1070,7 @@
             outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; 
             outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
             
+            // Wait for transition + 100ms extra padding for mobile lags
             setTimeout(() => {
                 try {
                     const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); 
@@ -1078,6 +1088,12 @@
                         justAchievedTarget = true;
                     }
                     
+                    // UI Instant Update for Mobile reliability
+                    renderCalendar(); 
+                    checkTodaySpin(); 
+                    renderTargetUI(); 
+                    
+                    // Database sync (caught in promises so UI doesn't freeze)
                     if (isLocalMode) { 
                         localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); 
                         localStorage.setItem('dsc_target', JSON.stringify(userTarget)); 
@@ -1085,39 +1101,40 @@
                         photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(userNameToDisplay); 
                     } 
                     else if (currentUser) { 
-                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total); 
-                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget); 
-                        
                         userNameToDisplay = (currentUserData && currentUserData.name) ? currentUserData.name : (currentUser.displayName || "User"); 
                         photoToDisplay = (currentUserData && currentUserData.photoURL) ? currentUserData.photoURL : (currentUser.photoURL || generateAvatar(userNameToDisplay)); 
-                    }
-                    
-                    if (justAchievedTarget && !isLocalMode && currentUser) { 
-                        database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }); 
+                        
+                        // Fire and forget, UI is already updated
+                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total).catch(e => showNotification("Cloud Sync Error", "warning")); 
+                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget).catch(e => console.error(e));
+                        
+                        if (justAchievedTarget) { 
+                            database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }).catch(e => console.error(e)); 
+                        }
                     }
 
-                    renderCalendar(); 
-                    checkTodaySpin(); 
-                    renderTargetUI(); 
-                    
+                    // Popup UI Update
                     document.getElementById('cardName').innerText = `ආයුබෝවන් ${userNameToDisplay}`; 
                     document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
                     const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; 
                     document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); 
                     document.getElementById('popupAvatar').src = photoToDisplay;
                     
-                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }); 
+                    // Push Global Stats silently
+                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }).catch(e => console.error(e)); 
                     const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); 
-                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime });
+                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime }).catch(e => console.error(e));
                     
                     document.getElementById('resultModal').classList.add('active'); 
                     createConfetti(); 
+
                 } catch(e) {
                     console.error("Error occurred after spin: ", e);
+                    showNotification("දෝෂයකි! දත්ත යාවත්කාලීන නොවීය.", "error");
                 } finally {
                     isSpinning = false;
                 }
-            }, spinDuration);
+            }, spinDuration + 100); 
         }
 
         function closeModal() { 
