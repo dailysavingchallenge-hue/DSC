@@ -40,9 +40,9 @@
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
             <button class="close-modal-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
-            <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
+            <div style="position: absolute; top: 15px; left: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
-                    <!-- 📌 CRITICAL FIX: URL without .html -->
+                    <!-- 📌 CRITICAL FIX: URLs updated to prevent .html showing -->
                     <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='/sn/'">සිං</button>
                     <button class="lang-btn btn-en active" style="padding: 5px 10px; font-size: 0.8rem;">EN</button>
                 </div>
@@ -171,7 +171,7 @@
             <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
-                <!-- 🏆 WINNERS BANNER (Strictly Today Only) -->
+                <!-- 🏆 WINNERS BANNER (STRICTLY TODAY ONLY) -->
                 <div id="homeAchievers" style="display: none;"></div>
 
                 <div class="live-total-container">
@@ -214,6 +214,7 @@
             <!-- 🔹 TAB 2: CALENDAR -->
             <div id="view-calendar" class="view-section" id="calendarCaptureArea">
                 
+                <!-- 🏆 WINNERS BANNER (STRICTLY TODAY ONLY) -->
                 <div id="calAchievers" style="display: none;"></div>
 
                 <div class="calendar-section">
@@ -260,7 +261,7 @@
                     </div>
                 </div>
 
-                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>Financial Advice & Articles</span></h2>
+                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>Articles & Advice</span></h2>
                 
                 <div id="blogGrid">
                     <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); width:100%; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i> Fetching articles...</p>
@@ -286,16 +287,16 @@
 
                 <div class="settings-card">
                     <h3><i class="fas fa-coins" style="margin-right:8px; color:#f59e0b;"></i> <span>Currency</span></h3>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Note: Non-LKR currencies will force the app language to English.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Note: Non-LKR currencies will hide the Sinhala language option.</p>
                     <select id="currencySelector" class="auth-input" style="padding-left: 20px; font-weight: 600; cursor: pointer;" onchange="changeCurrency(this)">
-                        <option value="LKR">LKR - Sri Lankan Rupee (Rs.)</option>
+                        <option value="LKR">Loading Currencies...</option>
                     </select>
                 </div>
 
                 <div class="settings-card">
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span>Language</span></h3>
                     <div class="lang-toggle" id="settingsLangToggle">
-                        <!-- 📌 CRITICAL FIX: URL without .html -->
+                        <!-- 📌 CRITICAL FIX: Clean URL for English to Sinhala Switch -->
                         <button class="lang-btn btn-si" onclick="window.location.href='/sn/'">Sinhala</button>
                         <button class="lang-btn btn-en active">English</button>
                     </div>
@@ -357,12 +358,13 @@
             </div>
             
             <div class="footer-links">
-                <a href="about.html">About Us</a> | 
-                <a href="privacy.html">Privacy</a> | 
-                <a href="terms.html">Terms</a> | 
-                <a href="cookie-policy.html">Cookie Policy</a> | 
-                <a href="disclaimer.html">Disclaimer</a> | 
-                <a href="contact.html">Contact Us</a>
+                <!-- 📌 CRITICAL FIX: Clean URLs without .html -->
+                <a href="/about">About Us</a> | 
+                <a href="/privacy">Privacy</a> | 
+                <a href="/terms">Terms</a> | 
+                <a href="/cookie-policy">Cookie Policy</a> | 
+                <a href="/disclaimer">Disclaimer</a> | 
+                <a href="/contact">Contact Us</a>
             </div>
 
             <div class="footer-text">
@@ -382,7 +384,8 @@
         <div class="nav-item" id="nav-explore" onclick="switchView('hub', this)">
             <i class="fas fa-book-open"></i><span>Articles</span>
         </div>
-        <div class="nav-item" onclick="window.location.href='about.html'">
+        <!-- 📌 CRITICAL FIX: Clean URL without .html -->
+        <div class="nav-item" onclick="window.location.href='/about'">
             <i class="fas fa-info-circle"></i><span>About Us</span>
         </div>
         <div class="nav-item" id="nav-settings" onclick="switchView('settings', this)">
@@ -404,7 +407,6 @@
         </div>
     </div>
 
-    <!-- 📌 CRITICAL FIX: Removed inline styles causing Mobile UI issues -->
     <div id="resultModal" class="my-modal">
         <div class="my-modal-content" style="background: transparent; border: none; box-shadow: none; padding: 0;">
             <div id="captureArea" class="capture-card">
@@ -424,6 +426,7 @@
         // =========================================
         // 📌 GLOBALS & CURRENCY LOGIC
         // =========================================
+        const currencySymbols = { LKR: "Rs. ", USD: "$", EUR: "€", GBP: "£", AUD: "A$" };
         let currentCurrencyCode = localStorage.getItem('dsc_currency') || 'LKR';
         let globalCurrenciesDB = {}; 
         let globalBase = 100;
@@ -439,6 +442,7 @@
                 renderCurrencyDropdown();
             }
 
+            // Async background fetch to prevent blocking UI
             database.ref('currencies').once('value').then(snapshot => {
                 globalCurrenciesDB = snapshot.val() || {};
                 localStorage.setItem('dsc_currencies_cache', JSON.stringify(globalCurrenciesDB));
@@ -486,7 +490,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('app-wrapper').style.display = 'flex'; // Instantly show
             initializeApp();
         });
 
@@ -596,7 +599,7 @@
             }
         });
 
-        // 📌 CRITICAL FIX: Only show TODAY'S achievers. Force hide if null.
+        // 📌 CRITICAL FIX: Ensure ONLY today's target achievers are shown. Force hide if empty.
         function fetchTargetAchievers() {
             const todayStr = getTodayString();
             
@@ -823,7 +826,7 @@
 
         function initializeApp() { 
             populateCurrencyDropdown();
-            loadFirebasePosts();
+            loadFirebasePosts(); // Background load CMS Posts
             setTimeout(checkDirectArticleLink, 500); 
         }
         
@@ -1033,7 +1036,6 @@
         function spin() {
             if (isSpinning) return; 
             
-            // Prevent double clicks instantly
             const spinBtn = document.getElementById('spinBtn');
             if(spinBtn.disabled) return;
 
@@ -1078,12 +1080,11 @@
                         justAchievedTarget = true;
                     }
                     
-                    // UI Instant Update for Mobile reliability
+                    // UI Instant Update
                     renderCalendar(); 
                     checkTodaySpin(); 
                     renderTargetUI(); 
                     
-                    // Database sync (caught in promises so UI doesn't freeze)
                     if (isLocalMode) { 
                         localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); 
                         localStorage.setItem('dsc_target', JSON.stringify(userTarget)); 
@@ -1094,7 +1095,6 @@
                         userNameToDisplay = (currentUserData && currentUserData.name) ? currentUserData.name : (currentUser.displayName || "User"); 
                         photoToDisplay = (currentUserData && currentUserData.photoURL) ? currentUserData.photoURL : (currentUser.photoURL || generateAvatar(userNameToDisplay)); 
                         
-                        // Fire and forget, UI is already updated
                         database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total).catch(e => showNotification("Cloud Sync Error", "warning")); 
                         database.ref('users/' + currentUser.uid + '/targetData').set(userTarget).catch(e => console.error(e));
                         
@@ -1104,13 +1104,12 @@
                     }
 
                     // Popup UI Update
-                    document.getElementById('cardName').innerText = `Hi ${userNameToDisplay}`; 
+                    document.getElementById('cardName').innerText = `Hi, ${userNameToDisplay}`; 
                     document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
                     const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; 
                     document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); 
                     document.getElementById('popupAvatar').src = photoToDisplay;
                     
-                    // Push Global Stats silently
                     database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }).catch(e => console.error(e)); 
                     const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); 
                     database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime }).catch(e => console.error(e));
@@ -1120,7 +1119,7 @@
 
                 } catch(e) {
                     console.error("Error occurred after spin: ", e);
-                    showNotification("Oops, something went wrong updating your data.", "error");
+                    showNotification("An error occurred while saving your progress.", "error");
                 } finally {
                     isSpinning = false;
                 }
