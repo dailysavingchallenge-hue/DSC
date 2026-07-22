@@ -12,13 +12,13 @@
     <meta name="description" content="Cultivate the habit of saving a small amount daily to secure your future. Join the Daily Saving Challenge to track and grow your savings securely.">
     <link rel="icon" type="image/png" href="dsc_logo.png">
     <link rel="apple-touch-icon" href="dsc_logo.png">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -36,14 +36,17 @@
 
     <div class="bg-animation"></div>
 
-    <!-- Auth Modal -->
+    <div id="initialLoader" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--primary-light); z-index:9999999;">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+    </div>
+
+    <!-- 📌 Upgraded Auth Modal (Hidden by Default) -->
     <div id="authModal" class="my-modal">
         <div class="my-modal-content">
             <button class="close-modal-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
-            <div style="position: absolute; top: 15px; left: 15px; z-index: 10;">
+            <div style="position: absolute; top: 15px; right: 15px; z-index: 10;">
                 <div class="lang-toggle" style="gap: 5px; margin: 0;">
-                    <!-- 📌 CRITICAL FIX: URLs updated to prevent .html showing -->
-                    <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='/sn/'">සිං</button>
+                    <button class="lang-btn btn-si" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.location.href='sn/'">සිං</button>
                     <button class="lang-btn btn-en active" style="padding: 5px 10px; font-size: 0.8rem;">EN</button>
                 </div>
             </div>
@@ -138,6 +141,7 @@
         </div>
     </div>
 
+    <!-- 📌 MAIN APP WRAPPER -->
     <div id="app-wrapper">
         <div class="header-section">
             <div class="header-left-group">
@@ -148,6 +152,7 @@
             </div>
             
             <div class="header-right-group">
+                <!-- Header Buttons -->
                 <div id="headerAuthGroup" class="header-auth-buttons">
                     <button class="header-btn login-btn" onclick="openAuthModal('login')">
                         <i class="fas fa-sign-in-alt"></i> <span>Login</span>
@@ -160,6 +165,7 @@
                     </button>
                 </div>
 
+                <!-- User Profile (Hidden by default) -->
                 <div id="headerProfileGroup" class="user-profile-wrapper" style="display: none;" onclick="switchView('settings', document.getElementById('nav-settings'))">
                     <div class="user-greeting"><span>Hi,</span> <span id="displayUserName">User</span></div>
                     <img id="headerProfilePic" src="" class="header-profile-pic">
@@ -171,7 +177,7 @@
             <!-- 🔹 TAB 1: HOME -->
             <div id="view-home" class="view-section active">
                 
-                <!-- 🏆 WINNERS BANNER (STRICTLY TODAY ONLY) -->
+                <!-- 🏆 WINNERS BANNER (TARGET ACHIEVERS) -->
                 <div id="homeAchievers" style="display: none;"></div>
 
                 <div class="live-total-container">
@@ -214,7 +220,7 @@
             <!-- 🔹 TAB 2: CALENDAR -->
             <div id="view-calendar" class="view-section" id="calendarCaptureArea">
                 
-                <!-- 🏆 WINNERS BANNER (STRICTLY TODAY ONLY) -->
+                <!-- 🏆 WINNERS BANNER (TARGET ACHIEVERS) -->
                 <div id="calAchievers" style="display: none;"></div>
 
                 <div class="calendar-section">
@@ -237,6 +243,7 @@
                 </div>
                 <div id="targetDisplayCalendar" class="target-card"></div>
 
+                <!-- Last Saver Highlight -->
                 <div class="champion-card">
                     <div class="champ-icon"><i class="fas fa-piggy-bank"></i></div>
                     <div class="champ-details">
@@ -248,7 +255,7 @@
 
             </div>
 
-            <!-- 🔹 TAB 3: ARTICLES (CUSTOM CMS) -->
+            <!-- 🔹 TAB 3: HUB (ARTICLE LIST) -->
             <div id="view-hub" class="view-section">
                 
                 <div class="advice-intro-card">
@@ -256,25 +263,24 @@
                         <i class="fas fa-lightbulb text-accent" style="font-size: 2rem; color: var(--accent);"></i>
                         <h2 style="margin:0; font-size:1.4rem;">Master Your Money</h2>
                     </div>
-                    <div class="advice-content-box" style="margin-top: 15px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; text-align: justify;">
+                    <div class="advice-content-box">
                         Navigating the complex world of personal finance does not have to be an intimidating or complicated process. Welcome to our Financial Advice Hub, a dedicated space designed to provide you with clear, actionable, and user-friendly insights to help you completely master your money. We firmly believe that financial literacy is the essential cornerstone of a secure, stress-free future. Our ultimate goal is to empower you with the comprehensive knowledge and practical tools necessary to make informed, confident decisions about your wealth, no matter where you currently stand on your financial journey.<br><br>A fundamental pillar of achieving and maintaining financial health is the creation of a realistic, sustainable budget. We often recommend starting with the widely recognized 50/30/20 rule. This straightforward framework suggests allocating 50% of your net income to essential needs like housing, groceries, and utilities; 30% to wants and lifestyle choices such as dining out and entertainment; and a critical 20% dedicated entirely to savings and debt repayment. Implementing this simple structure ensures that you consistently live within your means while still enjoying your life today and actively preparing for whatever tomorrow may bring.<br><br>Alongside diligent budgeting, building a robust emergency fund is absolutely crucial. Life is inherently unpredictable, bringing unexpected medical bills, urgent home repairs, or sudden changes in employment. Having three to six months' worth of living expenses safely set aside in an accessible account can be the critical difference between experiencing a minor temporary setback and falling into a major, stressful financial crisis. An emergency fund is your personal financial shock absorber.<br><br>Beyond the act of saving, understanding the profound difference between saving and investing is key to long-term wealth building. While saving protects your money from loss and keeps it liquid, investing is what actually grows your wealth and protects your purchasing power against inflation. In our articles below, we provide clear introductory guides on how to make your money work tirelessly for you. We explore various low-risk investment avenues suitable for beginners, explaining concepts like compound interest, diversification, and long-term market trends in simple, plain language.<br><br>Additionally, we delve deeply into the psychology of spending. We understand that personal finance is often more about behavior than math. We offer practical, real-world tips on how to curb impulsive buying habits, how to accurately differentiate between true necessities and fleeting wants, and how to cultivate a resilient mindset of abundance and intentionality. By aligning your daily spending habits with your deepest values and long-term goals, you create a financial life that brings you genuine satisfaction.<br><br>Whether you are a complete beginner just starting your financial journey, someone looking to aggressively pay down high-interest debt, or an advanced saver aiming to accelerate your wealth accumulation and achieve early retirement, our carefully curated selection of articles is here to guide you every single step of the way. Remember, financial independence is not an overnight achievement; it is a marathon that requires patience, discipline, and continuous learning. Make it a habit to revisit your financial goals regularly, track your net worth, and celebrate the small milestones along the way. Every dollar saved and invested is a step closer to the freedom to live life on your own terms. Explore our articles below and equip yourself with the knowledge to thrive.
                     </div>
                 </div>
 
-                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>Articles & Advice</span></h2>
+                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-book-open"></i> <span>Financial Advice & Articles</span></h2>
                 
                 <div id="blogGrid">
-                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); width:100%; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i> Fetching articles...</p>
+                    <p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">Fetching articles...</p>
                 </div>
             </div>
 
             <!-- 🔹 TAB 3.1: FULL ARTICLE VIEW -->
             <div id="view-article" class="view-section">
                 <button class="back-to-hub-btn" onclick="closeArticleView()">
-                    <i class="fas fa-arrow-left"></i> <span>Back to Articles</span>
+                    <i class="fas fa-arrow-left"></i> <span>Back</span>
                 </button>
                 <div class="full-article-container">
-                    <div id="fullArticleHero" style="display:none; width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: var(--radius); margin-bottom: 20px;"></div>
                     <h2 class="full-article-title" id="fullArticleTitle">Loading...</h2>
                     <div class="full-article-content" id="fullArticleContent">
                         Please wait...
@@ -296,8 +302,7 @@
                 <div class="settings-card">
                     <h3><i class="fas fa-language" style="margin-right:8px; color:var(--accent);"></i> <span>Language</span></h3>
                     <div class="lang-toggle" id="settingsLangToggle">
-                        <!-- 📌 CRITICAL FIX: Clean URL for English to Sinhala Switch -->
-                        <button class="lang-btn btn-si" onclick="window.location.href='/sn/'">Sinhala</button>
+                        <button class="lang-btn btn-si" onclick="window.location.href='sn/'">Sinhala</button>
                         <button class="lang-btn btn-en active">English</button>
                     </div>
                 </div>
@@ -350,7 +355,7 @@
             </div>
         </div>
 
-        <!-- 📌 GLOBAL FOOTER -->
+        <!-- 📌 GLOBAL FOOTER WITH LEGAL LINKS -->
         <div class="global-footer">
             <div class="social-icons">
                 <a href="https://web.facebook.com/profile.php?id=61590623947927" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -358,13 +363,10 @@
             </div>
             
             <div class="footer-links">
-                <!-- 📌 CRITICAL FIX: Clean URLs without .html -->
-                <a href="/about">About Us</a> | 
-                <a href="/privacy">Privacy</a> | 
-                <a href="/terms">Terms</a> | 
-                <a href="/cookie-policy">Cookie Policy</a> | 
-                <a href="/disclaimer">Disclaimer</a> | 
-                <a href="/contact">Contact Us</a>
+                <a href="about.html">About Us</a> | 
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Service</a> | 
+                <a href="contact.html">Contact Us</a>
             </div>
 
             <div class="footer-text">
@@ -374,7 +376,7 @@
     </div>
 
     <!-- 📌 BOTTOM NAVIGATION BAR -->
-    <div class="bottom-nav" id="bottomNav" style="display: flex;">
+    <div class="bottom-nav" id="bottomNav" style="display: none;">
         <div class="nav-item active" onclick="switchView('home', this)">
             <i class="fas fa-home"></i><span>Home</span>
         </div>
@@ -382,10 +384,9 @@
             <i class="fas fa-calendar-alt"></i><span>Calendar</span>
         </div>
         <div class="nav-item" id="nav-explore" onclick="switchView('hub', this)">
-            <i class="fas fa-book-open"></i><span>Articles</span>
+            <i class="fas fa-book-open"></i><span>Explore</span>
         </div>
-        <!-- 📌 CRITICAL FIX: Clean URL without .html -->
-        <div class="nav-item" onclick="window.location.href='/about'">
+        <div class="nav-item" onclick="window.location.href='about.html'">
             <i class="fas fa-info-circle"></i><span>About Us</span>
         </div>
         <div class="nav-item" id="nav-settings" onclick="switchView('settings', this)">
@@ -410,12 +411,12 @@
     <div id="resultModal" class="my-modal">
         <div class="my-modal-content" style="background: transparent; border: none; box-shadow: none; padding: 0;">
             <div id="captureArea" class="capture-card">
-                <div id="captureDate" class="capture-date" style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 10px;"></div>
+                <div id="captureDate" class="capture-date"></div>
                 <img id="popupAvatar" src="" alt="Profile" class="profile-pic">
                 <h2 id="cardName">Hi Name</h2>
-                <p class="capture-subtitle" style="margin:5px 0 10px; color: rgba(255,255,255,0.9); font-size: 0.95rem;">Amount to save today</p>
+                <p class="capture-subtitle" style="margin:5px 0 10px;">Amount to save today</p>
                 <div class="amount" id="cardTotal">Rs. 0</div>
-                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; gap: 5px;"><i class="fab fa-facebook"></i> Daily Saving Challenge</div>
+                <div class="capture-footer" style="margin-top:15px; font-size:0.9rem;"><i class="fab fa-facebook"></i>Daily Saving Challenge</div>
             </div>
             <button class="action-btn primary" style="margin-bottom:10px;" onclick="shareAndDownload()"><i class="fas fa-download"></i> Download & Share</button>
             <button class="action-btn secondary" onclick="closeModal()"><span>Close</span></button>
@@ -436,17 +437,29 @@
         }
 
         function populateCurrencyDropdown() {
-            const cached = localStorage.getItem('dsc_currencies_cache');
-            if (cached) {
-                globalCurrenciesDB = JSON.parse(cached);
-                renderCurrencyDropdown();
-            }
-
-            // Async background fetch to prevent blocking UI
             database.ref('currencies').once('value').then(snapshot => {
                 globalCurrenciesDB = snapshot.val() || {};
-                localStorage.setItem('dsc_currencies_cache', JSON.stringify(globalCurrenciesDB));
-                renderCurrencyDropdown();
+                const select = document.getElementById('currencySelector');
+                if(!select) return;
+                select.innerHTML = ''; 
+                
+                const currencyNames = {
+                    LKR: "Sri Lankan Rupee (Rs.)", USD: "US Dollar ($)", EUR: "Euro (€)", GBP: "British Pound (£)", AUD: "Australian Dollar (A$)",
+                    INR: "Indian Rupee (₹)", JPY: "Japanese Yen (¥)", AED: "UAE Dirham (د.إ)", CAD: "Canadian Dollar (C$)",
+                    SGD: "Singapore Dollar (S$)", NZD: "New Zealand Dollar (NZ$)", KRW: "South Korean Won (₩)", ZAR: "South African Rand (R)",
+                    MYR: "Malaysian Ringgit (RM)", THB: "Thai Baht (฿)", PHP: "Philippine Peso (₱)", QAR: "Qatari Riyal (ر.ق)",
+                    SAR: "Saudi Riyal (ر.س)", OMR: "Omani Rial (ر.ع.)", KWD: "Kuwaiti Dinar (د.ك)", BHD: "Bahraini Dinar (.د.ب)"
+                };
+
+                const allCodes = Object.keys(globalCurrenciesDB).sort();
+                if(!allCodes.includes('LKR')) allCodes.unshift('LKR'); 
+
+                allCodes.forEach(code => {
+                    const name = currencyNames[code] ? currencyNames[code] : `${code}`;
+                    select.innerHTML += `<option value="${code}">${code} - ${name}</option>`;
+                });
+
+                select.value = currentCurrencyCode;
                 applyWheelFromDB();
             }).catch(err => {
                 const select = document.getElementById('currencySelector');
@@ -454,47 +467,44 @@
                 applyWheelFromDB();
             });
         }
-        
-        function renderCurrencyDropdown() {
-            const select = document.getElementById('currencySelector');
-            if(!select || !globalCurrenciesDB) return;
-            select.innerHTML = ''; 
-            
-            const currencyNames = {
-                LKR: "Sri Lankan Rupee (Rs.)", USD: "US Dollar ($)", EUR: "Euro (€)", GBP: "British Pound (£)", AUD: "Australian Dollar (A$)",
-                INR: "Indian Rupee (₹)", JPY: "Japanese Yen (¥)", AED: "UAE Dirham (د.إ)", CAD: "Canadian Dollar (C$)",
-                SGD: "Singapore Dollar (S$)", NZD: "New Zealand Dollar (NZ$)", KRW: "South Korean Won (₩)", ZAR: "South African Rand (R)",
-                MYR: "Malaysian Ringgit (RM)", THB: "Thai Baht (฿)", PHP: "Philippine Peso (₱)", QAR: "Qatari Riyal (ر.ق)",
-                SAR: "Saudi Riyal (ر.س)", OMR: "Omani Rial (ر.ع.)", KWD: "Kuwaiti Dinar (د.ك)", BHD: "Bahraini Dinar (.د.ب)"
-            };
-
-            const allCodes = Object.keys(globalCurrenciesDB).sort();
-            if(!allCodes.includes('LKR')) allCodes.unshift('LKR'); 
-
-            allCodes.forEach(code => {
-                const name = currencyNames[code] ? currencyNames[code] : `${code}`;
-                select.innerHTML += `<option value="${code}">${code} - ${name}</option>`;
-            });
-
-            select.value = currentCurrencyCode;
-        }
 
         function changeCurrency(selectEl) {
             const code = selectEl.value;
             localStorage.setItem('dsc_currency', code);
             currentCurrencyCode = code;
 
+            if(code !== 'LKR') {
+                document.querySelectorAll('.btn-si').forEach(btn => btn.style.display = 'none');
+            } else {
+                document.querySelectorAll('.btn-si').forEach(btn => btn.style.display = 'inline-block');
+            }
+            
             applyWheelFromDB();
             if (currentUserData || isLocalMode) { renderCalendar(); checkTodaySpin(); renderTargetUI(); }
             if (lastWinnerData) updateLastWinnerDisplay(lastWinnerData);
         }
 
+        function enforceLocationRules() {
+            fetch('https://get.geojs.io/v1/ip/country.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.country !== 'LK') {
+                    document.querySelectorAll('.btn-si').forEach(btn => btn.style.display = 'none');
+                }
+            })
+            .catch(error => { console.log('Location check failed'); });
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            enforceLocationRules();
+            if(currentCurrencyCode !== 'LKR') {
+                document.querySelectorAll('.btn-si').forEach(btn => btn.style.display = 'none');
+            }
             initializeApp();
         });
 
         // =========================================
-        // 📌 FIREBASE INIT
+        // 📌 FIREBASE LOGIC 
         // =========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDo_Z1pawT4IB_KaoLdo0Yl2YV5gt27S3U", authDomain: "dailysavingchallenge-b7f58.firebaseapp.com",
@@ -541,16 +551,25 @@
             }
         }
 
+        function launchApp() {
+            document.getElementById('app-wrapper').style.display = 'flex'; document.getElementById('bottomNav').style.display = 'flex';
+        }
+
         auth.onAuthStateChanged((user) => {
+            const loader = document.getElementById('initialLoader');
+            if(loader) loader.style.display = 'none';
+
             if (user) {
                 isLocalMode = false; localStorage.setItem('dsc_local_session', 'false');
                 currentUser = user; 
+                launchApp(); 
                 updateHeaderState(true);
                 loadUserData(user.uid);
             } else {
                 currentUser = null; currentUserData = null;
                 if (isLocalMode && localUserName) {
                     trackingData = localTrackingData; if(localTargetData) userTarget = localTargetData;
+                    launchApp(); 
                     updateHeaderState(true);
                     document.getElementById('displayUserName').innerText = localUserName;
                     const savedAvatar = localStorage.getItem('dsc_avatar') || generateAvatar(localUserName);
@@ -561,6 +580,7 @@
                     document.getElementById('settingsEmail').value = "Local Account (No Email)";
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 } else {
+                    launchApp(); 
                     updateHeaderState(false);
                     renderCalendar(); checkTodaySpin(); renderTargetUI();
                 }
@@ -599,23 +619,31 @@
             }
         });
 
-        // 📌 CRITICAL FIX: Ensure ONLY today's target achievers are shown. Force hide if empty.
         function fetchTargetAchievers() {
+            const slDate = getSLDate();
             const todayStr = getTodayString();
-            
-            database.ref('achievers').off(); 
             
             database.ref('achievers/' + todayStr).on('value', snap => {
                 const data = snap.val();
                 const homeContainer = document.getElementById('homeAchievers');
                 const calContainer = document.getElementById('calAchievers');
                 
-                // If there is data for TODAY, show it. Otherwise, firmly hide it.
-                if (data && Object.keys(data).length > 0) {
+                if(data && Object.keys(data).length > 0) {
                     renderAchieversBanner(data, "🎉 Today's Target Achievers:");
                 } else {
-                    if(homeContainer) { homeContainer.style.display = 'none'; homeContainer.innerHTML = ''; }
-                    if(calContainer) { calContainer.style.display = 'none'; calContainer.innerHTML = ''; }
+                    const yesterdayDate = new Date(slDate);
+                    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                    const yesterdayStr = `${yesterdayDate.getFullYear()}-${String(yesterdayDate.getMonth()+1).padStart(2, '0')}-${String(yesterdayDate.getDate()).padStart(2, '0')}`;
+                    
+                    database.ref('achievers/' + yesterdayStr).once('value').then(ySnap => {
+                        const yData = ySnap.val();
+                        if (yData && Object.keys(yData).length > 0) {
+                            renderAchieversBanner(yData, "Last Saver / Yesterday's Champions:");
+                        } else {
+                            document.getElementById('homeAchievers').style.display = 'none';
+                            document.getElementById('calAchievers').style.display = 'none';
+                        }
+                    });
                 }
             });
         }
@@ -630,18 +658,24 @@
                 html += `<b>${d.name}</b> (${curSymbol}${d.amount.toLocaleString()}) &nbsp;&nbsp;&nbsp;&nbsp;⭐&nbsp;&nbsp;&nbsp;&nbsp;`;
             });
             html += '</marquee></div>';
-            
-            if(homeContainer) { homeContainer.innerHTML = html; homeContainer.style.display = 'block'; }
-            if(calContainer) { calContainer.innerHTML = html; calContainer.style.display = 'block'; }
+            homeContainer.innerHTML = html; calContainer.innerHTML = html;
+            homeContainer.style.display = 'block'; calContainer.style.display = 'block';
         }
 
+        // 📌 1. LOGIN SCENE (MODALS & BUTTONS)
         let authMode = 'login'; 
         function openAuthModal(mode) {
             document.getElementById('authModal').classList.add('active');
-            if (mode === 'local') { showGuestUI(); } 
-            else { hideGuestUI(); switchAuthTab(mode); }
+            if (mode === 'local') {
+                showGuestUI();
+            } else {
+                hideGuestUI();
+                switchAuthTab(mode);
+            }
         }
-        function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
 
         function switchAuthTab(mode) {
             authMode = mode; 
@@ -679,18 +713,27 @@
         function loginWithGoogle() {
             const btn = document.getElementById('googleLoginBtn');
             const originalHTML = btn.innerHTML;
-            if(btn) { btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>`; btn.disabled = true; }
+            if(btn) {
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>`;
+                btn.disabled = true;
+            }
             
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then((result) => {
                 const user = result.user;
                 database.ref('users/' + user.uid).update({ name: user.displayName, email: user.email, photoURL: user.photoURL, joinedAt: new Date().toISOString() });
-                syncLocalDataToCloud(user); closeAuthModal(); showNotification("Successfully logged in!", "success");
+                syncLocalDataToCloud(user); 
+                closeAuthModal();
+                showNotification("Successfully logged in!", "success");
                 if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
             }).catch(error => { 
+                console.error("Auth Error:", error);
                 if(btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
-                if(error.code === 'auth/popup-blocked') { showNotification("Popup blocked by browser! Please use Email/Password to login.", "error"); } 
-                else if(error.code !== 'auth/popup-closed-by-user') { showNotification(error.message, "error"); }
+                if(error.code === 'auth/popup-blocked') {
+                    showNotification("Popup blocked by browser! Please use Email/Password to login.", "error");
+                } else if(error.code !== 'auth/popup-closed-by-user') {
+                    showNotification(error.message, "error"); 
+                }
             });
         }
 
@@ -713,7 +756,13 @@
         }
 
         function handleForgotPassword(fromSettings = false) {
-            let email = fromSettings ? (currentUser ? currentUser.email : "") : document.getElementById('authEmail').value.trim();
+            let email = "";
+            if (fromSettings) {
+                email = currentUser ? currentUser.email : "";
+            } else {
+                email = document.getElementById('authEmail').value.trim();
+            }
+
             if (!email) { showNotification("Please enter your email address in the field to reset password.", "warning"); return; }
             auth.sendPasswordResetEmail(email).then(() => { showNotification("Password reset link sent to your email!", "success"); }).catch((error) => { showNotification(error.message, "error"); });
         }
@@ -723,55 +772,92 @@
         }
 
         // =========================================
-        // 📌 CUSTOM CMS (ARTICLES)
+        // 📌 BLOGGER (HEADLESS CMS) - English Feed
         // =========================================
-        let allFetchedPosts = [];
+        const myBloggerURL = "https://dailysavingchallengelk.blogspot.com";
+        let fetchedArticles = []; 
+        let currentStartIndex = 1;
+        const postsPerPage = 10;
+        let isFetchingPosts = false;
 
-        function loadFirebasePosts() {
-            const blogGrid = document.getElementById('blogGrid');
-            if(!blogGrid) return;
+        function loadBloggerPosts(startIndex = 1) {
+            if(isFetchingPosts) return;
+            isFetchingPosts = true;
             
-            database.ref('articles').orderByChild('language').equalTo('en').once('value').then(snapshot => {
-                const data = snapshot.val();
-                blogGrid.innerHTML = '';
-                
-                if (!data) {
-                    blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); width:100%; grid-column: 1 / -1;">No articles available currently.</p>`;
-                    return;
-                }
-
-                allFetchedPosts = Object.keys(data).map(key => ({ id: key, ...data[key] })).sort((a, b) => b.timestamp - a.timestamp);
-
-                allFetchedPosts.forEach((post) => {
-                    let imgUrl = post.heroImage || 'https://placehold.co/400x250/1e293b/cbd5e1?text=Daily+Saving+Challenge';
-                    
-                    blogGrid.innerHTML += `
-                        <div class="article-card" onclick="openArticle('${post.id}')">
-                            <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
-                            <div class="article-info">
-                                <h3 class="article-card-title">${post.title}</h3>
-                                <div class="article-card-footer">
-                                    <span class="read-more-btn"><span class="read-more-text">Read Article</span> <i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            }).catch(error => {
-                blogGrid.innerHTML = `<p style="text-align:center; color:var(--danger); width:100%; grid-column: 1 / -1;">Error loading articles.</p>`;
-            });
+            const script = document.createElement('script');
+            script.src = `${myBloggerURL}/feeds/posts/default/-/En?alt=json-in-script&callback=handleBloggerPosts&start-index=${startIndex}&max-results=${postsPerPage}`;
+            document.body.appendChild(script);
         }
 
-        window.openArticle = function(postId) {
-            const post = allFetchedPosts.find(p => p.id === postId);
-            if (!post) return;
+        window.handleBloggerPosts = function(data) {
+            isFetchingPosts = false;
+            const blogGrid = document.getElementById('blogGrid'); 
+            if(!blogGrid) return;
             
-            window.history.pushState({articleId: post.id}, post.title, '?article=' + post.id);
+            const noMsg = document.getElementById('noArticlesMsg');
+            if(noMsg) noMsg.remove();
+
+            const oldLoadCont = document.getElementById('loadMoreContainer');
+            if(oldLoadCont) oldLoadCont.remove();
+
+            const entries = data.feed.entry || [];
+
+            if (entries.length === 0 && fetchedArticles.length === 0) { 
+                blogGrid.innerHTML = `<p id="noArticlesMsg" style="text-align:center; color:var(--text-muted); padding: 20px; grid-column: 1 / -1;">No articles available currently.</p>`; 
+                return; 
+            }
+
+            entries.forEach((entry) => {
+                const globalIndex = fetchedArticles.length;
+                fetchedArticles.push(entry);
+                const title = entry.title.$t;
+                const postId = entry.id.$t.split('post-')[1]; 
+                
+                let imgUrl = 'https://via.placeholder.com/400x250/1e293b/cbd5e1?text=Daily+Saving+Challenge'; 
+                if (entry.media$thumbnail) {
+                    imgUrl = entry.media$thumbnail.url.replace(/\/s72\-c\//, '/w400-h250-c/');
+                } else if (entry.content && entry.content.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                    imgUrl = entry.content.$t.match(/<img.+?src=["'](.*?)["']/)[1];
+                } else if (entry.summary && entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)) {
+                    imgUrl = entry.summary.$t.match(/<img.+?src=["'](.*?)["']/)[1];
+                }
+
+                blogGrid.innerHTML += `
+                    <div class="article-card" onclick="openArticle('${postId}', ${globalIndex})">
+                        <div class="article-thumb" style="background-image: url('${imgUrl}');"></div>
+                        <div class="article-info">
+                            <h3 class="article-card-title">${title}</h3>
+                            <div class="article-card-footer">
+                                <span class="read-more-btn"><span class="read-more-text">Read More</span> <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            if (entries.length === postsPerPage) {
+                blogGrid.innerHTML += `
+                    <div id="loadMoreContainer" style="grid-column: 1 / -1; margin-top: 15px;">
+                        <button id="loadMoreBtnActual" class="load-more-btn" onclick="loadNextPosts()">
+                            Load More Articles
+                        </button>
+                    </div>`;
+            }
+        };
+
+        window.loadNextPosts = function() {
+            const btn = document.getElementById('loadMoreBtnActual');
+            if(btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading...`;
+            currentStartIndex += postsPerPage;
+            loadBloggerPosts(currentStartIndex);
+        }
+
+        window.openArticle = function(postId, index) {
+            if (!fetchedArticles[index]) return;
+            const entry = fetchedArticles[index];
+            window.history.pushState({articleId: postId}, entry.title.$t, '?article=' + postId);
             
-            document.getElementById('fullArticleTitle').innerText = post.title;
-            const heroDiv = document.getElementById('fullArticleHero');
-            if(post.heroImage) { heroDiv.style.backgroundImage = `url('${post.heroImage}')`; heroDiv.style.display = 'block'; } 
-            else { heroDiv.style.display = 'none'; }
-            document.getElementById('fullArticleContent').innerHTML = post.content || "";
+            document.getElementById('fullArticleTitle').innerText = entry.title.$t;
+            document.getElementById('fullArticleContent').innerHTML = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
             switchView('article', document.getElementById('nav-explore'));
         }
 
@@ -786,22 +872,19 @@
             if (articleId) {
                 document.getElementById('fullArticleTitle').innerText = "Loading Article...";
                 switchView('article', document.getElementById('nav-explore'));
-                
-                database.ref('articles/' + articleId).once('value').then(snapshot => {
-                    const post = snapshot.val();
-                    if(post) {
-                        document.getElementById('fullArticleTitle').innerText = post.title;
-                        const heroDiv = document.getElementById('fullArticleHero');
-                        if(post.heroImage) { heroDiv.style.backgroundImage = `url('${post.heroImage}')`; heroDiv.style.display = 'block'; } 
-                        else { heroDiv.style.display = 'none'; }
-                        document.getElementById('fullArticleContent').innerHTML = post.content || "";
-                    } else {
-                        document.getElementById('fullArticleTitle').innerText = "Article Not Found";
-                        document.getElementById('fullArticleContent').innerHTML = "This article may have been removed.";
-                    }
-                });
+                const script = document.createElement('script');
+                script.src = `${myBloggerURL}/feeds/posts/default/${articleId}?alt=json-in-script&callback=handleSinglePost`;
+                document.body.appendChild(script);
             }
         }
+
+        window.handleSinglePost = function(data) {
+            const entry = data.entry;
+            if(entry) {
+                document.getElementById('fullArticleTitle').innerText = entry.title.$t;
+                document.getElementById('fullArticleContent').innerHTML = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
+            }
+        };
 
         window.addEventListener('popstate', function(event) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -811,7 +894,11 @@
         function switchView(viewName, navElement) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
-            if(navElement) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); navElement.classList.add('active'); }
+            
+            if(navElement) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                navElement.classList.add('active');
+            }
             window.scrollTo(0,0);
         }
 
@@ -821,12 +908,15 @@
             else { input.type = "password"; iconElement.classList.remove('fa-eye-slash'); iconElement.classList.add('fa-eye'); }
         }
 
+        // =========================================
+        // 📌 APP INIT
+        // =========================================
         function getSLDate() { const d = new Date(); const utc = d.getTime() + (d.getTimezoneOffset() * 60000); return new Date(utc + (3600000 * 5.5)); }
         function getTodayString() { const slDate = getSLDate(); return `${slDate.getFullYear()}-${String(slDate.getMonth()+1).padStart(2, '0')}-${String(slDate.getDate()).padStart(2, '0')}`; }
 
         function initializeApp() { 
             populateCurrencyDropdown();
-            loadFirebasePosts(); // Background load CMS Posts
+            loadBloggerPosts(1);
             setTimeout(checkDirectArticleLink, 500); 
         }
         
@@ -847,7 +937,7 @@
                 const dayStr = `${year}-${String(month+1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
                 const card = document.createElement('div'); card.className = 'day-card'; let amountHtml = '-';
                 const isPastDay = dayStr < todayStr;
-                if (trackingData && trackingData[dayStr]) { card.classList.add('completed'); amountHtml = `${getCurrency()}${trackingData[dayStr]}`; currentMonthTotal += trackingData[dayStr]; } 
+                if (trackingData[dayStr]) { card.classList.add('completed'); amountHtml = `${getCurrency()}${trackingData[dayStr]}`; currentMonthTotal += trackingData[dayStr]; } 
                 else if (dayStr === todayStr) { card.classList.add('today'); amountHtml = "Today"; } 
                 else if (isPastDay) { card.classList.add('missed'); amountHtml = '<i class="fas fa-times"></i>'; }
                 card.innerHTML = `<div class="date">${i}</div><div class="amount">${amountHtml}</div>`; grid.appendChild(card);
@@ -857,11 +947,13 @@
 
         function checkTodaySpin() {
             const todayStr = getTodayString(); const spinBtn = document.getElementById('spinBtn');
-            if (trackingData && trackingData[todayStr]) {
+            if (trackingData[todayStr]) {
                 spinBtn.disabled = true; spinBtn.innerHTML = `<i class="fas fa-check-circle"></i> <span>Completed Today</span>`; document.getElementById('liveAmount').innerText = `${getCurrency()}${trackingData[todayStr].toLocaleString()}`;
             } else {
                 spinBtn.disabled = false; spinBtn.innerHTML = `<i class="fas fa-sync-alt"></i> <span id="spinBtnText">Spin Wheel</span>`; document.getElementById('liveAmount').innerText = `${getCurrency()}0`;
-                if (outerVals[outerVals.length - 1] !== (9 * globalBase) || outerVals.length === 1) { applyWheelFromDB(); }
+                if (outerVals[outerVals.length - 1] !== (9 * globalBase) || outerVals.length === 1) { 
+                    applyWheelFromDB(); 
+                }
             }
         }
 
@@ -871,8 +963,10 @@
                 const name = currentUserData.name || currentUser.displayName || 'User'; const photo = currentUserData.photoURL || currentUser.photoURL || generateAvatar(name);
                 trackingData = currentUserData.trackingData || {}; userTarget = currentUserData.targetData || { amount: 0, setDate: null, achievedDate: null };
                 
-                document.getElementById('displayUserName').innerText = name; document.getElementById('headerProfilePic').src = photo;
-                document.getElementById('settingsName').value = name; document.getElementById('settingsAvatarPreview').src = photo;
+                document.getElementById('displayUserName').innerText = name; 
+                document.getElementById('headerProfilePic').src = photo;
+                document.getElementById('settingsName').value = name; 
+                document.getElementById('settingsAvatarPreview').src = photo;
                 
                 document.getElementById('settingsEmailWrapper').style.display = 'block';
                 if(currentUser.email) { document.getElementById('settingsEmail').value = currentUser.email; } else { document.getElementById('settingsEmail').value = "Local Account (No Email)"; }
@@ -905,12 +999,13 @@
             const newPass = document.getElementById('settingsNewPassword') ? document.getElementById('settingsNewPassword').value : "";
 
             if (!newName) { showNotification("Please enter your name!", "warning"); return; }
+            
             const btn = document.getElementById('saveProfileBtn'); const originalHTML = btn.innerHTML; btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`; btn.disabled = true;
 
             if (isLocalMode) {
                 localStorage.setItem('dsc_userName', newName); localUserName = newName; if (tempAvatarBase64) localStorage.setItem('dsc_avatar', tempAvatarBase64);
                 document.getElementById('displayUserName').innerText = newName; document.getElementById('headerProfilePic').src = tempAvatarBase64 || localStorage.getItem('dsc_avatar') || generateAvatar(newName);
-                showNotification("Profile updated!", "success"); btn.innerHTML = originalHTML; btn.disabled = false;
+                showNotification("Profile updated successfully!", "success"); btn.innerHTML = originalHTML; btn.disabled = false;
             } else if (currentUser) {
                 let updatePromises = []; let authUpdates = {};
                 if (newName !== currentUser.displayName) authUpdates.displayName = newName; if (tempAvatarBase64) authUpdates.photoURL = tempAvatarBase64;
@@ -953,7 +1048,6 @@
 
         function renderTargetUI() {
             if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null };
-            trackingData = trackingData || {};
             const totalSaved = Object.values(trackingData).reduce((sum, val) => sum + val, 0); const today = getTodayString();
             let canEdit = false; let daysLeft = 0;
             if (!userTarget.amount || (userTarget.amount > 0 && userTarget.achievedDate)) { canEdit = true; } 
@@ -991,15 +1085,23 @@
                 globalBase = globalCurrenciesDB[currentCurrencyCode].base || 100;
             }
 
-            outerVals = outer; innerVals = inner;
-            buildWheel('outerWheel', outerVals, 150, false, false); buildWheel('innerWheel', innerVals, 85, false, true);
+            outerVals = outer;
+            innerVals = inner;
+
+            buildWheel('outerWheel', outerVals, 150, false, false); 
+            buildWheel('innerWheel', innerVals, 85, false, true);
             
             const slider = document.getElementById('wheelSlider');
             if(slider) {
-                slider.max = outerVals[outerVals.length - 1] || (9 * globalBase); slider.step = globalBase; slider.value = outerVals[outerVals.length - 1] || (9 * globalBase);
+                slider.max = outerVals[outerVals.length - 1] || (9 * globalBase);
+                slider.step = globalBase;
+                slider.value = outerVals[outerVals.length - 1] || (9 * globalBase);
                 updateSliderText(slider.value);
+
                 const subTxt = document.getElementById('modalSetupSub');
-                if(subTxt) { subTxt.innerText = `Select Max Value (0 - ${9 * globalBase})`; }
+                if(subTxt) {
+                    subTxt.innerText = `Select Max Value (0 - ${9 * globalBase})`;
+                }
             }
         }
         
@@ -1019,9 +1121,17 @@
         function updateSliderText(val) { document.getElementById('sliderValDisplay').innerText = val; }
         function closeCustom() { document.getElementById('customModal').classList.remove('active'); }
         function saveCustom() {
-            const maxVal = parseFloat(document.getElementById('wheelSlider').value); const stepVal = parseFloat(document.getElementById('wheelSlider').step);
+            const maxVal = parseFloat(document.getElementById('wheelSlider').value);
+            const stepVal = parseFloat(document.getElementById('wheelSlider').step);
             outerVals = []; let isZero = false;
-            if (maxVal <= 0) { outerVals = [0]; isZero = true; } else { for(let i = stepVal; i <= maxVal; i += stepVal) { outerVals.push(Number(i.toFixed(2))); } }
+            
+            if (maxVal <= 0) { 
+                outerVals = [0]; isZero = true; 
+            } else { 
+                for(let i = stepVal; i <= maxVal; i += stepVal) { 
+                    outerVals.push(Number(i.toFixed(2))); 
+                } 
+            }
             buildWheel('outerWheel', outerVals, 150, isZero, false); closeCustom(); document.getElementById('outerWheel').style.transition = 'none'; document.getElementById('innerWheel').style.transition = 'none';
             void document.getElementById('outerWheel').offsetWidth; document.getElementById('outerWheel').style.transform = `rotate(0deg)`; document.getElementById('innerWheel').style.transform = `rotate(0deg)`; outerDeg = 0; innerDeg = 0;
         }
@@ -1032,98 +1142,44 @@
             return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
         }
 
-        // 📌 CRITICAL FIX: Safe execution for mobile updates
         function spin() {
-            if (isSpinning) return; 
-            
-            const spinBtn = document.getElementById('spinBtn');
-            if(spinBtn.disabled) return;
-
-            if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
-
-            const todayStr = getTodayString();
-            if (trackingData && trackingData[todayStr]) {
-                showNotification("Completed Today", "warning");
-                checkTodaySpin();
-                return;
-            }
-
-            isSpinning = true; 
-            const spinDuration = Math.floor(Math.random() * 5000) + 10000;  
-            spinBtn.disabled = true; 
-            spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Spinning...</span>`; 
-            document.getElementById('liveAmount').innerText = "Spinning...";
-            
+            if (isSpinning) return; if (!currentUser && !isLocalMode) { openAuthModal('login'); return; }
+            isSpinning = true; const spinDuration = Math.floor(Math.random() * 5000) + 10000;  const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true; spinBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Spinning...</span>`; document.getElementById('liveAmount').innerText = "Spinning...";
             const outIndex = Math.floor(Math.random() * outerVals.length); const inIndex = Math.floor(Math.random() * innerVals.length);
             const outTarget = 360 - (outIndex * (360 / outerVals.length)); const inTarget = 360 - (inIndex * (360 / innerVals.length));
             outerDeg += 3600 + outTarget - (outerDeg % 360); innerDeg += 5040 + inTarget - (innerDeg % 360);
-            
             const outerWheel = document.getElementById('outerWheel'); const innerWheel = document.getElementById('innerWheel');
-            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; 
-            outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
-            
-            // Wait for transition + 100ms extra padding for mobile lags
+            outerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; innerWheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.1, 1)`; outerWheel.style.transform = `rotate(${outerDeg}deg)`; innerWheel.style.transform = `rotate(${innerDeg}deg)`;
             setTimeout(() => {
-                try {
-                    const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); 
-                    
-                    trackingData = trackingData || {}; 
-                    trackingData[todayStr] = total; 
-                    
-                    let userNameToDisplay = "User"; let photoToDisplay = "";
-                    if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null }; 
-                    const totalSavedNow = Object.values(trackingData).reduce((sum, val) => sum + val, 0);
-                    
-                    let justAchievedTarget = false;
-                    if (userTarget.amount > 0 && totalSavedNow >= userTarget.amount && !userTarget.achievedDate) { 
-                        userTarget.achievedDate = todayStr; 
-                        justAchievedTarget = true;
-                    }
-                    
-                    // UI Instant Update
-                    renderCalendar(); 
-                    checkTodaySpin(); 
-                    renderTargetUI(); 
-                    
-                    if (isLocalMode) { 
-                        localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); 
-                        localStorage.setItem('dsc_target', JSON.stringify(userTarget)); 
-                        userNameToDisplay = localUserName || "Guest"; 
-                        photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(userNameToDisplay); 
-                    } 
-                    else if (currentUser) { 
-                        userNameToDisplay = (currentUserData && currentUserData.name) ? currentUserData.name : (currentUser.displayName || "User"); 
-                        photoToDisplay = (currentUserData && currentUserData.photoURL) ? currentUserData.photoURL : (currentUser.photoURL || generateAvatar(userNameToDisplay)); 
-                        
-                        database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total).catch(e => showNotification("Cloud Sync Error", "warning")); 
-                        database.ref('users/' + currentUser.uid + '/targetData').set(userTarget).catch(e => console.error(e));
-                        
-                        if (justAchievedTarget) { 
-                            database.ref('achievers/' + todayStr).push({ name: userNameToDisplay, amount: userTarget.amount, currency: getCurrency() }).catch(e => console.error(e)); 
-                        }
-                    }
-
-                    // Popup UI Update
-                    document.getElementById('cardName').innerText = `Hi, ${userNameToDisplay}`; 
-                    document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
-                    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; 
-                    document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); 
-                    document.getElementById('popupAvatar').src = photoToDisplay;
-                    
-                    database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }).catch(e => console.error(e)); 
-                    const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); 
-                    database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime }).catch(e => console.error(e));
-                    
-                    document.getElementById('resultModal').classList.add('active'); 
-                    createConfetti(); 
-
-                } catch(e) {
-                    console.error("Error occurred after spin: ", e);
-                    showNotification("An error occurred while saving your progress.", "error");
-                } finally {
-                    isSpinning = false;
+                const total = Number((outerVals[outIndex] + innerVals[inIndex]).toFixed(2)); const todayStr = getTodayString(); trackingData[todayStr] = total; let userNameToDisplay = "User"; let photoToDisplay = "";
+                if (!userTarget) userTarget = { amount: 0, setDate: null, achievedDate: null }; const totalSavedNow = Object.values(trackingData).reduce((sum, val) => sum + val, 0);
+                
+                let justAchievedTarget = false;
+                if (userTarget.amount > 0 && totalSavedNow >= userTarget.amount && !userTarget.achievedDate) { 
+                    userTarget.achievedDate = todayStr; 
+                    justAchievedTarget = true;
                 }
-            }, spinDuration + 100); 
+                
+                if (isLocalMode) { localStorage.setItem('dsc_tracking', JSON.stringify(trackingData)); localStorage.setItem('dsc_target', JSON.stringify(userTarget)); userNameToDisplay = localUserName; photoToDisplay = localStorage.getItem('dsc_avatar') || generateAvatar(localUserName); } 
+                else if (currentUser && currentUserData) { database.ref('users/' + currentUser.uid + '/trackingData/' + todayStr).set(total); database.ref('users/' + currentUser.uid + '/targetData').set(userTarget); userNameToDisplay = currentUserData.name || "User"; photoToDisplay = currentUserData.photoURL || currentUser.photoURL || generateAvatar(userNameToDisplay); }
+                
+                if (justAchievedTarget && !isLocalMode && currentUser) {
+                    database.ref('achievers/' + todayStr).push({
+                        name: userNameToDisplay,
+                        amount: userTarget.amount,
+                        currency: getCurrency()
+                    });
+                }
+
+                renderCalendar(); checkTodaySpin(); renderTargetUI(); document.getElementById('cardName').innerText = `Hi, ${userNameToDisplay}`; document.getElementById('cardTotal').innerText = `${getCurrency()}${total.toLocaleString()}`;
+                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' }; document.getElementById('captureDate').innerText = new Date().toLocaleString('en-US', dateOptions); document.getElementById('popupAvatar').src = photoToDisplay;
+                
+                database.ref('stats').update({ totalSpins: globalSpinCount + 1, lastWinnerName: userNameToDisplay, lastWinnerAmount: total, lastWinnerCurrency: getCurrency() }); 
+                const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' }); database.ref('spinHistory').push({ userId: currentUser ? currentUser.uid : "local_guest", userName: userNameToDisplay, wonAmount: total, playedTime: currentTime });
+                
+                document.getElementById('resultModal').classList.add('active'); createConfetti(); isSpinning = false;
+            }, spinDuration);
         }
 
         function closeModal() { 
